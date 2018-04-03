@@ -1,0 +1,100 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{vietnam}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{listings}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+
+% hyper setup
+\hypersetup{
+	bookmarks=true,
+	pdftitle={Xây dựng công cụ hỗ trợ quản lý và đảm bảo chất lượng cho các phiên bản phần mềm},
+	pdfauthor={Bùi Quang Cường}, % author
+	pdfsubject={TeX and LaTeX},
+	pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,       % color of internal links
+	citecolor=black,       % color of links to bibliography
+	filecolor=black,        % color of file links
+	urlcolor=purple,        % color of external links
+	linktoc=page            % only page is linked
+}
+
+\date{}
+
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{.5\baselineskip}
+
+%\newpagestyle{short}
+%{\sethead{Nhóm 1 - INT3110 3}{}{MXH Phượt}\headrule
+%	\setfoot{}{\thepage}{}}
+
+\newpagestyle{long}
+{\sethead{\thesection. \sectiontitle}{}{\subsectiontitle}\headrule
+	\setfoot{}{\thepage}{}}
+
+
+\begin{document}
+	\begin{titlepage}
+		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+		
+		\center % Center everything on the page
+		
+		%----------------------------------------------------------------------------------------
+		%	HEADING SECTIONS
+		%----------------------------------------------------------------------------------------
+		
+		\textsc{\Large ĐẠI HỌC QUỐC GIA HÀ NỘI\\ TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}\\[1cm] % Name of your university/college
+		
+		%----------------------------------------------------------------------------------------
+		%	LOGO SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\includegraphics[width=0.2\linewidth]{images/uet}\\[1cm] % Include a department/university logo - this will require the graphicx package
+		
+		%------------------------------------------------------------------------
+		%	AUTHOR SECTION
+		%------------------------------------------------------------------------
+		
+		% If you don't want a supervisor, uncomment the two lines below and remove the section above
+		{\Large  \bfseries Bùi Quang Cường}\\[2cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	TITLE SECTION
+		%----------------------------------------------------------------------------------------
+		
+		%\HRule \\[0.4cm]
+		{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm] % Title of your document
+		%\HRule \\[1.5cm]
+		
+		% whitespace
+		\hfill\\[3cm]
+		
+		%------------------------------------------------------------------------
+		%	MAJOR SECTION
+		%------------------------------------------------------------------------
+		\textsc{\Large \bfseries Ngành: Công nghệ thông tin}
+		
+		% whitespace
+		\hfill\\[4cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	DATE SECTION
+		%----------------------------------------------------------------------------------------		
+		{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+		
+		
+		%----------------------------------------------------------------------------------------
+		
+		\vfill % Fill the rest of the page with whitespace
+		
+	\end{titlepage}
+	
+	
+%	\pagestyle{short}
+	\tableofcontents
+	\newpage
+	\section*{Lịch sử thay đổi}
+\end{document}
