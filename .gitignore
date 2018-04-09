@@ -5,3 +5,4 @@ build/
 *.out
 *.toc
 *.synctex.gz
+*.dvi
