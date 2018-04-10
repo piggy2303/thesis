@@ -4,9 +4,11 @@
 \usepackage{titletoc}
 \usepackage{listings}
 \usepackage[bookmarks=true]{hyperref}
-\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
 \usepackage{graphicx}
-\usepackage{tikz}
+\usepackage{hyperref}
+\setlength{\parindent}{10mm}
+\renewcommand{\baselinestretch}{1.3}
 
 % hyper setup
 \hypersetup{
@@ -25,12 +27,6 @@
 
 \date{}
 
-%\setlength{\parindent}{0pt}
-%\setlength{\parskip}{.5\baselineskip}
-
-%\newpagestyle{short}
-%{\sethead{Nhóm 1 - INT3110 3}{}{MXH Phượt}\headrule
-%	\setfoot{}{\thepage}{}}
 
 \newpagestyle{long}
 {\sethead{\thesection. \sectiontitle}{}{\subsectiontitle}\headrule
@@ -38,60 +34,52 @@
 
 
 \begin{document}
-	\begin{titlepage}		
-		\center % Center everything on the page
-		
-		%----------------------------------------------------------------------------------------
-		%	HEADING SECTIONS
-		%----------------------------------------------------------------------------------------
-		
-		\textsc{\Large ĐẠI HỌC QUỐC GIA HÀ NỘI\\ TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}\\[1cm] % Name of your university/college
-		
-		%----------------------------------------------------------------------------------------
-		%	LOGO SECTION
-		%----------------------------------------------------------------------------------------
-		
-		\includegraphics[width=0.2\linewidth]{images/uet}\\[1cm] % Include a department/university logo - this will require the graphicx package
-		
-		%------------------------------------------------------------------------
-		%	AUTHOR SECTION
-		%------------------------------------------------------------------------
-		
-		% If you don't want a supervisor, uncomment the two lines below and remove the section above
-		{\Large  \bfseries Bùi Quang Cường}\\[2cm]
-		
-		%----------------------------------------------------------------------------------------
-		%	TITLE SECTION
-		%----------------------------------------------------------------------------------------
-		
-		{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm] % Title of your document
-		
-		% whitespace
-		\hfill\\[3cm]
-		
-		%------------------------------------------------------------------------
-		%	MAJOR SECTION
-		%------------------------------------------------------------------------
-		\textsc{\Large \bfseries Ngành: Công nghệ thông tin}
-		
-		% whitespace
-		\hfill\\[4cm]
-		
-		%----------------------------------------------------------------------------------------
-		%	DATE SECTION
-		%----------------------------------------------------------------------------------------		
-		{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
-		
-		
-		%----------------------------------------------------------------------------------------
-		
-		\vfill % Fill the rest of the page with whitespace
-		
-	\end{titlepage}
+\begin{titlepage}
+	\center
+	{\large \bfseries ĐẠI HỌC QUỐC GIA HÀ NỘI\\ TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}\\[1cm]
+	\includegraphics[width=0.2\linewidth]{images/uet}\\[1cm]
+	{\Large  \bfseries Bùi Quang Cường}\\[2cm]
+	{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm]
+	\hfill\\[3cm]
+	{\large \bfseries KHÓA LUẬN TỐT NGHIỆP ĐẠI HỌC HỆ CHÍNH QUY}\\	
+	{\large \bfseries Ngành: Công nghệ thông tin}	
+	\hfill\\[3cm]	
+	{\large \bfseries HÀ NỘI - 2018}\\	
+	\vfill
+\end{titlepage}
 	
+%-----SECONDARY TITLE PAGE-----%	
+\begin{titlepage}
+	\center
+	{\large \bfseries ĐẠI HỌC QUỐC GIA HÀ NỘI\\ TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}\\[1cm]
+	\includegraphics[width=0.2\linewidth]{images/uet}\\[1cm]
+	{\Large  \bfseries Bùi Quang Cường}\\[2cm]		
+	{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm]
+	\hfill\\[3cm]
+	{\large \bfseries KHÓA LUẬN TỐT NGHIỆP ĐẠI HỌC HỆ CHÍNH QUY}\\	
+	{\large \bfseries Ngành: Công nghệ thông tin}		
+	\hfill\\[3cm]		
+	{\large \bfseries HÀ NỘI - 2018}\\		
+	\vfill		
+\end{titlepage}
 	
-%	\pagestyle{short}
-	\tableofcontents
-	\newpage
-	\section*{Lịch sử thay đổi}
+%-----ABSTRACT-----%
+\newpage
+\begin{center}
+	\textbf{\large TÓM TẮT}
+\end{center}
+\textbf{Tóm tắt:} Mã nguồn ứng dụng trở nên lớn và phức tạp sau quá trình dài phát triển, bảo trì và nâng cấp. Vấn đề này đang dần phổ biến đối với các doanh nghiệp phát triển phần mềm, gây khó khăn trong việc kiểm soát và đảm bảo chất lượng cho các ứng dụng. Hiện nay đã có một số công cụ được đề xuất để giải quyết vấn đề trên nhưng chưa có kết quả thỏa đáng. Nghiên cứu này đề xuất các phương pháp và xây dựng một bộ công cụ toàn diện cho việc phân tích và đảm bảo chất lượng mã nguồn cho các ứng dụng doanh nghiệp sử dụng các nền tảng J2EE phổ biến Struts 2, Hibernate, Spring. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để tạo cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi và các chức năng phân tích cấu trúc như xây dựng đồ thị dữ liệu; xây dựng kiến trúc về công nghệ, cơ sở dữ liệu; tính toán độ phức tạp mã nguồn. Phương pháp phân tích ảnh hưởng sự thay đổi được đề xuất cải tiến theo hướng tự động hóa bằng phương pháp so sánh các phiên bản mã nguồn. Hiện nay, bộ công cụ đang được triển khai thử nghiệm tại Trung tâm công nghệ và quản lý chất lượng phần mềm Viettel (VITM) và nhận được nhiều phản hồi tích cực.\\
+
+\noindent \textit{\textbf{Từ khóa:} phân tích mã nguồn, phiên bản mã nguồn, ứng dụng doanh nghiệp}
+%-----CONTENTS-----%
+\newpage
+\tableofcontents
+
+
+\newpage	
+\section{Đặt vấn đề}
+\section{Giải pháp đề xuất}
+\section{Công cụ và thực nghiệm}
+\section{Kết luận}
+\section{Tài liệu tham khảo}
 \end{document}
