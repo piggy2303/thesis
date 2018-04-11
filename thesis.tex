@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt]{report}
 \usepackage[utf8]{vietnam}
 \usepackage{titlesec}
 \usepackage{titletoc}
@@ -108,9 +108,63 @@
 %-----MAIN-----%
 \newpage
 \setcounter{page}{1}
-\section{Đặt vấn đề}
-\section{Giải pháp đề xuất}
-\section{Công cụ và thực nghiệm}
-\section{Kết luận}
-\section{Tài liệu tham khảo}
+\chapter{Đặt vấn đề}
+Hiện nay, các ứng dụng tại các doanh nghiệp thường được phát triển trong một thời gian
+dài với quy mô lớn và độ phức tạp cao. Trải qua nhiều phiên bản nâng cấp, các ứng dụng
+này thường thiếu tài liệu đặc tả và thiết kế. Có thể nói tài liệu gần như duy nhất của các
+ứng dụng này là mã nguồn. Trong khi đó, quá trình bảo trì và nâng cấp diễn ra thường
+xuyên. Để đảm bảo chất lượng cho mỗi phiên bản mới, đội dự án cần thực hiện kiểm thử
+lại toàn bộ hệ thống. Điều này là không thể bởi chi phí cho việc này rất tốn kém. Kết quả
+là chúng ta không thể kiếm soát toàn bộ sự ảnh hưởng của việc thay đổi và có thể dẫn đến
+nhiều rủi ro lớn cho doanh nghiệp trong quá trình vận hành. Đây là một bài toán khó tổng
+quát hóa vì các giải pháp đề xuất phụ thuộc chặt chẽ vào các công nghệ được sử dụng
+trong ứng dụng. Đề xuất các giải pháp và xây dựng công cụ đủ tốt để giải quyết vấn đề
+nêu trên đang là một trong những thách thức lớn và nhận được sự quan tâm nghiên cứu.\\
+
+Phân tích ảnh hưởng sự thay đổi (Change Impact Analysis - CIA) được xem là một
+giải pháp để giải quyết bài toán trên. CIA có vai trò quan trọng trong các giai đoạn phát
+triển, bảo trì và kiểm thử hồi quy. Đối với người quản lý và lập trình viên, CIA là công cụ
+đánh giá phạm vi ảnh hưởng, ước lượng chi phí từ đó lên kế hoạch thực hiện thay đổi.
+Đối với kiểm thử viên, trong quá trình kiểm thử hồi quy, CIA có thể ứng dụng vào việc
+xác định những ca kiểm thử có liên quan đến phần mã nguồn chỉnh sửa, điều này giúp
+giảm số lượng các ca kiểm thử cần thực hiện từ đó rút ngắn thời gian và nỗ lực kiểm thử.
+Các kĩ thuật CIA được thực hiện theo hai hướng tiếp cận chính là phân tích tĩnh (static
+CIA) và phân tích động (dynamic CIA) [1]. Trong thực tế, hầu hết các nghiên cứu đề xuất
+các phương pháp phân tích ảnh hưởng sự thay đổi liên quan đến static CIA. Nổi bật trong
+số đó là kĩ thuật CIA dựa trên sự phân loại thay đổi [2], kĩ thuật dựa vào đồ thị Call
+Graph [3] và kĩ thuật dựa trên tư tưởng giao thoa sóng nước WAVE-CIA [4]. Tuy nhiên,
+Các kĩ thuật CIA sử dụng đầu vào là kết quả của quá trình phân tích phụ thuộc từ ứng
+dụng. Quá trình này không thể tổng quát hóa cho toàn bộ các công nghệ và nền tảng hiện
+có.\\
+
+J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng
+Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI,
+JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts,
+Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng 
+2
+J2EE, một phương pháp kèm theo công cụ có tên JCIA [5] đã được đề xuất và xây dựng.
+Tuy nhiên phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt
+lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính
+hiệu quả cao.\\
+
+Dựa trên ý tưởng về phương pháp này, một phương pháp hoàn chỉnh đã được nghiên
+cứu và đề xuất để thực hiện phân tích ảnh hưởng sự thay đổi cho các ứng dụng J2EE đa
+nền tảng. Các framework phổ biến hiện nay: Spring, Struts, Hibernate sẽ được tập trung
+hỗ trợ đầu tiên. Sau đó chúng tôi sẽ dần hoàn thiện phương pháp cho các tất cả các nền
+tảng khác. Ngoài ra, chúng tôi cũng đề xuất các giải pháp khác để đem lại nhiều góc nhìn
+khách quan về hệ thông ứng dụng như xây dựng dòng dữ liệu, tái hiện thiết kế kiến trúc
+hệ thống và cơ sở dữ liệu, và tính toán độ phức tạp mã nguồn. Một bộ công cụ được phát
+triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã đề xuất.\\
+
+Phần còn lại của báo cáo được cấu trúc như sau. Phần 2 trình bày các phương pháp
+thực hiện về tiền xử lý mã nguồn; phân tích phụ thuộc cho các công nghệ Struts 2, Spring,
+Hibernate; quản lý các phiên bản phân tích; xây dựng dòng dữ liệu và cuối cùng là biểu
+diễn các góc nhìn kiến trúc của ứng dụng. Tiếp theo, phần 3 trình bày bộ công cụ đảm
+bảo chất lượng JCIA-VT, và kết quả đạt được qua thực nghiệm phân tích. Cuối cùng,
+phần 4 tóm tắt các kết quả đạt được, kết luận, hạn chế và hướng nghiên cứu phát triển
+trong tương lai.
+
+\chapter{Lý thuyết phân tích ảnh hưởng sự thay đổi}
+\chapter{Thực nghiệm và triển khai}
+\chapter{Kết luận}
 \end{document}
