@@ -9,9 +9,13 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{varwidth}
+\usepackage{float}
+
+
 \usetikzlibrary{calc}
 \setlength{\parindent}{10mm}
 \renewcommand{\baselinestretch}{1.3}
+\graphicspath{{images/}}
 
 % hyper setup
 \hypersetup{
@@ -35,7 +39,6 @@
 {\sethead{\thesection. \sectiontitle}{}{\subsectiontitle}\headrule
 	\setfoot{}{\thepage}{}}
 
-
 \begin{document}
 \begin{titlepage}
 	\center
@@ -51,7 +54,7 @@
 	\end{tikzpicture}
 	
 	{\large \bfseries ĐẠI HỌC QUỐC GIA HÀ NỘI\\ TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}\\[1cm]
-	\includegraphics[width=0.2\linewidth]{images/uet}\\[1cm]
+	\includegraphics[width=0.2\linewidth]{uet}\\[1cm]
 	{\Large  \bfseries Bùi Quang Cường}\\[2cm]
 	{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm]
 	\hfill\\[3cm]
@@ -210,7 +213,42 @@ trong tương lai.
 
 \newpage	
 \chapter{Lý thuyết phân tích ảnh hưởng sự thay đổi}
-Định nghĩa phân tích ảnh hưởng sự thay đổi được đề xuất lẫn đầu tiên vào năm 1986 bởi Horowiz và cộng sự: "sự kiểm tra tác động để xác định các thành phần hoặc phần tử của tác động đó". Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Một số phương pháp được thực hiện dựa trên sự kiểm tra truy vết (traceability-based CIA) trong khi một số khác tập trung xem xét các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng. Kỹ thuật CIA dựa trên phân tích các mối quan hệ phụ thuộc sẽ cố gắng phân tích để xác định các quan hệ...
+Bảo trì phần mềm luôn được coi là hoạt động khó và tiêu tốn chi phí nhiều nhất trong quá trình phát triển phần mềm. Các sản phẩm phẩm phần mềm liên tục thay đổi và thích nghi với các yêu cầu thay đổi để phù hợp với nhu cầu của người dùng. Khi các thay đổi được thực hiện, nó sẽ gây ra các ảnh hướng không lường trước được, và có thể gây ra các tác động làm mất sự nhất quán đối với các thành phần của phần mềm. Phân tích ảnh hưởng sự thay đổi (Change Impact Analysis - CIA) bao gồm một bộ các kỹ thuật giúp xác định sự ảnh hưởng của các thay đổi được đề xuất tới các thành phần phần mềm. Nó đóng vai trò quan trọng trong quá trình phát triển, bảo trì phần mềm và kiểm thử hồi quy. CIA có thể được sử dụng trước hoặc sau khi thực hiện thay đổi. Trước khi thực hiện thay đổi, CIA có thể được sử dụng để tiên đoán ảnh hưởng sự thay đổi và ước tính chi phí. Sau khi thay đổi được thực hiện, CIA có thể được ứng dụng để lựa chọn các ca kiểm thử cho quá trình kiểm thử hồi quy.\\
+
+\section{Các phương pháp phân tích ảnh hưởng sự thay đổi}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{CIA-hierarchy}
+	\label{fig:cia-hierarchy}
+	\caption{Các phương pháp CIA}
+\end{figure}
+
+Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA. Để thực hiện Depedency-based CIA, ta có thể sử dụng hai phương pháp là phân tích tĩnh và động. Phân tích động sẽ yêu cầu thực thi ứng dụng, nó sẽ thu thập các thông tin trước, trong và sau khi chạy để xác định các mối quan hệ phụ thuộc. Phương pháp này mang lại chính xác cao nhưng đòi hỏi sự phức tạp và tốn kém. Bên cạnh đó, các phương pháp phân tích tĩnh dễ thực hiện và ít tốn kém. Chúng tập được thực hiện ngay trên mã nguồn phần mềm. Có thể chia các phương pháp tĩnh này thành ba loại chính: Phân tích dựa trên lịch sử được thực hiện bằng cách khai phá thông tin từ nhiều phiên bản tiến hóa của phần mềm, phương pháp thường cho nhiều kết quả dự đoán nhầm, nhiều phần tử ảnh hưởng dự đoán thật sự không bị ảnh hưởng; Phân tích ngữ nghĩa dựa trên việc trích xuất thông tin từ việc phân tích nội dung comment hoặc các định danh (ví dụ: tên biến, phương thức); Nổi trội nhất trong đó là phân tích cấu trúc, phương pháp này tập trung phân tích tĩnh cấu trúc của chương trình, xác định các mối quan hệ giữa các thành phần và xây dựng đồ thị phụ thuộc.\\
+
+\section{Quy trình phân tích ảnh hưởng sự thay đổi}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{CIA-process}
+	\label{fig:cia-process}
+	\caption{Quy trình chung CIA}
+\end{figure}
+
+Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính là thay đổi cấu trúc và thay đổi lô-gíc. Thay đổi cấu trúc là các thay đổi liên quan đến các thành phần trong mã nguồn. Cụ thể đối với ngôn ngữ Java, thay đổi cấu trúc có thể là thay đổi về phạm vi truy cập, kiểu, tên của một thuộc tính hoặc thay đổi chữ kí của một phương thức. Thay đổi lô-gíc là thay đổi về thuật toán, các câu lệnh. Chúng thường là những thay đổi nằm trong thân phương thức.\\
+
+Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.\\
+
+Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập ảnh hưởng dự đoán gần nhất với tập ảnh hưởng thực tế khi thực hiện thay đổi (Actual Impact Set - AIS). Khi so sánh giữa EIS và AIS ta, có tập các thành phần ảnh hưởng tiên đoán nhầm (False Negative Impact Set - FNIS) và tập các thành phần ảnh hưởng tiên đoán thiếu (False Positive Impact Set - FPIS). Để đánh giá sự hiệu quả của một phương pháp CIA, người ta dùng hai độ đo là độ chính xác (Precision - P) và Recall - R, được tính theo các công thức \ref{exp:cia-precision} và \ref{exp:cia-recall}. Độ chính xác càng cao, tập FNIS sẽ càng bé, ta ít phải chú ý đến những thành phần không cần thiết. Độ hồi tưởng cào cao, tập FPIS càng bé, giúp ta phát hiện nhiều thành phần bị ảnh hưởng hơn giúp giảm số lỗi tiềm ẩn sau khi áp dụng phương pháp CIA.\\
+
+\begin{equation}
+	Precision = \frac{|EIS \cap AIS|}{EIS}
+	\label{exp:cia-precision}
+\end{equation}
+\\
+\begin{equation}
+	Recall = \frac{|EIS \cap AIS|}{AIS}
+	\label{exp:cia-recall}
+\end{equation}
+
 
 \newpage
 \chapter{Phương pháp tiền xử lý mã nguồn}
@@ -223,6 +261,11 @@ dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa
 cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và
 tìm kiếm các nút trên cây dễ dàng.
 \chapter{Phương pháp phân tích phụ thuộc cho các ứng dụng J2EE}
+\section{Phân tích phụ thuộc Java Core}
+\section{Phân tích phụ thuộc Struts}
+\chapter{Phương pháp phân tích ảnh hưởng sự thay đổi}
+\chapter{Phương pháp quản lý các phiên bản}
+\section{So sánh hai phiên bản}
 \chapter{Thực nghiệm và triển khai}
 \chapter{Kết luận}
 \end{document}
