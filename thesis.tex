@@ -167,7 +167,19 @@ trong tương lai.
 
 \newpage	
 \chapter{Lý thuyết phân tích ảnh hưởng sự thay đổi}
-Định nghĩa phân tích ảnh hưởng sự thay đổi được đề xuất lẫn đầu tiên vào năm 1986 bởi Horowiz và cộng sự: "sự kiểm tra tác động để xác định các thành phần hoặc phần tử của tác động đó". Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Một số phương pháp được thực hiện dựa trên sự kiểm tra truy vết (traceability-based CIA) trong khi một số khác tập trung xem xét các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng. Kỹ thuật CIA dựa trên phân tích các mối quan hệ phụ thuộc sẽ cố gắng phân tích để xác định các quan hệ 
+Định nghĩa phân tích ảnh hưởng sự thay đổi được đề xuất lẫn đầu tiên vào năm 1986 bởi Horowiz và cộng sự: "sự kiểm tra tác động để xác định các thành phần hoặc phần tử của tác động đó". Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Một số phương pháp được thực hiện dựa trên sự kiểm tra truy vết (traceability-based CIA) trong khi một số khác tập trung xem xét các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng. Kỹ thuật CIA dựa trên phân tích các mối quan hệ phụ thuộc sẽ cố gắng phân tích để xác định các quan hệ...
+
+\newpage
+\chapter{Phương pháp tiền xử lý mã nguồn}
+\textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồng ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (V, E)$ với $V = \{v_1, v_2,..., v_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML, JSP); v,v. $E = \{(v_i, v_j) | v_i,v_j \in V\}$ là tập các cạnh. Mỗi cạnh $(v_i,v_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.\\
+
+Các ứng dụng doanh nghiệp J2EE, ngoài mã nguồn Java còn sử dụng nhiều định
+dạng mã nguồn như XML, JSP, XHTML, FreeMarker,...Với mỗi một định dạng lại có
+cấu trúc và cú pháp khác nhau. Bộ tiền xử lý cần biến đổi những mã nguồn này về định
+dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa những thông tin cần thiết
+cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và
+tìm kiếm các nút trên cây dễ dàng.
+\chapter{Phương pháp phân tích phụ thuộc cho các ứng dụng J2EE}
 \chapter{Thực nghiệm và triển khai}
 \chapter{Kết luận}
 \end{document}
