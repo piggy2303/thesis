@@ -10,12 +10,37 @@
 \usepackage{tikz}
 \usepackage{varwidth}
 \usepackage{float}
-
+\usepackage{listings}
+\usepackage{color}
 
 \usetikzlibrary{calc}
 \setlength{\parindent}{10mm}
 \renewcommand{\baselinestretch}{1.3}
 \graphicspath{{images/}}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% setup code area as listings
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\renewcommand{\lstlistingname}{Mã nguồn}
+
 
 % hyper setup
 \hypersetup{
@@ -276,14 +301,52 @@ Hình \ref{fig:preprocess} thể hiện phương pháp để tiền xử lý mã
 Đầu tiên, ta thực hiện duyệt toàn bộ cấu trúc các thư mục và tệp trong mã nguồn ứng dụng. Ta có thể sinh được cây cấu trúc cơ bản gồm các nút thư mục và nút tệp. Tiếp theo, ta duyệt tìm tất cả các nút tệp trên cây. Các tệp mã nguồn có phần mở rộng \textit{.java} sẽ được phân tích  để thu thập thông tin và tạo các nút con tương ứng với các thành phần mã nguồn Java đó (lớp, thuộc tính, phương thức). Các thông tin của các thành phần này cũng cần được thu thập (ví dụ: đối với phương thức cần thu thập thông tin về kiểu trả về, mức truy cập, tên phương thức, danh sách các tham số). Hiện nay có một thư viện mã nguồn mở Java có tên Java Development Tools \footnote{https://www.eclipse.org/jdt/} đã hỗ trợ việc phân tích và thu thập thông tin cho các tệp mã nguồn Java. Tuy nhiên đầu ra của thư viện này chứa khá nhiều thông tin không cần thiết. Ta chỉ cần trích xuất những thông tin cần thiết để thêm vào cây cấu trúc. Các tệp mã nguồn có phần mở rộng \textit{.xml, .jsp, .html} sẽ xử lý bởi cùng một phương pháp tiền xử lý cho định dạng mã nguồn dựa trên XML. Kết quả đầu ra sẽ là các nút tương ứng với các thẻ XML có trong tệp. Các nút này cũng cần chứa toàn bộ thông tin của thẻ đấy, bao gồm các thuộc tính và nội dung của thẻ.\\
 
 \subsection{Định danh cho các nút trên cây cấu trúc}
+Cây cấu trúc là dữ liệu được sử dụng xuyên suốt trong các quá trình phân tích. Sẽ có rất nhiều hoạt động phân tích cần đến việc tìm kiếm và truy xuất dữ liệu của các nút trên cây. Vì thế việc định danh cho các nút trên cây là một việc rất quan trọng. Phương pháp đề xuất là định danh bằng đường dẫn tuyệt đối của nút. Đường dẫn tuyệt đối của mỗi nút trên cây sẽ được tạo thành bởi tên lần lượt của các nút cha và tên của nó, ngăn cách bởi kí tự gạch chéo (\texttt{/}). Với hầu hết các nút đại diện trong thành phần mã nguồn sẽ có đường dẫn tuyệt đối duy nhất, ta có thể thực hiện \textit{Indexing} các nút trên cây phục vụ cho việc tìm kiếm nhanh. Tuy nhiên, trong một số trường hợp, dùng tên các nút để tạo thành đường dẫn tuyệt đối sẽ có thể cho cùng một kết quả đối với nhiều hơn một nút.\\
+
+\begin{lstlisting}[language=Java,
+caption={Ví dụ chồng hàm trong Java},label={code:java-overloading}]
+package vn.sample.manager.BookManager;
+import vn.sample.model.Boook;
+import vn.sample.model.Author;
+public class BookManager {
+	//...	
+	public void addBook(Book newBook) {
+		//...
+	}
+	public void addBook(String bookName, Author author) {
+		//...
+	}
+}
+\end{lstlisting}
+
+Ví dụ như ở Mã nguồn \ref{code:java-overloading} thể hiện sự chồng hàm của phương thức \texttt{addBook()}. Nếu chỉ sử dụng tên của phương thức thì ta sẽ không định danh cho các các nút tương ứng với hai phương thức này được. Do vậy ta cần sử dụng cả thông tin về các tham số của chúng để tạo đường dẫn tuyệt đối. Bao gồm cả tên, kiểu và thứ tự của các tham số này trong phần khai báo phương thức. Kết quả ta được hai đường dẫn tuyệt đối có thể đại diện cho sự riêng biệt của các nút phương thức Java này.\\
+
+\begin{verbatim}
+vn/sample/manager/BookManager.java/BookManager/addBook(vn.sample.model.Book_newBook)
+vn/sample/manager/BookManager.java/BookManager/
+addBook(java.lang.String_bookName,java.lang.String_author)
+\end{verbatim}
+
+Hoặc đối với mã nguồn dựa trên định dạng XML như ở Mã nguồn \ref{code:html-example}, nếu dùng tên thẻ để làm đường dẫn tuyệt đối thì hai phần tử \texttt{h1} sẽ có chung giá trị là \texttt{web/hello.html/html/body/h1}. Để định danh cho hai phần này, ta sẽ dùng thêm các thuộc tích đặc biệt là tọa độ thẻ mở của chúng trong mã nguồn. Ví dụ với phần \texttt{h1} đầu tiên, sẽ có tọa độ số dòng là 3, số cột là 12 cho nên đường dẫn tuyệt đối của nó sẽ là \texttt{web/hello.html/html/body/h1:3:12}. Đường dẫn mới này sẽ giúp phân biệt phần tử này với phần liền kề với đường dẫn \texttt{web/hello.html/html/body/h1:4:12}. Thật may mắn nền tảng Java cung cấp sẵn một thư viện giúp chúng ta phân tích các tệp có định dạng XML và lấy được tọa độ của các phần tử này. Nó là SAXParser, nó sẽ giúp tiết kiệm công sức rất nhiều trong việc tiền xử lý phần mã nguồn này.\\
+
+\begin{lstlisting}[language=XML,
+caption={Ví dụ mã nguồn HTML},label={code:html-example}]
+<html>
+	<body>
+		<h1>Hello!</h1>
+		<h1>I am writing this line with Latex.</h1>
+	</body>
+</html>
+\end{lstlisting}
+
 \subsection{Làm mịn cây cấu trúc}
 
 \section{Phân tích phụ thuộc Java Core}
 \section{Phân tích phụ thuộc Struts}
 
-\chapter{Phương pháp phân tích ảnh hưởng sự thay đổi}
 \chapter{Phương pháp quản lý các phiên bản}
 \section{So sánh hai phiên bản}
+\chapter{Phương pháp phân tích ảnh hưởng sự thay đổi}
 \chapter{Thực nghiệm và triển khai}
 \chapter{Kết luận}
 \end{document}
