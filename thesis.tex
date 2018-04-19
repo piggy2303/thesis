@@ -327,7 +327,7 @@ vn/sample/manager/BookManager.java/BookManager/
 addBook(java.lang.String_bookName,java.lang.String_author)
 \end{verbatim}
 
-Hoặc đối với mã nguồn dựa trên định dạng XML như ở Mã nguồn \ref{code:html-example}, nếu dùng tên thẻ để làm đường dẫn tuyệt đối thì hai phần tử \texttt{h1} sẽ có chung giá trị là \texttt{web/hello.html/html/body/h1}. Để định danh cho hai phần này, ta sẽ dùng thêm các thuộc tích đặc biệt là tọa độ thẻ mở của chúng trong mã nguồn. Ví dụ với phần \texttt{h1} đầu tiên, sẽ có tọa độ số dòng là 3, số cột là 12 cho nên đường dẫn tuyệt đối của nó sẽ là \texttt{web/hello.html/html/body/h1:3:12}. Đường dẫn mới này sẽ giúp phân biệt phần tử này với phần liền kề với đường dẫn \texttt{web/hello.html/html/body/h1:4:12}. Thật may mắn nền tảng Java cung cấp sẵn một thư viện giúp chúng ta phân tích các tệp có định dạng XML và lấy được tọa độ của các phần tử này. Nó là SAXParser, nó sẽ giúp tiết kiệm công sức rất nhiều trong việc tiền xử lý phần mã nguồn này.\\
+Hoặc đối với mã nguồn dựa trên định dạng XML như ở Mã nguồn \ref{code:html-example}, nếu dùng tên thẻ để làm đường dẫn tuyệt đối thì hai phần tử \texttt{h1} sẽ có chung giá trị là \texttt{web/hello.html/html/body/h1}. Để định danh cho hai phần này, ta sẽ dùng thêm các thuộc tích đặc biệt là tọa độ thẻ mở của chúng trong mã nguồn. Ví dụ với phần \texttt{h1} đầu tiên, sẽ có tọa độ số dòng là 3, số cột là 12 cho nên đường dẫn tuyệt đối của nó sẽ là \texttt{web/hello.html/html/body/h1:3:12}. Đường dẫn mới này sẽ giúp phân biệt phần tử này với phần liền kề với đường dẫn \texttt{web/hello.html/html/body/h1:4:12}. Thật may mắn nền tảng Java cung cấp sẵn một thư viện giúp chúng ta phân tích các tệp có định dạng XML và lấy được tọa độ của các phần tử này. SAXParser sẽ giúp ta tiết kiệm công sức rất nhiều trong việc tiền xử lý phần mã nguồn này.\\
 
 \begin{lstlisting}[language=XML,
 caption={Ví dụ mã nguồn HTML},label={code:html-example}]
@@ -339,12 +339,30 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 </html>
 \end{lstlisting}
 
-\subsection{Làm mịn cây cấu trúc}
-
-
-
 \section{Phân tích phụ thuộc Java Core}
 \section{Phân tích phụ thuộc Struts}
+\subsection{Giới thiệu mô hình kiến trúc Struts}
+Apache Struts (trước đây được gọi là Struts2 để phân biệt với Struts1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chưa đủ các thành phàn giúp lập trình viên định nghĩa rõ ràng Model, View và Controller.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{struts-architecture}
+	\label{fig:struts-architecture}
+	\caption{Mô hình thiết kế của ứng dụng Struts}
+\end{figure}
+
+Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của một ứng dụng Struts. Các thành phần chính của nó được thiết kế tương ứng với các phần trong mô hình MVC chung.\\
+
+\textbf{Model:} là các lớp Java định nghĩa các đối tượng để chứa dữ liệu (POJO). Chúng chỉ đơn thuần có phương thức getter/setter tương ứng với các thuộc tính.\\
+
+\textbf{View:} là các tệp JSP, dùng để hiện thị dữ liệu tới người dùng. Việc lấy dữ liệu từ Model để hiển thị lên View được thực hiện nhờ một thành phần trong Struts có tên là OGNL (Object-graph Navigation Language).\\
+
+\textbf{Controller:} là phần xử lý logic, trong Struts được gọi là Action. Mỗi Action sẽ là một lớp Java, thường kế thừa từ lớp \textit{ActionSupport} của Struts. Trong lớp Action này có chứa tham chiếu đến lớp Java của phần Model, từ đó có thể dễ dàng truy cập dữ liệu từ phần Model. Các phương thức bên trong lớp Action sẽ thực hiện truy xuất và xử lý dữ liệu từ lớp Model. Sau khi thực hiện xử lý xong, phương này có thể cập nhật lại dữ liệu và chuyển hướng đến một View tương ứng để hiển thị kết quả tới người dùng.\\
+
+\subsection{Phân tích tệp cấu hình Struts}
+Thông thường một ứng dụng Struts sẽ có một tệp cấu hình chính có tên là \textit{struts.xml}. Tại đây, chúng ta có thể dễ dàng thu thập được các thông tin về toàn bộ các thành phần trong ứng dụng được khai báo: bao gồm các Action và View Results. Để xác định các mối quan hệ phụ thuộc giữa các thành phần Struts, tệp cấu hình chính là điểm bắt đầu để phân tích. Tệp cấu hình này đã được làm mịn ở bước tiền xử lý mã nguồn, cho ta thông tin về các Package, Action, Result, Interceptor, ResultType - những đối tượng của Struts.
+
+
 
 \chapter{Phương pháp quản lý các phiên bản}
 \section{So sánh hai phiên bản}
