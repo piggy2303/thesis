@@ -342,7 +342,7 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 \end{lstlisting}
 
 \section{Phân tích phụ thuộc Java Core}
-Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Java, ta có thể bắt gặp mã nguồn Java bất cứ đâu. Từ việc truy xuất cơ sở dữ liệu, thực hiện các tính năng nghiệp vụ, cho đến hiển thị dữ liệu cho người dùng. Vì vậy việc phân tích phụ thuộc cho mã nguồn Java rất quan trọng. Nó cũng giúp ích cho ta trong thực hiện các phương pháp phân tích mã nguồn cho các framework phía trên. Các loại phụ thuộc của các thành phần Java được chia là ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Chi tiết về các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}. \\
+Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Java, ta có thể bắt gặp mã nguồn Java bất cứ đâu. Từ việc truy xuất cơ sở dữ liệu, thực hiện các tính năng nghiệp vụ, cho đến hiển thị dữ liệu cho người dùng. Vì vậy việc phân tích phụ thuộc cho mã nguồn Java rất quan trọng. Nó cũng giúp ích cho ta trong thực hiện các phương pháp phân tích mã nguồn cho các framework phía trên. Các loại phụ thuộc của các thành phần Java được chia là ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Tương ứng với mỗi loại quan hệ phụ thuộc ta sẽ có phương pháp để phân tích khác nhau. Chi tiết về toàn bộ các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}. \\
 
 \begin{table}[]
 \centering
@@ -362,6 +362,8 @@ Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Ja
  & Gọi phương thức tĩnh của lớp khác \\ \hline
 \end{tabular}
 \end{table}
+
+Hiện nay, thư viện JDT đã hỗ trợ rất nhiều trong việc xác định các quan hệ phụ thuộc Java Core. 
 
 \subsection{Định danh tên lớp Java}
 
