@@ -12,6 +12,8 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{multirow}
+\usepackage{booktabs}
 
 \usetikzlibrary{calc}
 \setlength{\parindent}{10mm}
@@ -340,6 +342,30 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 \end{lstlisting}
 
 \section{Phân tích phụ thuộc Java Core}
+Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Java, ta có thể bắt gặp mã nguồn Java bất cứ đâu. Từ việc truy xuất cơ sở dữ liệu, thực hiện các tính năng nghiệp vụ, cho đến hiển thị dữ liệu cho người dùng. Vì vậy việc phân tích phụ thuộc cho mã nguồn Java rất quan trọng. Nó cũng giúp ích cho ta trong thực hiện các phương pháp phân tích mã nguồn cho các framework phía trên. Các loại phụ thuộc của các thành phần Java được chia là ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Chi tiết về các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}. \\
+
+\begin{table}[]
+\centering
+\caption{Các loại quan hệ phụ thuộc trong mã nguồn Java Core}
+\label{tbl:javacore-dependencies}
+\begin{tabular}{|l|l|}
+\hline
+\multirow{3}{*}{\textbf{Quan hệ thừa kế \& Implement}} & Quan hệ thừa kế giữa hai interface \\ \cline{2-2} 
+ & Quan hệ thừa kế giữa hai lớp \\ \cline{2-2} 
+ & Quan hệ implement giữa interface và lớp \\ \hline
+\multirow{3}{*}{\textbf{Sử dụng thuộc tính}} & Sử dụng thuộc tính cùng lớp \\ \cline{2-2} 
+ & Sử dụng thuộc tính từ một lớp khác \\ \cline{2-2} 
+ & Sử dụng thuộc tính tĩnh từ một lớp khác \\ \hline
+\multirow{4}{*}{\textbf{Lời gọi hàm}} & Gọi phương thức khác cùng lớp \\ \cline{2-2} 
+ & Gọi phương thức của lớp cha \\ \cline{2-2} 
+ & Gọi phương thức của lớp khác \\ \cline{2-2} 
+ & Gọi phương thức tĩnh của lớp khác \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Định danh tên lớp Java}
+
+
 \section{Phân tích phụ thuộc Struts}
 \subsection{Giới thiệu mô hình kiến trúc Struts}
 Apache Struts (trước đây được gọi là Struts2 để phân biệt với Struts1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chưa đủ các thành phàn giúp lập trình viên định nghĩa rõ ràng Model, View và Controller.\\
