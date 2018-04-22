@@ -14,6 +14,7 @@
 \usepackage{color}
 \usepackage{multirow}
 \usepackage{booktabs}
+\usepackage[ruled,vlined]{algorithm2e}
 
 \usetikzlibrary{calc}
 \setlength{\parindent}{10mm}
@@ -42,7 +43,10 @@
   tabsize=3
 }
 \renewcommand{\lstlistingname}{Mã nguồn}
-
+\newenvironment{thuattoan}[1][h]
+  {\renewcommand{\algorithmcfname}{Thuật toán}
+   \begin{algorithm}[#1]
+  }{\end{algorithm}}
 
 % hyper setup
 \hypersetup{
@@ -287,7 +291,7 @@ Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập 
 \newpage
 \chapter{Phương pháp phân tích phụ thuộc cho các ứng dụng J2EE}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
-\textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồng ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (V, E)$ với $V = \{v_1, v_2,..., v_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $E = \{(v_i, v_j) | v_i,v_j \in V\}$ là tập các cạnh. Mỗi cạnh $(v_i,v_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.\\
+\textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồng ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.\\
 
 Các ứng dụng doanh nghiệp J2EE, ngoài sử dụng mã nguồn Java còn nhiều định dạng mã nguồn khác để đảm nhiệm vai trò cho tầng \textit{View} và các thành phần cấu hình ứng dụng như XML, JSP, XHTML, FreeMarker,...Với mỗi một định dạng lại có cấu trúc và cú pháp khác nhau, tuy nhiên ta có thể phân loại thành hai nhóm là mã nguồn Java và mã nguồn XML-based (mã nguồn có cú pháp dựa trên định dạng XML). Bộ tiền xử lý cần biến đổi những mã nguồn này về định dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa những thông tin cần thiết cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và tìm kiếm các nút trên cây dễ dàng.\\
 
@@ -397,8 +401,96 @@ Thông thường một ứng dụng Struts sẽ có một tệp cấu hình chí
 \chapter{Phương pháp quản lý các phiên bản}
 \section{So sánh hai phiên bản}
 \chapter{Phương pháp phân tích ảnh hưởng sự thay đổi}
+Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.\\
+
+Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.\\
+
+\section{Xây dựng đồ thị gọi}
+Đồ thị gọi là một đồ thị có hướng $G = (V, E)$. $V$ là tập các đỉnh tương ứng với các nút trong cây cấu trúc (lớp, phương thức, thuộc tính Java; phần tử XML; tệp JSP, HTML), và $E \subseteq V \times V$ là tập các cạnh biểu diễn cho các mối quan hệ phụ thuộc giữa các nút này.
+
+Để xây dựng được đồ thị gọi cho phương pháp CIA, ta chỉ cần chuyển đồi từ cây cấu trúc. Các bước để thực hiện được trình bày ở Thuật toán \ref{algo:build-call-graph}.\\
+
+\begin{thuattoan}
+\label{algo:build-call-graph}
+\caption{Xây dựng đồ thị gọi từ cây cấu trúc}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKwInOut{Use}{Use}
+\Input{$T = (N, R)$ là cây cấu trúc của ứng dụng}
+\Output{$G = (V, E)$ là đồ thị gọi của ứng dụng}
+\Use{$getCallees(n)$ là các nút được gọi hoặc sử dụng bởi $n$}
+ V = $\emptyset$, E = $\emptyset$\;
+ \ForEach{$n \in N$}{
+  $V = V \cup \{n\}$\; 
+  \ForEach{$ne \in getCallees(n)$} {$E = E \cup (n, ne)$\;}
+  } 
+  \Return V\;
+\end{thuattoan}
+
+\section{Xác định tập cốt lõi}
+Như đã nói ở trên, hầu hết các phương pháp CIA hiện nay tính toán tập ảnh hưởng mà không quan tâm đến mối quan hệ của các phần tử trong tập thay đổi. Trong thực tế, luôn có mối quan hệ giữa các phần tử trong tập thay đổi. Chúng ta sẽ sử dụng hiện tượng này trong việc ước tính tập ảnh hưởng. Đầu tiên ta cần tìm tập cốt lõi, nó là tập gồm các thành phần thường bị ảnh hưởng bởi nhiều phần tử trong tập thay đổi nhất. Việc tính toán tập cốt lõi được thực hiện bằng việc khai thác thông tin từ đồ thị gọi, các bước thực hiện như Thuật toán \ref{algo:cal-core-set}.\\
+
+\begin{thuattoan}
+\label{algo:cal-core-set}
+\caption{Xác định tập cốt lõi}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKwInOut{Use}{Use}
+\Input{
+	$G = (V, E)$ là đồ thị gọi của ứng dụng\\
+	$CS$ gồm những phần tử của tệp thay đổi\\
+	$depth$ là độ sâu tìm kiếm
+}
+\Output{$Core$ là tập cốt lõi}
+\Use{$getNeighborSet(m, depth)$ là tập các đỉnh có quan hệ với đỉnh $m$ với khoảng cách $depth$}
+
+ $tempSet = \emptyset$\;
+ \ForEach{$v \in V$}{
+  $neighborSet = getNeighborSet(m, depth)$\;
+  $neighborCSSet = neighborSet \cap CS$\;
+  \If{$|neighborSet| > 1$} {$tempSet = tempSet \cup \{m\}$}
+ }
+ $Core = CS \cup tempSet$\;
+ \Return $Core$\;
+\end{thuattoan}
+
+Các phần tử trong tập cốt lõi được định nghĩa là các đỉnh \textit{láng giềng} với nhiều hơn một phần tử trong tập thay đổi. \textit{Láng giềng} tức là có quan hệ phụ thuộc giữa hai đỉnh trên đồ thị gọi nhỏ hơn một khoảng cách $depth$ cho trước. Khoảng cách $depth$ sẽ thay đổi với từng bài toán để cân bằng giữa độ chính xác và độ hồi tưởng của phương pháp để phù với từng loại yêu cầu cụ thể (ví dụ: cần độ chính xác cao thay vì quan tâm đến độ hồi tưởng cao).\\
+
+\section{Tính toán tập ảnh hưởng}
+Mặc dù tập cốt lõi có thể cho kết quả có độ chính xác tốt nhờ vào điều chỉnh $depth$, tuy vẫn có những phần tử bị dự đoán ảnh hưởng thiếu (thực tế phần tử đó bị ảnh hưởng nhưng không xuất hiện trong tập cốt lõi). Do vậy ta cần tính toán để tìm thêm các phần tử còn sót này, ta sẽ mở rộng tập cốt lõi để xây dựng tập ảnh hưởng cuối cùng (Final Impact Set - FIS) nhằm tăng độ hồi tưởng cho phương pháp. Phương pháp tính toán FIS được thể hiện như Thuật toán \ref{algo:cal-fis}. \\
+
+\begin{thuattoan}
+\label{algo:cal-fis}
+\caption{Tính toán tập ảnh hưởng cuối cùng}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKwInOut{Use}{Use}
+\Input{
+	$G = (V, E)$ là đồ thị gọi của ứng dụng\\
+	$Core$ là tập cốt lõi\\
+}
+\Output{$FIS$ là tập ảnh hưởng}
+\Use{$getCallerSet(m, depth)$ là tập các đỉnh gọi hoặc sử dụng $m$ trong khoảng cách $depth$\\
+$getCalleeSet(m, depth)$ là tập các đỉnh được gọi hoặc sử dụng bởi $m$ trong khoảng cách $depth$\\}
 
 
+ $FIS = Core$\;
+ \While{$FIS$ có số lượng phần tử không ổn định} {
+  \ForEach{$v \in V$}{
+   \If{$m \notin FIS$}{
+    $callerSet = getCallerSet(v)$\;
+    $calleeSet = getCalleeSet(v)$\;
+    \If{$FIS \cap callerSet \neq \emptyset \wedge FIS \cap calleeSet \neq \emptyset$}{
+     $FIS = FIS \cup \{v\}$
+    }
+   }
+  }
+ }
+
+ \Return $FIS$\;
+\end{thuattoan}
+
+Một phần tử $v$ sẽ được thêm vào tập ảnh hưởng nếu $v$ thỏa mãn điều kiện khi $v$ được gọi hoặc sử dụng bởi $v_1$ và $v_2$, hoặc ngượi lại $v_1$ và $v_2$ gọi hoặc sử dụng $v$; trong khi $v_1$ và $v_2$ là hai phần tử thuộc tập cốt lõi. Sau khi duyệt tất cả các phần tử, tập ảnh hưởng có thể được sử dụng tiếp như tập cốt lõi để tiếp tục mở rộng tập ảnh hưởng nếu nó chưa đủ tốt để tăng độ phủ cho phương pháp. Thuật toán có thể dừng lại khi kích thước tập ảnh hưởng đạt mức ổn định.\\
 \chapter{Thực nghiệm và triển khai}
 \chapter{Kết luận}
 \end{document}
