@@ -1,5 +1,8 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt]{report}
+\usepackage[fontsize=13pt]{scrextend}
 \usepackage[utf8]{vietnam}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
 \usepackage{titlesec}
 \usepackage{titletoc}
 \usepackage{listings}
@@ -15,10 +18,13 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{adjustbox}
+
+\setlength{\parskip}{6pt}
 
 \usetikzlibrary{calc}
 \setlength{\parindent}{10mm}
-\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\baselinestretch}{1.3}
 \graphicspath{{images/}}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -86,12 +92,12 @@
 	
 	{\large \bfseries ĐẠI HỌC QUỐC GIA HÀ NỘI\\ TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}\\[1cm]
 	\includegraphics[width=0.2\linewidth]{uet}\\[1cm]
-	{\Large  \bfseries Bùi Quang Cường}\\[2cm]
+	{\Large  \bfseries Bùi Quang Cường}\\[1.5cm]
 	{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm]
-	\hfill\\[3cm]
+	\hfill\\[1.5cm]
 	{\large \bfseries KHÓA LUẬN TỐT NGHIỆP ĐẠI HỌC HỆ CHÍNH QUY}\\	
 	{\large \bfseries Ngành: Công nghệ thông tin}	
-	\hfill\\[3cm]	
+	\hfill\\[3.5cm]	
 	{\large \bfseries HÀ NỘI - 2018}\\	
 	\vfill
 \end{titlepage}
@@ -114,14 +120,14 @@
 
 	{\Large  \bfseries Bùi Quang Cường}\\[2cm]		
 	{ \LARGE \bfseries XÂY DỰNG CÔNG CỤ HỖ TRỢ QUẢN LÝ VÀ ĐẢM BẢO CHẤT LƯỢNG CHO CÁC PHIÊN BẢN PHẦN MỀM}\\[0.5cm]
-	\hfill\\[2cm]
+	\hfill\\[1.5cm]
 	{\large \bfseries KHÓA LUẬN TỐT NGHIỆP ĐẠI HỌC HỆ CHÍNH QUY}\\	
 	{\large \bfseries Ngành: Công nghệ thông tin}
 	\hfill\\[2cm]
 	\begin{flushleft}
 		{\large \bfseries Cán bộ hướng dẫn: PGS. TS. Phạm Ngọc Hùng}\\	
 	\end{flushleft}
-	\hfill\\[4cm]		
+	\hfill\\[3cm]		
 	{\large \bfseries HÀ NỘI - 2018}\\		
 	\vfill		
 \end{titlepage}
@@ -289,7 +295,7 @@ Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập 
 \end{equation}
 
 \newpage
-\chapter{Phương pháp phân tích phụ thuộc cho các ứng dụng J2EE}
+\chapter{Phân tích phụ thuộc cho các ứng dụng J2EE}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
 \textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồng ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.\\
 
@@ -307,7 +313,7 @@ Hình \ref{fig:preprocess} thể hiện phương pháp để tiền xử lý mã
 
 Đầu tiên, ta thực hiện duyệt toàn bộ cấu trúc các thư mục và tệp trong mã nguồn ứng dụng. Ta có thể sinh được cây cấu trúc cơ bản gồm các nút thư mục và nút tệp. Tiếp theo, ta duyệt tìm tất cả các nút tệp trên cây. Các tệp mã nguồn có phần mở rộng \textit{.java} sẽ được phân tích  để thu thập thông tin và tạo các nút con tương ứng với các thành phần mã nguồn Java đó (lớp, thuộc tính, phương thức). Các thông tin của các thành phần này cũng cần được thu thập (ví dụ: đối với phương thức cần thu thập thông tin về kiểu trả về, mức truy cập, tên phương thức, danh sách các tham số). Hiện nay có một thư viện mã nguồn mở Java có tên Java Development Tools \footnote{https://www.eclipse.org/jdt/} đã hỗ trợ việc phân tích và thu thập thông tin cho các tệp mã nguồn Java. Tuy nhiên đầu ra của thư viện này chứa khá nhiều thông tin không cần thiết. Ta chỉ cần trích xuất những thông tin cần thiết để thêm vào cây cấu trúc. Các tệp mã nguồn có phần mở rộng \textit{.xml, .jsp, .html} sẽ xử lý bởi cùng một phương pháp tiền xử lý cho định dạng mã nguồn dựa trên XML. Kết quả đầu ra sẽ là các nút tương ứng với các thẻ XML có trong tệp. Các nút này cũng cần chứa toàn bộ thông tin của thẻ đấy, bao gồm các thuộc tính và nội dung của thẻ.\\
 
-\subsection{Định danh cho các nút trên cây cấu trúc}
+\subsection{Định danh các nút trên cây cấu trúc}
 Cây cấu trúc là dữ liệu được sử dụng xuyên suốt trong các quá trình phân tích. Sẽ có rất nhiều hoạt động phân tích cần đến việc tìm kiếm và truy xuất dữ liệu của các nút trên cây. Vì thế việc định danh cho các nút trên cây là một việc rất quan trọng. Phương pháp đề xuất là định danh bằng đường dẫn tuyệt đối của nút. Đường dẫn tuyệt đối của mỗi nút trên cây sẽ được tạo thành bởi tên lần lượt của các nút cha và tên của nó, ngăn cách bởi kí tự gạch chéo (\texttt{/}). Với hầu hết các nút đại diện trong thành phần mã nguồn sẽ có đường dẫn tuyệt đối duy nhất, ta có thể thực hiện \textit{Indexing} các nút trên cây phục vụ cho việc tìm kiếm nhanh. Tuy nhiên, trong một số trường hợp, dùng tên các nút để tạo thành đường dẫn tuyệt đối sẽ có thể cho cùng một kết quả đối với nhiều hơn một nút.\\
 
 \begin{lstlisting}[language=Java,
@@ -329,7 +335,9 @@ public class BookManager {
 Ví dụ như ở Mã nguồn \ref{code:java-overloading} thể hiện sự chồng hàm của phương thức \texttt{addBook()}. Nếu chỉ sử dụng tên của phương thức thì ta sẽ không định danh cho các các nút tương ứng với hai phương thức này được. Do vậy ta cần sử dụng cả thông tin về các tham số của chúng để tạo đường dẫn tuyệt đối. Bao gồm cả tên, kiểu và thứ tự của các tham số này trong phần khai báo phương thức. Kết quả ta được hai đường dẫn tuyệt đối có thể đại diện cho sự riêng biệt của các nút phương thức Java này.
 
 \begin{verbatim}
-vn/sample/manager/BookManager.java/BookManager/addBook(vn.sample.model.Book_newBook)
+vn/sample/manager/BookManager.java/BookManager/
+addBook(vn.sample.model.Book_newBook)
+
 vn/sample/manager/BookManager.java/BookManager/
 addBook(java.lang.String_bookName,java.lang.String_author)
 \end{verbatim}
@@ -349,7 +357,6 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 \section{Phân tích phụ thuộc Java Core}
 Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Java, ta có thể bắt gặp mã nguồn Java bất cứ đâu. Từ việc truy xuất cơ sở dữ liệu, thực hiện các tính năng nghiệp vụ, cho đến hiển thị dữ liệu cho người dùng. Vì vậy việc phân tích phụ thuộc cho mã nguồn Java rất quan trọng. Nó cũng giúp ích cho ta trong thực hiện các phương pháp phân tích mã nguồn cho các framework được xây dựng phía trên. Công việc phân tích phụ thuộc cho Java Core được thực hiện khá dễ dàng nhờ sự hỗ trợ của thư viện JDT.\\
 
-\subsection{Các loại phụ thuộc Java Core}
 Các loại phụ thuộc của các thành phần Java được chia là ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Chi tiết về các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}.\\
 
 \begin{table}[h]
@@ -371,12 +378,9 @@ Các loại phụ thuộc của các thành phần Java được chia là ba lo�
 \end{tabular}
 \end{table}
 
-\subsection{Xác định các quan hệ phụ thuộc Java Core}
-Việc sử dụng thư viện JDT trong quá trình tiền xử lý mã nguồn Java giúp ích ta rất nhiều. JDT hoàn toàn có khả năng cho ta biết được 
-
 \section{Phân tích phụ thuộc Struts}
 \subsection{Giới thiệu mô hình kiến trúc Struts}
-Apache Struts (trước đây được gọi là Struts2 để phân biệt với Struts1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chưa đủ các thành phần giúp lập trình viên định nghĩa rõ ràng Model, View và Controller.\\
+Apache Struts (trước đây được gọi là Struts2 để phân biệt với Struts1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chứa đủ các thành phần giúp lập trình viên định nghĩa rõ ràng các thành phần Model, View và Controller.\\
 
 \begin{figure}[h]
 	\centering
@@ -393,17 +397,210 @@ Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của m�
 
 \textbf{Controller:} là phần xử lý logic, trong Struts được gọi là Action. Mỗi Action sẽ là một lớp Java, thường kế thừa từ lớp \textit{ActionSupport} của Struts. Trong lớp Action này có chứa tham chiếu đến lớp Java của phần Model, từ đó có thể dễ dàng truy cập dữ liệu từ phần Model. Các phương thức bên trong lớp Action sẽ thực hiện truy xuất và xử lý dữ liệu từ lớp Model. Sau khi thực hiện xử lý xong, phương này có thể cập nhật lại dữ liệu và chuyển hướng đến một View tương ứng để hiển thị kết quả tới người dùng.\\
 
+\subsection{Làm mịn cây cấu trúc}
+
 \subsection{Phân tích tệp cấu hình Struts}
 Thông thường một ứng dụng Struts sẽ có một tệp cấu hình chính có tên là \textit{struts.xml}. Tại đây, chúng ta có thể dễ dàng thu thập được các thông tin về toàn bộ các thành phần trong ứng dụng được khai báo: bao gồm các Action và View Results. Để xác định các mối quan hệ phụ thuộc giữa các thành phần Struts, tệp cấu hình chính là điểm bắt đầu để phân tích. Tệp cấu hình này đã được làm mịn ở bước tiền xử lý mã nguồn, cho ta thông tin về các Package, Action, Result, Interceptor, ResultType - những đối tượng của Struts.
 
 
 
-\chapter{Phương pháp quản lý các phiên bản}
-\section{So sánh hai phiên bản}
-\chapter{Phương pháp phân tích ảnh hưởng sự thay đổi}
-Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.\\
+\chapter{Quản lý các phiên bản phân tích}
+Quản lý phiên bản là công việc lưu trữ các thay đổi của ứng dụng phần mềm theo thời gian, nó có thể giúp ta khôi phục lại một phiên bản xác định nào đó sau này. Một số hệ thông quản lý phiên bản phổ biến hiện nay như Git \footnote{https://git-scm.com} hay SVN  \footnote{https://subversion.apache.org} tập trung lưu trữ các thay đổi ở mức mã nguồn. Không giống như chúng, phương pháp quản lý phiên bản được sử dụng trong công cụ này sẽ lưu trữ thay đổi ở mức trừu tượng hơn là cây cấu trúc của mã nguồn. Điều này giúp cho người sử dụng có thể dễ dàng kiểm soát lịch sử thay đổi của mã nguồn ứng dụng hơn, bởi vì những thay đổi được thể hiện ở mức các thành phần mã nguồn như lớp, phương thức, thuộc tính, v.v chứ không đơn thuần là các dòng mã.\\
 
-Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.\\
+Trong một hệ thống quản lý phiên bản, bộ so sánh các phiên bản là phần quan trọng nhất. Nó giúp phát hiện ra những thay đổi giữa hai phiên bản mã nguồn, từ đó lưu trữ để theo dõi thay đổi và khôi phục lại phiên bản khi mong muốn. Ngoài ra, bộ so sánh này còn giúp ích trong việc tự động thực hiện phân tích ảnh hưởng sự thay đổi. Các thành phần mã nguồn thay đổi được thu thập từ bộ so sánh được sử dụng làm đầu vào cho thuật toán CIA.
+
+\section{So sánh các phiên bản cho mã nguồn Java}
+Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm lớp, phương thức và thuộc tính. Có rất nhiều loại thay đổi đối với những thành phần mã nguồn này, ví dụ như mở rộng mức truy cập từ \textit{private} thành \textit{public}, thay đổi lớp cha đối với lớp hoặc thay đổi tham số đối với phương thức, v.v. Tất cả các loại thay đổi cho Java được liệt kê ở các Bảng \ref{tbl:attribute-ct}, Bảng \ref{tbl:class-ct} và Bảng \ref{tbl:method-ct}.\\
+
+
+\begin{table}[h]
+	\centering
+	\caption{Các loại thay đổi của thuộc tính Java}
+	\label{tbl:attribute-ct}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        \\ \hline
+		AF               & Thêm thuộc tính mới                                            \\ \hline
+		DF               & Xóa thuộc tính                                                 \\ \hline
+		IAF              & Mở rộng mức truy cập của thuộc tính                            \\ \hline
+		DAF              & Thu hẹp mức truy cập của thuộc tính                            \\ \hline
+		AFF              & Thêm từ khóa \textit{final} cho thuộc tính    \\ \hline
+		DFF              & Xóa từ khóa \textit{final} của thuộc tính     \\ \hline
+		ASF              & Thêm từ khóa \textit{static} cho thuộc tính   \\ \hline
+		DSF              & Xóa từ khóa \textit{static} của thuộc tính    \\ \hline
+		CSF              & Thay đổi kiểu của thuộc tính    \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Các loại thay đổi của lớp Java}
+		\label{tbl:class-ct}
+		\begin{tabular}{|p{1.3cm}|p{5cm}|}
+			\hline
+			\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        \\ \hline
+			AC               & Thêm lớp mới                                            \\ \hline
+			DC               & Xóa lớp                                                 \\ \hline
+			IAC              & Mở rộng mức truy cập của lớp                            \\ \hline
+			DAC              & Thu hẹp mức truy cập của lớp                            \\ \hline
+			AFC              & Thêm từ khóa \textit{final} cho lớp    \\ \hline
+			DFC              & Xóa từ khóa \textit{final} của lớp     \\ \hline
+			ASC              & Thêm từ khóa \textit{static} cho lớp   \\ \hline
+			DSC              & Xóa từ khóa \textit{static} của lớp    \\ \hline
+			AAbC             & Thêm từ khóa \textit{abstract} cho lớp \\ \hline
+			DAbC             & Xóa từ khóa \textit{abstract} của lớp  \\ \hline
+			APC              & Thêm lớp cha                                            \\ \hline
+			DPC              & Xóa lớp cha                                             \\ \hline
+			CPC              & Thay đổi lớp cha                                        \\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Các loại thay đổi của phương thức Java}
+		\label{tbl:method-ct}
+		\begin{tabular}{|p{1.3cm}|p{7cm}|}
+			\hline
+			\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        \\ \hline
+			AM               & Thêm phương thức mới                                            \\ \hline
+			DM               & Xóa phương thức                                                 \\ \hline
+			IAM              & Mở rộng mức truy cập của phương thức                            \\ \hline
+			DAM              & Thu hẹp mức truy cập của phương thức                            \\ \hline
+			AFM              & Thêm từ khóa \textit{final} cho phương thức    \\ \hline
+			DFM              & Xóa từ khóa \textit{final} của phương thức     \\ \hline
+			ASM              & Thêm từ khóa \textit{static} cho phương thức   \\ \hline
+			DSM              & Xóa từ khóa \textit{static} của phương thức    \\ \hline
+			AAbM             & Thêm từ khóa \textit{abstract} cho phương thức \\ \hline
+			DAbM             & Xóa từ khóa \textit{abstract} của phương thức  \\ \hline
+			CM             & Thay đổi nội dung thân phương thức  \\ \hline
+			CRM             & Thay đổi kiểu trả về của phương thức  \\ \hline
+			CPM             & Thay đổi danh sách tham số của phương thức  \\ \hline
+		\end{tabular}
+	\end{minipage} 
+\end{table}
+
+Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần xây dựng cây cấu trúc cho tệp của phiên bản mới. Công việc so sánh để xác định các thay đổi sẽ được thực hiện trên cây cấu trúc này và cây cấu trúc của phiên bản trước. Đối với mã nguồn Java, vì thành phần lớp chứa các thành phần phương thức và thuộc tính nên ta sẽ thực hiện so sánh từ các nút đại diện cho lớp trước tiên. Các bước so sánh và xác định thay đổi cho lớp Java được mô tả như Thuật toán \ref{algo:class-change}.
+
+\begin{thuattoan}
+	\label{algo:class-change}
+	\caption{$ClassChange(F_{t1}, F_{t2})$}
+	\SetKwInOut{Input}{Input}
+	\SetKwInOut{Output}{Output}
+	\Input{$F_{t1}, F_{t2}$ lần lượt đại diện cho các nút của tệp chứa thay đổi ở phiên bản $t1$ và $t2$}
+	\Output{$CS$ là danh sách các thay đổi}
+	
+	$C_{t1}$ = tất cả lớp trong $F_{t1}$\;
+	$C_{t2}$ = tất cả lớp trong $F_{t2}$\;
+	CS = $\emptyset$\;
+	\ForEach{$c_1 \in C_{t1}$}{
+		\ForEach{$c_2 \in C_{t2}$}{
+			\If{$c_1.name = c_2.name$}{
+				$CS = CS \cup compareFinalModifier(c_1, c_2)$\;
+				$CS = CS \cup compareVisibilityModifier(c_1, c_2)$\;
+				$CS = CS \cup compareStaticModifier(c_1, c_2)$\;
+				$CS = CS \cup compareAbstractModifier(c_1, c_2)$\;
+				\If{$c_1.parent = null \wedge c_2.parent \neq null$} {
+					$CS = CS \cup (c_1, APC)$\;
+				}\ElseIf{$c_1.parent \neq null \wedge c_2.parent = null$}{
+					$CS = CS \cup (c_1, DPC)$\;
+				}\ElseIf{$c_1.parent \neq null \wedge c_1.parent \neq c_2.parent$}{
+					$CS = CS \cup (c_1, CPC)$\;
+				}
+				$CS = CS \cup FieldChange(c_1, c_2)$\;
+				$CS = CS \cup MethodChange(c_1, c_2)$\;
+				$C_{t1} = C_{t1} \setminus c_1$\;
+				$C_{t2} = C_{t2} \setminus c_2$\;
+			}
+		}
+	}
+	\ForEach{$c_1 \in C_{t1}$}{
+		$CS = CS \cup (c_1, DC)$\;
+	}
+	\ForEach{$c_2 \in C_{t2}$}{
+		$CS = CS \cup (c_1, AC)$\;
+	}
+	\Return $CS$\;
+\end{thuattoan}
+
+\begin{thuattoan}
+	\label{algo:field-change}
+	\caption{$FieldChange(C_{t1}, C_{t2})$}
+	\SetKwInOut{Input}{Input}
+	\SetKwInOut{Output}{Output}
+	\Input{$C_{t1}, C_{t2}$ lần lượt đại diện cho các nút của lớp chứa thay đổi ở phiên bản $t1$ và $t2$}
+	\Output{$CS$ là danh sách các thay đổi}
+	
+	$F_{t1}$ = tất cả thuộc tính trong $C_{t1}$\;
+	$F_{t2}$ = tất cả thuộc tính trong $C_{t2}$\;
+	CS = $\emptyset$\;
+	\ForEach{$f_1 \in F_{t1}$}{
+		\ForEach{$f_2 \in F_{t2}$}{
+			\If{$f_1.name = f_2.name$}{
+				$CS = CS \cup compareFinalModifier(f_1, f_2)$\;
+				$CS = CS \cup compareVisibilityModifier(f_1, f_2)$\;
+				$CS = CS \cup compareStaticModifier(f_1, f_2)$\;
+				\If{$f_1.type \neq f_2.type$} {
+					$CS = CS \cup (f_1, CSF)$\;
+				}
+				$F_{t1} = F_{t1} \setminus f_1$\;
+				$F_{t2} = F_{t2} \setminus f_2$\;
+			}
+		}
+	}
+	\ForEach{$f_1 \in F_{t1}$}{
+		$CS = CS \cup (f_1, DF)$\;
+	}
+	\ForEach{$f_2 \in F_{t2}$}{
+		$CS = CS \cup (f_1, AF)$\;
+	}
+	\Return $CS$\;
+\end{thuattoan}
+
+\begin{thuattoan}
+	\label{algo:method-change}
+	\caption{$MethodChange(C_{t1}, C_{t2})$}
+	\SetKwInOut{Input}{Input}
+	\SetKwInOut{Output}{Output}
+	\Input{$C_{t1}, C_{t2}$ lần lượt đại diện cho các nút của lớp chứa thay đổi ở phiên bản $t1$ và $t2$}
+	\Output{$CS$ là danh sách các thay đổi}
+	
+	$M_{t1}$ = tất cả phương thức trong $C_{t1}$\;
+	$M_{t2}$ = tất cả phương thức trong $C_{t2}$\;
+	CS = $\emptyset$\;
+	\ForEach{$m_1 \in M_{t1}$}{
+		\ForEach{$m_2 \in M_{t2}$}{
+			\If{$m_1.name = m_2.name$}{
+				$CS = CS \cup compareFinalModifier(m_1, m_2)$\;
+				$CS = CS \cup compareVisibilityModifier(m_1, m_2)$\;
+				$CS = CS \cup compareStaticModifier(m_1, m_2)$\;
+				$CS = CS \cup compareAbstractModifier(m_1, m_2)$\;
+				\If{$m_1.returnType \neq m_2.returnType$} {
+					$CS = CS \cup (m_1, CRM)$\;
+				}
+				\If{$m_1.body \neq m_2.body$} {
+					$CS = CS \cup (m_1, CM)$\;
+				}
+				\If{$m_1.param \neq m_2.param$} {
+					$CS = CS \cup (m_1, CPM)$\;
+				}			
+				$M_{t1} = M_{t1} \setminus m_1$\;
+				$M_{t2} = M_{t2} \setminus m_2$\;
+			}
+		}
+	}
+	\ForEach{$m_1 \in M_{t1}$}{
+		$CS = CS \cup (m_1, DM)$\;
+	}
+	\ForEach{$m_2 \in M_{t2}$}{
+		$CS = CS \cup (m_1, AM)$\;
+	}
+	\Return $CS$\;
+\end{thuattoan}
+
+\chapter{Phân tích ảnh hưởng sự thay đổi}
+Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
+
+Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.
 
 \section{Xây dựng đồ thị gọi}
 Đồ thị gọi là một đồ thị có hướng $G = (V, E)$. $V$ là tập các đỉnh tương ứng với các nút trong cây cấu trúc (lớp, phương thức, thuộc tính Java; phần tử XML; tệp JSP, HTML), và $E \subseteq V \times V$ là tập các cạnh biểu diễn cho các mối quan hệ phụ thuộc giữa các nút này.
