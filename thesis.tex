@@ -403,10 +403,14 @@ Thông thường một ứng dụng Struts sẽ có một tệp cấu hình chí
 
 
 
-\chapter{Quản lý các phiên bản phân tích}
-Quản lý phiên bản là công việc lưu trữ các thay đổi của ứng dụng phần mềm theo thời gian, nó có thể giúp ta khôi phục lại một phiên bản xác định nào đó sau này. Một số hệ thông quản lý phiên bản phổ biến hiện nay như Git \footnote{https://git-scm.com} hay SVN  \footnote{https://subversion.apache.org} tập trung lưu trữ các thay đổi ở mức mã nguồn. Không giống như chúng, phương pháp quản lý phiên bản được sử dụng trong công cụ này sẽ lưu trữ thay đổi ở mức trừu tượng hơn là cây cấu trúc của mã nguồn. Điều này giúp cho người sử dụng có thể dễ dàng kiểm soát lịch sử thay đổi của mã nguồn ứng dụng hơn, bởi vì những thay đổi được thể hiện ở mức các thành phần mã nguồn như lớp, phương thức, thuộc tính, v.v chứ không đơn thuần là các dòng mã.
+\chapter{Quản lý các phiên bản}
+Các nhà bảo trì phần mềm cần phải hiểu về ứng dụng phần mềm trước khi thực hiện các sửa đổi trên nó. Mặc dù mã nguồn hệ thống thường được xem xét (review) cẩn thận, tuy nhiên chỉ xem xét cho mã nguồn ở phiên bản hiện tại là không đủ để hiểu rõ sự tiến hóa của nó. Các nhà bảo trì cũng nên hiểu được mã nguồn đã được thay đổi như thế nào trước đó.
 
-Trong một hệ thống quản lý phiên bản, bộ so sánh các phiên bản là phần quan trọng nhất. Nó giúp phát hiện ra những thay đổi giữa hai phiên bản mã nguồn, từ đó lưu trữ để theo dõi thay đổi và khôi phục lại phiên bản khi mong muốn. Ngoài ra, bộ so sánh này còn giúp ích trong việc tự động thực hiện phân tích ảnh hưởng sự thay đổi. Các thành phần mã nguồn thay đổi được thu thập từ bộ so sánh được sử dụng làm đầu vào cho thuật toán CIA.
+Quản lý phiên bản là công việc lưu trữ các thay đổi của ứng dụng phần mềm theo thời gian, nó có thể giúp ta theo dõi các thay đổi qua thời phát triển, bảo trì và hoàn toàn có thể khôi phục lại một phiên bản xác định nào đó sau này. Một số hệ thống quản lý phiên bản phổ biến hiện nay như Git \footnote{https://git-scm.com} hay SVN  \footnote{https://subversion.apache.org} tập trung lưu trữ các thay đổi ở mức các dòng mã nguồn. Các hệ thống này có thể trích xuất thông tin về sự khác nhau giữa các lần sửa đổi của một tệp mã nguồn được lưu trữ. Một tập hợp các thông tin này được xem như là lịch sử thay đổi của tệp mã nguồn đấy.
+
+Tuy nhiên, trong thực tế có một vài bất lợi cho các nhà bảo trì khi sử dụng các hệ thống này để theo dõi lịch sử thay đổi của ứng dụng phần mềm. Ở mỗi lần cam kết (commit - xác nhận lưu trữ thay đổi), lập trình viên thường sửa đổi rất nhiều thứ xen kẽ nhau chứ không chỉ thực hiện một thay đổi. Các công cụ phát hiện ở mức dòng mã nguồn khó tách rời những thay đổi này ra và phát hiện riêng rẽ từng thay đổi trong một lần cam kết đấy. Nếu các nhà bảo trì phải thực hiện công việc này bằng tay, nó sẽ tốn rất nhiều thời gian và chi phí.
+
+Để giải quyết vấn đề nhiều thay đổi xuất hiện xen kẽ trong cùng một lần cam kết. Một hướng tiếp cận để phát hiện thay đổi mới được để xuất. Cơ chế này sẽ phát hiện thay đổi trên một dạng dữ liệu trừu tượng là cây cấu trúc của các phiên bản ứng dụng chứ không phải những dòng mã nguồn. Trong các chương trình hướng đối tượng như J2EE, các lớp, phương thức, thuộc tính sẽ thích hợp làm đơn vị cho các thay đổi. Việc sử dụng cây cấu trúc làm dữ liệu để thực hiện phát hiện thay đổi so với dòng mã giúp trừu tượng hóa các thay đổi, giảm lượng thông tin cần xử lý cho người bảo trì nhưng vẫn cung cấp đủ thông tin để họ có thể hiểu sự tiến hóa của ứng dụng. Ngoài việc cung cấp đầu vào cho việc lưu trữ thay đổi, cơ chế so sánh này còn giúp ích trong việc tự động thực hiện phân tích ảnh hưởng sự thay đổi. Các thành phần mã nguồn thay đổi được thu thập từ bộ so sánh được sử dụng làm tập thay đổi cho thuật toán CIA.
 
 \section{So sánh các phiên bản cho mã nguồn Java}
 Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm lớp, phương thức và thuộc tính. Có rất nhiều loại thay đổi đối với những thành phần mã nguồn này, ví dụ như mở rộng mức truy cập từ \textit{private} thành \textit{public}, thay đổi lớp cha đối với lớp hoặc thay đổi tham số đối với phương thức, v.v. Tất cả các loại thay đổi cho Java được liệt kê ở các Bảng \ref{tbl:attribute-ct}, Bảng \ref{tbl:class-ct} và Bảng \ref{tbl:method-ct}.
@@ -507,8 +511,8 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 				}
 				$CS = CS \cup FieldChange(c_1, c_2)$\;
 				$CS = CS \cup MethodChange(c_1, c_2)$\;
-				$C_{t1} = C_{t1} \setminus c_1$\;
-				$C_{t2} = C_{t2} \setminus c_2$\;
+				$C_{t1} = C_{t1} \setminus \{c_1\}$\;
+				$C_{t2} = C_{t2} \setminus \{c_2\}$\;
 			}
 		}
 	}
@@ -541,8 +545,8 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 				\If{$f_1.type \neq f_2.type$} {
 					$CS = CS \cup (f_1, CSF)$\;
 				}
-				$F_{t1} = F_{t1} \setminus f_1$\;
-				$F_{t2} = F_{t2} \setminus f_2$\;
+				$F_{t1} = F_{t1} \setminus \{f_1\}$\;
+				$F_{t2} = F_{t2} \setminus \{f_2\}$\;
 			}
 		}
 	}
@@ -582,8 +586,8 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 				\If{$m_1.param \neq m_2.param$} {
 					$CS = CS \cup (m_1, CPM)$\;
 				}			
-				$M_{t1} = M_{t1} \setminus m_1$\;
-				$M_{t2} = M_{t2} \setminus m_2$\;
+				$M_{t1} = M_{t1} \setminus \{m_1\}$\;
+				$M_{t2} = M_{t2} \setminus \{m_2\}$\;
 			}
 		}
 	}
@@ -597,7 +601,15 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 \end{thuattoan}
 
 \chapter{Phân tích ảnh hưởng sự thay đổi}
-Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{wave-cia-phenomenon}
+	\label{wave-cia-phenomenon}
+	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi}
+\end{figure}
+
+Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước, được mô tả như Hình \ref{wave-cia-phenomenon}. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
 
 Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.
 
