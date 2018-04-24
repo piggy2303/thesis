@@ -234,7 +234,7 @@ cứu và đề xuất để thực hiện phân tích ảnh hưởng sự thay 
 nền tảng. Các framework phổ biến hiện nay: Spring, Struts, Hibernate sẽ được tập trung
 hỗ trợ đầu tiên. Sau đó chúng tôi sẽ dần hoàn thiện phương pháp cho các tất cả các nền
 tảng khác. Ngoài ra, chúng tôi cũng đề xuất các giải pháp khác để đem lại nhiều góc nhìn
-khách quan về hệ thông ứng dụng như xây dựng dòng dữ liệu, tái hiện thiết kế kiến trúc
+khách quan về hệ thống ứng dụng như xây dựng dòng dữ liệu, tái hiện thiết kế kiến trúc
 hệ thống và cơ sở dữ liệu, và tính toán độ phức tạp mã nguồn. Một bộ công cụ được phát
 triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã đề xuất.
 
@@ -281,7 +281,7 @@ Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính 
 
 Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
 
-Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập ảnh hưởng dự đoán gần nhất với tập ảnh hưởng thực tế khi thực hiện thay đổi (Actual Impact Set - AIS). Khi so sánh giữa EIS và AIS ta, có tập các thành phần ảnh hưởng tiên đoán nhầm (False Negative Impact Set - FNIS) và tập các thành phần ảnh hưởng tiên đoán thiếu (False Positive Impact Set - FPIS). Để đánh giá sự hiệu quả của một phương pháp CIA, người ta dùng hai độ đo là độ chính xác (Precision - P) và Recall - R, được tính theo các công thức \ref{exp:cia-precision} và \ref{exp:cia-recall}. Độ chính xác càng cao, tập FNIS sẽ càng bé, ta ít phải chú ý đến những thành phần không cần thiết. Độ hồi tưởng cào cao, tập FPIS càng bé, giúp ta phát hiện nhiều thành phần bị ảnh hưởng hơn giúp giảm số lỗi tiềm ẩn sau khi áp dụng phương pháp CIA.
+Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập ảnh hưởng dự đoán gần nhất với tập ảnh hưởng thực tế khi thực hiện thay đổi (Actual Impact Set - AIS). Khi so sánh giữa EIS và AIS ta, có tập các thành phần ảnh hưởng tiên đoán nhầm (False Negative Impact Set - FNIS) và tập các thành phần ảnh hưởng tiên đoán thiếu (False Positive Impact Set - FPIS). Để đánh giá sự hiệu quả của một phương pháp CIA, người ta dùng hai độ đo là độ chính xác (Precision - P) và Recall - R, được tính theo các công thức \ref{exp:cia-precision} và \ref{exp:cia-recall}. Độ chính xác càng cao, tập FNIS sẽ càng bé, ta ít phải chú ý đến những thành phần không cần thiết. Độ hồi tưởng càng cao, tập FPIS càng bé, giúp ta phát hiện nhiều thành phần bị ảnh hưởng hơn giúp giảm số lỗi tiềm ẩn sau khi áp dụng phương pháp CIA.
 
 \begin{equation}
 	Precision = \frac{|EIS \cap AIS|}{EIS}
@@ -296,7 +296,7 @@ Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập 
 \newpage
 \chapter{Phân tích phụ thuộc cho các ứng dụng J2EE}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
-\textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồng ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
+\textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
 
 Các ứng dụng doanh nghiệp J2EE, ngoài sử dụng mã nguồn Java còn nhiều định dạng mã nguồn khác để đảm nhiệm vai trò cho tầng \textit{View} và các thành phần cấu hình ứng dụng như XML, JSP, XHTML, FreeMarker,...Với mỗi một định dạng lại có cấu trúc và cú pháp khác nhau, tuy nhiên ta có thể phân loại thành hai nhóm là mã nguồn Java và mã nguồn XML-based (mã nguồn có cú pháp dựa trên định dạng XML). Bộ tiền xử lý cần biến đổi những mã nguồn này về định dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa những thông tin cần thiết cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và tìm kiếm các nút trên cây dễ dàng.
 
@@ -356,7 +356,7 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 \section{Phân tích phụ thuộc Java Core}
 Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Java, ta có thể bắt gặp mã nguồn Java bất cứ đâu. Từ việc truy xuất cơ sở dữ liệu, thực hiện các tính năng nghiệp vụ, cho đến hiển thị dữ liệu cho người dùng. Vì vậy việc phân tích phụ thuộc cho mã nguồn Java rất quan trọng. Nó cũng giúp ích cho ta trong thực hiện các phương pháp phân tích mã nguồn cho các framework được xây dựng phía trên. Công việc phân tích phụ thuộc cho Java Core được thực hiện khá dễ dàng nhờ sự hỗ trợ của thư viện JDT.
 
-Các loại phụ thuộc của các thành phần Java được chia là ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Chi tiết về các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}.
+Các loại phụ thuộc của các thành phần Java được chia làm ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Chi tiết về các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}.
 
 \begin{table}[h]
 \centering
@@ -392,9 +392,9 @@ Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của m�
 
 \textbf{Model:} là các lớp Java định nghĩa các đối tượng để chứa dữ liệu (POJO). Chúng chỉ đơn thuần có phương thức getter/setter tương ứng với các thuộc tính.
 
-\textbf{View:} là các tệp JSP, dùng để hiện thị dữ liệu tới người dùng. Việc lấy dữ liệu từ Model để hiển thị lên View được thực hiện nhờ một thành phần trong Struts có tên là OGNL (Object-graph Navigation Language).
+\textbf{View:} là các tệp JSP, dùng để hiển thị dữ liệu tới người dùng. Việc lấy dữ liệu từ Model để hiển thị lên View được thực hiện nhờ một thành phần trong Struts có tên là OGNL (Object-graph Navigation Language).
 
-\textbf{Controller:} là phần xử lý logic, trong Struts được gọi là Action. Mỗi Action sẽ là một lớp Java, thường kế thừa từ lớp \textit{ActionSupport} của Struts. Trong lớp Action này có chứa tham chiếu đến lớp Java của phần Model, từ đó có thể dễ dàng truy cập dữ liệu từ phần Model. Các phương thức bên trong lớp Action sẽ thực hiện truy xuất và xử lý dữ liệu từ lớp Model. Sau khi thực hiện xử lý xong, phương này có thể cập nhật lại dữ liệu và chuyển hướng đến một View tương ứng để hiển thị kết quả tới người dùng.
+\textbf{Controller:} là phần xử lý lô-gíc, trong Struts được gọi là Action. Mỗi Action sẽ là một lớp Java, thường kế thừa từ lớp \textit{ActionSupport} của Struts. Trong lớp Action này có chứa tham chiếu đến lớp Java của phần Model, từ đó có thể dễ dàng truy cập dữ liệu từ phần Model. Các phương thức bên trong lớp Action sẽ thực hiện truy xuất và xử lý dữ liệu từ lớp Model. Sau khi thực hiện xử lý xong, phương này có thể cập nhật lại dữ liệu và chuyển hướng đến một View tương ứng để hiển thị kết quả tới người dùng.
 
 \subsection{Làm mịn cây cấu trúc}
 
@@ -616,7 +616,7 @@ Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm ph�
 \section{Xây dựng đồ thị gọi}
 Đồ thị gọi là một đồ thị có hướng $G = (V, E)$. $V$ là tập các đỉnh tương ứng với các nút trong cây cấu trúc (lớp, phương thức, thuộc tính Java; phần tử XML; tệp JSP, HTML), và $E \subseteq V \times V$ là tập các cạnh biểu diễn cho các mối quan hệ phụ thuộc giữa các nút này.
 
-Để xây dựng được đồ thị gọi cho phương pháp CIA, ta chỉ cần chuyển đồi từ cây cấu trúc. Các bước để thực hiện được trình bày ở Thuật toán \ref{algo:build-call-graph}.
+Để xây dựng được đồ thị gọi cho phương pháp CIA, ta chỉ cần chuyển đổi từ cây cấu trúc. Các bước để thực hiện được trình bày ở Thuật toán \ref{algo:build-call-graph}.
 
 \begin{thuattoan}
 \label{algo:build-call-graph}
