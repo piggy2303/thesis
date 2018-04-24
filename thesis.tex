@@ -241,11 +241,10 @@ triển như là phiên bản tiếp theo của công cụ JCIA để thực hi�
 Các phần còn lại của báo cáo được cấu trúc như sau:
 \begin{itemize}
 \item Chương 2 - Lý thuyết về phân tích ảnh hưởng sự thay đổi. Chương này trình bày về lịch sử các kỹ thuật và quy trình chung phân tích ảnh hưởng sự thay đổi hiện nay.
-\item Chương 3 - Phương pháp phân tích phụ thuộc cho các ứng dụng J2EE. Trong chương này, một phương pháp về tiền xử lý mã nguồn ứng dụng J2EE để xây dựng cây cấu trúc sẽ được đề xuất. Bên cạnh đó, đề xuất các phương pháp để phân tích phụ thuộc cho Java Core và các framework J2EE.
+\item Chương 3 - Phân tích ảnh hưởng sự thay đổi cho các ứng dụng J2EE. Trong chương này, một phương pháp về tiền xử lý mã nguồn ứng dụng J2EE để xây dựng cây cấu trúc sẽ được đề xuất. Bên cạnh đó, đề xuất các phương pháp để phân tích phụ thuộc cho Java Core và các framework J2EE. Cuối cùng là phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA để áp dụng cho các ứng dụng J2EE.
 \item Chương 4 - Phương pháp quản lý các phiên bản. Chương này mô tả cách quản lý các phiên bản mã nguồn dựa trên cây cấu trúc của mã nguồn.
-\item Chương 5 - Phương pháp phân tích ảnh hưởng sự thay đổi. Chương này chỉ ra phương pháp phân tích ảnh hưởng sự thay đổi được sử dụng.
-\item Chương 6 - Thực nghiệm và triển khai. Chương này mô tả các kết quả thực nghiệm và đánh giá về các kết quả này.
-\item Chương 7 - Kết luận. Kết luận của toàn bộ nghiên cứu và công cụ, trình bày các công việc tiếp theo cần thực hiện.
+\item Chương 5 - Thực nghiệm và triển khai. Chương này mô tả các kết quả thực nghiệm và đánh giá về các kết quả này.
+\item Chương 6 - Kết luận. Kết luận của toàn bộ nghiên cứu và công cụ, trình bày các công việc tiếp theo cần thực hiện.
 \end{itemize}
 
 
@@ -294,7 +293,7 @@ Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập 
 \end{equation}
 
 \newpage
-\chapter{Phân tích phụ thuộc cho các ứng dụng J2EE}
+\chapter{Phân tích ảnh hưởng sự thay đổi cho các ứng dụng J2EE}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
 \textbf{Định nghĩa:} (\textit{Cây cấu trúc}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
 
@@ -353,30 +352,6 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 </html>
 \end{lstlisting}
 
-\section{Phân tích phụ thuộc Java Core}
-Một ứng dụng J2EE được tạo nên từ phần lớn là mã nguồn Java, ta có thể bắt gặp mã nguồn Java bất cứ đâu. Từ việc truy xuất cơ sở dữ liệu, thực hiện các tính năng nghiệp vụ, cho đến hiển thị dữ liệu cho người dùng. Vì vậy việc phân tích phụ thuộc cho mã nguồn Java rất quan trọng. Nó cũng giúp ích cho ta trong thực hiện các phương pháp phân tích mã nguồn cho các framework được xây dựng phía trên. Công việc phân tích phụ thuộc cho Java Core được thực hiện khá dễ dàng nhờ sự hỗ trợ của thư viện JDT.
-
-Các loại phụ thuộc của các thành phần Java được chia làm ba loại chính: Quan hệ thừa kế - implement, quan hệ lời gọi hàm, quan hệ sử dụng thuộc tính. Chi tiết về các loại quan hệ phụ thuộc của mã nguồn Java được liệt kê ở Bảng \ref{tbl:javacore-dependencies}.
-
-\begin{table}[h]
-\centering
-\caption{Các loại quan hệ phụ thuộc trong mã nguồn Java Core}
-\label{tbl:javacore-dependencies}
-\begin{tabular}{|l|l|}
-\hline
-\multirow{3}{*}{\textbf{Quan hệ thừa kế \& Implement}} & Quan hệ thừa kế giữa hai interface \\ \cline{2-2} 
- & Quan hệ thừa kế giữa hai lớp \\ \cline{2-2} 
- & Quan hệ implement giữa interface và lớp \\ \hline
-\multirow{3}{*}{\textbf{Sử dụng thuộc tính}} & Sử dụng thuộc tính cùng lớp \\ \cline{2-2} 
- & Sử dụng thuộc tính từ một lớp khác \\ \cline{2-2} 
- & Sử dụng thuộc tính tĩnh từ một lớp khác \\ \hline
-\multirow{4}{*}{\textbf{Lời gọi hàm}} & Gọi phương thức khác cùng lớp \\ \cline{2-2} 
- & Gọi phương thức của lớp cha \\ \cline{2-2} 
- & Gọi phương thức của lớp khác \\ \cline{2-2} 
- & Gọi phương thức tĩnh của lớp khác \\ \hline
-\end{tabular}
-\end{table}
-
 \section{Phân tích phụ thuộc Struts}
 \subsection{Giới thiệu mô hình kiến trúc Struts}
 Apache Struts (trước đây được gọi là Struts2 để phân biệt với Struts1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chứa đủ các thành phần giúp lập trình viên định nghĩa rõ ràng các thành phần Model, View và Controller.
@@ -401,7 +376,105 @@ Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của m�
 \subsection{Phân tích tệp cấu hình Struts}
 Thông thường một ứng dụng Struts sẽ có một tệp cấu hình chính có tên là \textit{struts.xml}. Tại đây, chúng ta có thể dễ dàng thu thập được các thông tin về toàn bộ các thành phần trong ứng dụng được khai báo: bao gồm các Action và View Results. Để xác định các mối quan hệ phụ thuộc giữa các thành phần Struts, tệp cấu hình chính là điểm bắt đầu để phân tích. Tệp cấu hình này đã được làm mịn ở bước tiền xử lý mã nguồn, cho ta thông tin về các Package, Action, Result, Interceptor, ResultType - những đối tượng của Struts.
 
+\section{Phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{wave-cia-phenomenon}
+	\label{wave-cia-phenomenon}
+	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi}
+\end{figure}
+
+Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước, được mô tả như Hình \ref{wave-cia-phenomenon}. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
+
+Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.
+
+\subsection{Xây dựng đồ thị gọi}
+Đồ thị gọi là một đồ thị có hướng $G = (V, E)$. $V$ là tập các đỉnh tương ứng với các nút trong cây cấu trúc (lớp, phương thức, thuộc tính Java; phần tử XML; tệp JSP, HTML), và $E \subseteq V \times V$ là tập các cạnh biểu diễn cho các mối quan hệ phụ thuộc giữa các nút này.
+
+Để xây dựng được đồ thị gọi cho phương pháp CIA, ta chỉ cần chuyển đổi từ cây cấu trúc. Các bước để thực hiện được trình bày ở Thuật toán \ref{algo:build-call-graph}.
+
+\begin{thuattoan}
+	\label{algo:build-call-graph}
+	\caption{Xây dựng đồ thị gọi từ cây cấu trúc}
+	\SetKwInOut{Input}{Input}
+	\SetKwInOut{Output}{Output}
+	\SetKwInOut{Use}{Use}
+	\Input{$T = (N, R)$ là cây cấu trúc của ứng dụng}
+	\Output{$G = (V, E)$ là đồ thị gọi của ứng dụng}
+	\Use{$getCallees(n)$ là các nút được gọi hoặc sử dụng bởi $n$}
+	V = $\emptyset$, E = $\emptyset$\;
+	\ForEach{$n \in N$}{
+		$V = V \cup \{n\}$\; 
+		\ForEach{$ne \in getCallees(n)$} {$E = E \cup (n, ne)$\;}
+	} 
+	\Return V\;
+\end{thuattoan}
+
+\subsection{Xác định tập cốt lõi}
+Như đã nói ở trên, hầu hết các phương pháp CIA hiện nay tính toán tập ảnh hưởng mà không quan tâm đến mối quan hệ của các phần tử trong tập thay đổi. Trong thực tế, luôn có mối quan hệ giữa các phần tử trong tập thay đổi. Chúng ta sẽ sử dụng hiện tượng này trong việc ước tính tập ảnh hưởng. Đầu tiên ta cần tìm tập cốt lõi, nó là tập gồm các thành phần thường bị ảnh hưởng bởi nhiều phần tử trong tập thay đổi nhất. Việc tính toán tập cốt lõi được thực hiện bằng việc khai thác thông tin từ đồ thị gọi, các bước thực hiện như Thuật toán \ref{algo:cal-core-set}.
+
+\begin{thuattoan}
+	\label{algo:cal-core-set}
+	\caption{Xác định tập cốt lõi}
+	\SetKwInOut{Input}{Input}
+	\SetKwInOut{Output}{Output}
+	\SetKwInOut{Use}{Use}
+	\Input{
+		$G = (V, E)$ là đồ thị gọi của ứng dụng\\
+		$CS$ gồm những phần tử của tệp thay đổi\\
+		$depth$ là độ sâu tìm kiếm
+	}
+	\Output{$Core$ là tập cốt lõi}
+	\Use{$getNeighborSet(m, depth)$ là tập các đỉnh có quan hệ với đỉnh $m$ với khoảng cách $depth$}
+	
+	$tempSet = \emptyset$\;
+	\ForEach{$v \in V$}{
+		$neighborSet = getNeighborSet(m, depth)$\;
+		$neighborCSSet = neighborSet \cap CS$\;
+		\If{$|neighborSet| > 1$} {$tempSet = tempSet \cup \{m\}$}
+	}
+	$Core = CS \cup tempSet$\;
+	\Return $Core$\;
+\end{thuattoan}
+
+Các phần tử trong tập cốt lõi được định nghĩa là các đỉnh \textit{láng giềng} với nhiều hơn một phần tử trong tập thay đổi. \textit{Láng giềng} tức là có quan hệ phụ thuộc giữa hai đỉnh trên đồ thị gọi nhỏ hơn một khoảng cách $depth$ cho trước. Khoảng cách $depth$ sẽ thay đổi với từng bài toán để cân bằng giữa độ chính xác và độ hồi tưởng của phương pháp để phù với từng loại yêu cầu cụ thể (ví dụ: cần độ chính xác cao thay vì quan tâm đến độ hồi tưởng cao).
+
+\subsection{Tính toán tập ảnh hưởng}
+Mặc dù tập cốt lõi có thể cho kết quả có độ chính xác tốt nhờ vào điều chỉnh $depth$, tuy vẫn có những phần tử bị dự đoán ảnh hưởng thiếu (thực tế phần tử đó bị ảnh hưởng nhưng không xuất hiện trong tập cốt lõi). Do vậy ta cần tính toán để tìm thêm các phần tử còn sót này, ta sẽ mở rộng tập cốt lõi để xây dựng tập ảnh hưởng cuối cùng (Final Impact Set - FIS) nhằm tăng độ hồi tưởng cho phương pháp. Phương pháp tính toán FIS được thể hiện như Thuật toán \ref{algo:cal-fis}.
+
+\begin{thuattoan}
+	\label{algo:cal-fis}
+	\caption{Tính toán tập ảnh hưởng}
+	\SetKwInOut{Input}{Input}
+	\SetKwInOut{Output}{Output}
+	\SetKwInOut{Use}{Use}
+	\Input{
+		$G = (V, E)$ là đồ thị gọi của ứng dụng\\
+		$Core$ là tập cốt lõi\\
+	}
+	\Output{$FIS$ là tập ảnh hưởng}
+	\Use{$getCallerSet(m, depth)$ là tập các đỉnh gọi hoặc sử dụng $m$ trong khoảng cách $depth$\\
+		$getCalleeSet(m, depth)$ là tập các đỉnh được gọi hoặc sử dụng bởi $m$ trong khoảng cách $depth$\\}
+	
+	
+	$FIS = Core$\;
+	\While{$FIS$ có số lượng phần tử không ổn định} {
+		\ForEach{$v \in V$}{
+			\If{$m \notin FIS$}{
+				$callerSet = getCallerSet(v)$\;
+				$calleeSet = getCalleeSet(v)$\;
+				\If{$FIS \cap callerSet \neq \emptyset \wedge FIS \cap calleeSet \neq \emptyset$}{
+					$FIS = FIS \cup \{v\}$
+				}
+			}
+		}
+	}
+	
+	\Return $FIS$\;
+\end{thuattoan}
+
+Một phần tử $v$ sẽ được thêm vào tập ảnh hưởng nếu $v$ thỏa mãn điều kiện khi $v$ được gọi hoặc sử dụng bởi $v_1$ và $v_2$, hoặc ngượi lại $v_1$ và $v_2$ gọi hoặc sử dụng $v$; trong khi $v_1$ và $v_2$ là hai phần tử thuộc tập cốt lõi. Sau khi duyệt tất cả các phần tử, tập ảnh hưởng có thể được sử dụng tiếp như tập cốt lõi để tiếp tục mở rộng tập ảnh hưởng nếu nó chưa đủ tốt để tăng độ phủ cho phương pháp. Thuật toán có thể dừng lại khi kích thước tập ảnh hưởng đạt mức ổn định.
 
 \chapter{Quản lý các phiên bản}
 Các nhà bảo trì phần mềm cần phải hiểu về ứng dụng phần mềm trước khi thực hiện các sửa đổi trên nó. Mặc dù mã nguồn hệ thống thường được xem xét (review) cẩn thận, tuy nhiên chỉ xem xét cho mã nguồn ở phiên bản hiện tại là không đủ để hiểu rõ sự tiến hóa của nó. Các nhà bảo trì cũng nên hiểu được mã nguồn đã được thay đổi như thế nào trước đó.
@@ -412,19 +485,22 @@ Tuy nhiên, trong thực tế có một vài bất lợi cho các nhà bảo tr�
 
 Để giải quyết vấn đề nhiều thay đổi xuất hiện xen kẽ trong cùng một lần cam kết. Một hướng tiếp cận để phát hiện thay đổi mới được để xuất. Cơ chế này sẽ phát hiện thay đổi trên một dạng dữ liệu trừu tượng là cây cấu trúc của các phiên bản ứng dụng chứ không phải những dòng mã nguồn. Trong các chương trình hướng đối tượng như J2EE, các lớp, phương thức, thuộc tính sẽ thích hợp làm đơn vị cho các thay đổi. Việc sử dụng cây cấu trúc làm dữ liệu để thực hiện phát hiện thay đổi so với dòng mã giúp trừu tượng hóa các thay đổi, giảm lượng thông tin cần xử lý cho người bảo trì nhưng vẫn cung cấp đủ thông tin để họ có thể hiểu sự tiến hóa của ứng dụng. Ngoài việc cung cấp đầu vào cho việc lưu trữ thay đổi, cơ chế so sánh này còn giúp ích trong việc tự động thực hiện phân tích ảnh hưởng sự thay đổi. Các thành phần mã nguồn thay đổi được thu thập từ bộ so sánh được sử dụng làm tập thay đổi cho thuật toán CIA.
 
-\section{So sánh các phiên bản cho mã nguồn Java}
-Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm lớp, phương thức và thuộc tính. Có rất nhiều loại thay đổi đối với những thành phần mã nguồn này, ví dụ như mở rộng mức truy cập từ \textit{private} thành \textit{public}, thay đổi lớp cha đối với lớp hoặc thay đổi tham số đối với phương thức, v.v. Tất cả các loại thay đổi cho Java được liệt kê ở các Bảng \ref{tbl:attribute-ct}, Bảng \ref{tbl:class-ct} và Bảng \ref{tbl:method-ct}.
+\section{Phát hiện thay đổi cho mã nguồn Java}
+Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm lớp, phương thức và thuộc tính. Có rất nhiều loại thay đổi đối với những thành phần mã nguồn này, ví dụ như mở rộng mức truy cập từ \textit{private} thành \textit{public}, thay đổi lớp cha đối với lớp hoặc thay đổi tham số đối với phương thức, v.v. Tất cả các loại thay đổi cho Java được liệt kê ở các Bảng \ref{tbl:field-ct} và Bảng \ref{tbl:class-method-changes}.
 
 
 \begin{table}[h]
 	\centering
 	\caption{Các loại thay đổi của thuộc tính Java}
-	\label{tbl:attribute-ct}
+	\label{tbl:field-ct}
 	\begin{tabular}{|l|l|}
 		\hline
 		\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        \\ \hline
 		AF               & Thêm thuộc tính mới                                            \\ \hline
-		DF               & Xóa thuộc tính                                                 \\ \hline
+		DF               & Xóa thuộc tính                                                 \\
+		\hline
+		CNF               & Đổi tên thuộc tính                                                 \\
+		\hline
 		IAF              & Mở rộng mức truy cập của thuộc tính                            \\ \hline
 		DAF              & Thu hẹp mức truy cập của thuộc tính                            \\ \hline
 		AFF              & Thêm từ khóa \textit{final} cho thuộc tính    \\ \hline
@@ -435,54 +511,30 @@ Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm l
 	\end{tabular}
 \end{table}
 
-\begin{table}[!htb]
-	\begin{minipage}{.5\linewidth}
-		\centering
-		\caption{Các loại thay đổi của lớp Java}
-		\label{tbl:class-ct}
-		\begin{tabular}{|p{1.3cm}|p{5cm}|}
-			\hline
-			\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        \\ \hline
-			AC               & Thêm lớp mới                                            \\ \hline
-			DC               & Xóa lớp                                                 \\ \hline
-			IAC              & Mở rộng mức truy cập của lớp                            \\ \hline
-			DAC              & Thu hẹp mức truy cập của lớp                            \\ \hline
-			AFC              & Thêm từ khóa \textit{final} cho lớp    \\ \hline
-			DFC              & Xóa từ khóa \textit{final} của lớp     \\ \hline
-			ASC              & Thêm từ khóa \textit{static} cho lớp   \\ \hline
-			DSC              & Xóa từ khóa \textit{static} của lớp    \\ \hline
-			AAbC             & Thêm từ khóa \textit{abstract} cho lớp \\ \hline
-			DAbC             & Xóa từ khóa \textit{abstract} của lớp  \\ \hline
-			APC              & Thêm lớp cha                                            \\ \hline
-			DPC              & Xóa lớp cha                                             \\ \hline
-			CPC              & Thay đổi lớp cha                                        \\ \hline
-		\end{tabular}
-	\end{minipage}%
-	\begin{minipage}{.5\linewidth}
-		\centering
-		\caption{Các loại thay đổi của phương thức Java}
-		\label{tbl:method-ct}
-		\begin{tabular}{|p{1.3cm}|p{7cm}|}
-			\hline
-			\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        \\ \hline
-			AM               & Thêm phương thức mới                                            \\ \hline
-			DM               & Xóa phương thức                                                 \\ \hline
-			IAM              & Mở rộng mức truy cập của phương thức                            \\ \hline
-			DAM              & Thu hẹp mức truy cập của phương thức                            \\ \hline
-			AFM              & Thêm từ khóa \textit{final} cho phương thức    \\ \hline
-			DFM              & Xóa từ khóa \textit{final} của phương thức     \\ \hline
-			ASM              & Thêm từ khóa \textit{static} cho phương thức   \\ \hline
-			DSM              & Xóa từ khóa \textit{static} của phương thức    \\ \hline
-			AAbM             & Thêm từ khóa \textit{abstract} cho phương thức \\ \hline
-			DAbM             & Xóa từ khóa \textit{abstract} của phương thức  \\ \hline
-			CM             & Thay đổi nội dung thân phương thức  \\ \hline
-			CRM             & Thay đổi kiểu trả về của phương thức  \\ \hline
-			CPM             & Thay đổi danh sách tham số của phương thức  \\ \hline
-		\end{tabular}
-	\end{minipage} 
+\begin{table}[h]
+	\centering
+	\caption{Các loại thay đổi của lớp và phương thức Java}
+	\label{tbl:class-method-changes}
+	\begin{tabular}{|l|p{6cm}|l|p{6cm}|}
+		\hline
+		\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        & \textbf{Kí hiệu} & \textbf{Ý nghĩa}                                                \\ \hline
+		\multicolumn{2}{|l|}{\textit{Các loại thay đổi của lớp}}                   & \multicolumn{2}{l|}{\textit{Các loại thay đổi của phương thức}}                    \\ \hline
+		AC               & Thêm lớp mới                                            & AM               & Thêm phương thức mới                                            \\ \hline
+		DC               & Xóa lớp                                                 & DM               & Xóa phương thức                                                 \\ \hline
+		CNC              & Đổi tên lớp                                             & CNM              & Đổi tên phương thức                                             \\ \hline
+		IAC              & Mở rộng mức truy cập của lớp                            & IAM              & Mở rộng mức truy cập của phương thức                            \\ \hline
+		DAC              & Thu hẹp mức truy cập của lớp                            & DAM              & Thu hẹp mức truy cập của phương thức                            \\ \hline
+		AFC              & Thêm từ khóa \textit{final} cho lớp    & AFM              & Thêm từ khóa \textit{final} cho phương thức    \\ \hline
+		DFC              & Xóa từ khóa \textit{final} của lớp     & DFM              & Xóa từ khóa \textit{final} của phương thức     \\ \hline
+		ASC              & Thêm từ khóa \textit{static} cho lớp   & ASM              & Thêm từ khóa \textit{static} cho phương thức   \\ \hline
+		DSC              & Xóa từ khóa \textit{static} của lớp    & DSM              & Xóa từ khóa \textit{static} của phương thức    \\ \hline
+		AAbC             & Thêm từ khóa \textit{abstract} cho lớp & AAbM             & Thêm từ khóa \textit{abstract} cho phương thức \\ \hline
+		DAbC             & Xóa từ khóa \textit{abstract} của lớp  & DAbM             & Xóa từ khóa \textit{abstract} của phương thức  \\ \hline
+		APC              & Thêm lớp cha                                            & CM               & Thay đổi nội dung thân phương thức                              \\ \hline
+		DPC              & Xóa lớp cha                                             & CRM              & Thay đổi kiểu trả về của phương thức                            \\ \hline
+		CPC              & Thay đổi lớp cha                                        & CPM              & Thay đổi danh sách tham số của phương thức                      \\ \hline
+	\end{tabular}
 \end{table}
-
-Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần xây dựng cây cấu trúc cho tệp của phiên bản mới. Công việc so sánh để xác định các thay đổi sẽ được thực hiện trên cây cấu trúc này và cây cấu trúc của phiên bản trước. Đối với mã nguồn Java, vì thành phần lớp chứa các thành phần phương thức và thuộc tính nên ta sẽ thực hiện so sánh từ các nút đại diện cho lớp trước tiên. Các bước so sánh và xác định thay đổi cho lớp Java được mô tả như Thuật toán \ref{algo:class-change}.
 
 \begin{thuattoan}
 	\label{algo:class-change}
@@ -495,25 +547,23 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 	$C_{t1}$ = tất cả lớp trong $F_{t1}$\;
 	$C_{t2}$ = tất cả lớp trong $F_{t2}$\;
 	CS = $\emptyset$\;
-	\ForEach{$c_1 \in C_{t1}$}{
-		\ForEach{$c_2 \in C_{t2}$}{
-			\If{$c_1.name = c_2.name$}{
-				$CS = CS \cup compareFinalModifier(c_1, c_2)$\;
-				$CS = CS \cup compareVisibilityModifier(c_1, c_2)$\;
-				$CS = CS \cup compareStaticModifier(c_1, c_2)$\;
-				$CS = CS \cup compareAbstractModifier(c_1, c_2)$\;
-				\If{$c_1.parent = null \wedge c_2.parent \neq null$} {
-					$CS = CS \cup (c_1, APC)$\;
-				}\ElseIf{$c_1.parent \neq null \wedge c_2.parent = null$}{
-					$CS = CS \cup (c_1, DPC)$\;
-				}\ElseIf{$c_1.parent \neq null \wedge c_1.parent \neq c_2.parent$}{
-					$CS = CS \cup (c_1, CPC)$\;
-				}
-				$CS = CS \cup FieldChange(c_1, c_2)$\;
-				$CS = CS \cup MethodChange(c_1, c_2)$\;
-				$C_{t1} = C_{t1} \setminus \{c_1\}$\;
-				$C_{t2} = C_{t2} \setminus \{c_2\}$\;
+	\ForEach{$c_1 \in C_{t1}, c_2 \in C_{t2}$}{
+		\If{$c_1.name = c_2.name$}{
+			$CS = CS \cup compareFinalModifier(c_1, c_2)$\;
+			$CS = CS \cup compareVisibilityModifier(c_1, c_2)$\;
+			$CS = CS \cup compareStaticModifier(c_1, c_2)$\;
+			$CS = CS \cup compareAbstractModifier(c_1, c_2)$\;
+			\If{$c_1.parent = null \wedge c_2.parent \neq null$} {
+				$CS = CS \cup (c_1, APC)$\;
+			}\ElseIf{$c_1.parent \neq null \wedge c_2.parent = null$}{
+				$CS = CS \cup (c_1, DPC)$\;
+			}\ElseIf{$c_1.parent \neq null \wedge c_1.parent \neq c_2.parent$}{
+				$CS = CS \cup (c_1, CPC)$\;
 			}
+			$CS = CS \cup FieldChange(c_1, c_2)$\;
+			$CS = CS \cup MethodChange(c_1, c_2)$\;
+			$C_{t1} = C_{t1} \setminus \{c_1\}$\;
+			$C_{t2} = C_{t2} \setminus \{c_2\}$\;
 		}
 	}
 	\ForEach{$c_1 \in C_{t1}$}{
@@ -524,6 +574,8 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 	}
 	\Return $CS$\;
 \end{thuattoan}
+
+Để so phát hiện sự thay đổi của các lớp Java, các bước thực hiện như Thuật toán \ref{algo:class-change}. Đầu tiên, ta cần thu thập tất cả danh sách các lớp này của tệp thay đổi (từ $F_{t1}$ thành $F_{t2}$). Duyệt lần lượt các phần tử trong danh sách lớp ở phiên bản $t1$ từng đôi một với các phần tử ở phiên bản $t_2$. Đối với những cặp phần tử nào có tên lớp giống nhau, ta thực hiện so sánh các thuộc tính của chúng bao gồm: từ khóa $final$, từ khóa $static$, từ khóa $abstract$ và mức truy cập của lớp. Ngoài ra ta cũng cần so sánh về khai báo lớp cha của các phần tử. Nếu ở phiên bản $t1$ phần tử chưa có lớp cha mà phiên bản $t2$ có thì đây là kiểu thay đổi \textbf{APC} và ngược lại ở phiên bản $t1$ có nhưng $t2$ không có thì là \textbf{DPC}. Còn nếu trong trường hợp cả hai phiên bản đều có lớp cha nhưng tên của lớp cha này là khác nhau thì đây là kiểu thay đổi \textbf{CPC}. Ở những phần tử có tên giống nhau, ta cũng thực hiện gọi các phương thức để so sánh các thuộc tính và phương thức của chúng $FieldChange()$, $MethodChange()$ để tìm ra những thay đổi ở các thành còn của phần tử này. Sau khi duyệt xong, những phần tử thuộc danh sách phiên bản $t1$ là các phần đã bị xóa đi cho nên kiểu thay đổi là \textbf{DC}, các phần tử thuộc danh sách phiên bản $t2$ tương tự là những phần tử mới có kiểu thay đổi là \textbf{AC}.
 
 \begin{thuattoan}
 	\label{algo:field-change}
@@ -536,18 +588,16 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 	$F_{t1}$ = tất cả thuộc tính trong $C_{t1}$\;
 	$F_{t2}$ = tất cả thuộc tính trong $C_{t2}$\;
 	CS = $\emptyset$\;
-	\ForEach{$f_1 \in F_{t1}$}{
-		\ForEach{$f_2 \in F_{t2}$}{
-			\If{$f_1.name = f_2.name$}{
-				$CS = CS \cup compareFinalModifier(f_1, f_2)$\;
-				$CS = CS \cup compareVisibilityModifier(f_1, f_2)$\;
-				$CS = CS \cup compareStaticModifier(f_1, f_2)$\;
-				\If{$f_1.type \neq f_2.type$} {
-					$CS = CS \cup (f_1, CSF)$\;
-				}
-				$F_{t1} = F_{t1} \setminus \{f_1\}$\;
-				$F_{t2} = F_{t2} \setminus \{f_2\}$\;
+	\ForEach{$f_1 \in F_{t1}, f_2 \in F_{t2}$}{
+		\If{$f_1.name = f_2.name$}{
+			$CS = CS \cup compareFinalModifier(f_1, f_2)$\;
+			$CS = CS \cup compareVisibilityModifier(f_1, f_2)$\;
+			$CS = CS \cup compareStaticModifier(f_1, f_2)$\;
+			\If{$f_1.type \neq f_2.type$} {
+				$CS = CS \cup (f_1, CSF)$\;
 			}
+			$F_{t1} = F_{t1} \setminus \{f_1\}$\;
+			$F_{t2} = F_{t2} \setminus \{f_2\}$\;
 		}
 	}
 	\ForEach{$f_1 \in F_{t1}$}{
@@ -570,25 +620,23 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 	$M_{t1}$ = tất cả phương thức trong $C_{t1}$\;
 	$M_{t2}$ = tất cả phương thức trong $C_{t2}$\;
 	CS = $\emptyset$\;
-	\ForEach{$m_1 \in M_{t1}$}{
-		\ForEach{$m_2 \in M_{t2}$}{
-			\If{$m_1.name = m_2.name$}{
-				$CS = CS \cup compareFinalModifier(m_1, m_2)$\;
-				$CS = CS \cup compareVisibilityModifier(m_1, m_2)$\;
-				$CS = CS \cup compareStaticModifier(m_1, m_2)$\;
-				$CS = CS \cup compareAbstractModifier(m_1, m_2)$\;
-				\If{$m_1.returnType \neq m_2.returnType$} {
-					$CS = CS \cup (m_1, CRM)$\;
-				}
-				\If{$m_1.body \neq m_2.body$} {
-					$CS = CS \cup (m_1, CM)$\;
-				}
-				\If{$m_1.param \neq m_2.param$} {
-					$CS = CS \cup (m_1, CPM)$\;
-				}			
-				$M_{t1} = M_{t1} \setminus \{m_1\}$\;
-				$M_{t2} = M_{t2} \setminus \{m_2\}$\;
+	\ForEach{$m_1 \in M_{t1}, m_2 \in M_{t2}$}{
+		\If{$m_1.name = m_2.name$}{
+			$CS = CS \cup compareFinalModifier(m_1, m_2)$\;
+			$CS = CS \cup compareVisibilityModifier(m_1, m_2)$\;
+			$CS = CS \cup compareStaticModifier(m_1, m_2)$\;
+			$CS = CS \cup compareAbstractModifier(m_1, m_2)$\;
+			\If{$m_1.returnType \neq m_2.returnType$} {
+				$CS = CS \cup (m_1, CRM)$\;
 			}
+			\If{$m_1.body \neq m_2.body$} {
+				$CS = CS \cup (m_1, CM)$\;
+			}
+			\If{$m_1.param \neq m_2.param$} {
+				$CS = CS \cup (m_1, CPM)$\;
+			}			
+			$M_{t1} = M_{t1} \setminus \{m_1\}$\;
+			$M_{t2} = M_{t2} \setminus \{m_2\}$\;
 		}
 	}
 	\ForEach{$m_1 \in M_{t1}$}{
@@ -600,105 +648,15 @@ Sau khi xác định được các tệp có mã nguồn thay đổi, ta cần x
 	\Return $CS$\;
 \end{thuattoan}
 
-\chapter{Phân tích ảnh hưởng sự thay đổi}
+Đối với phát hiện thay đổi cho thuộc tính và phương thức Java, các làm cũng tương tự so với lớp tuy nhiên sẽ đơn giản hơn như Thuật toán \ref{algo:field-change} và \ref{algo:method-change}. Đối với thuộc tính ta chỉ cần so sánh cho từ khóa $final$, $static$ còn phương thức thì thêm cả từ khóa $abstract$. Ngoài ra đối với thuộc tính ta cũng cần so sánh kiểu của nó để xác định loại thay đổi (\textbf{CSF}). Đối với phương thức, để tìm ra các loại thay đổi khác, ta cần so sánh kiểu trả về (\textbf{CRM}), thân phương thức (\textbf{DM}), danh sách tham số (\textbf{CPM}).
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.5]{wave-cia-phenomenon}
-	\label{wave-cia-phenomenon}
-	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi}
-\end{figure}
-
-Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước, được mô tả như Hình \ref{wave-cia-phenomenon}. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
-
-Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.
-
-\section{Xây dựng đồ thị gọi}
-Đồ thị gọi là một đồ thị có hướng $G = (V, E)$. $V$ là tập các đỉnh tương ứng với các nút trong cây cấu trúc (lớp, phương thức, thuộc tính Java; phần tử XML; tệp JSP, HTML), và $E \subseteq V \times V$ là tập các cạnh biểu diễn cho các mối quan hệ phụ thuộc giữa các nút này.
-
-Để xây dựng được đồ thị gọi cho phương pháp CIA, ta chỉ cần chuyển đổi từ cây cấu trúc. Các bước để thực hiện được trình bày ở Thuật toán \ref{algo:build-call-graph}.
-
-\begin{thuattoan}
-\label{algo:build-call-graph}
-\caption{Xây dựng đồ thị gọi từ cây cấu trúc}
-\SetKwInOut{Input}{Input}
-\SetKwInOut{Output}{Output}
-\SetKwInOut{Use}{Use}
-\Input{$T = (N, R)$ là cây cấu trúc của ứng dụng}
-\Output{$G = (V, E)$ là đồ thị gọi của ứng dụng}
-\Use{$getCallees(n)$ là các nút được gọi hoặc sử dụng bởi $n$}
- V = $\emptyset$, E = $\emptyset$\;
- \ForEach{$n \in N$}{
-  $V = V \cup \{n\}$\; 
-  \ForEach{$ne \in getCallees(n)$} {$E = E \cup (n, ne)$\;}
-  } 
-  \Return V\;
-\end{thuattoan}
-
-\section{Xác định tập cốt lõi}
-Như đã nói ở trên, hầu hết các phương pháp CIA hiện nay tính toán tập ảnh hưởng mà không quan tâm đến mối quan hệ của các phần tử trong tập thay đổi. Trong thực tế, luôn có mối quan hệ giữa các phần tử trong tập thay đổi. Chúng ta sẽ sử dụng hiện tượng này trong việc ước tính tập ảnh hưởng. Đầu tiên ta cần tìm tập cốt lõi, nó là tập gồm các thành phần thường bị ảnh hưởng bởi nhiều phần tử trong tập thay đổi nhất. Việc tính toán tập cốt lõi được thực hiện bằng việc khai thác thông tin từ đồ thị gọi, các bước thực hiện như Thuật toán \ref{algo:cal-core-set}.
-
-\begin{thuattoan}
-\label{algo:cal-core-set}
-\caption{Xác định tập cốt lõi}
-\SetKwInOut{Input}{Input}
-\SetKwInOut{Output}{Output}
-\SetKwInOut{Use}{Use}
-\Input{
-	$G = (V, E)$ là đồ thị gọi của ứng dụng\\
-	$CS$ gồm những phần tử của tệp thay đổi\\
-	$depth$ là độ sâu tìm kiếm
-}
-\Output{$Core$ là tập cốt lõi}
-\Use{$getNeighborSet(m, depth)$ là tập các đỉnh có quan hệ với đỉnh $m$ với khoảng cách $depth$}
-
- $tempSet = \emptyset$\;
- \ForEach{$v \in V$}{
-  $neighborSet = getNeighborSet(m, depth)$\;
-  $neighborCSSet = neighborSet \cap CS$\;
-  \If{$|neighborSet| > 1$} {$tempSet = tempSet \cup \{m\}$}
- }
- $Core = CS \cup tempSet$\;
- \Return $Core$\;
-\end{thuattoan}
-
-Các phần tử trong tập cốt lõi được định nghĩa là các đỉnh \textit{láng giềng} với nhiều hơn một phần tử trong tập thay đổi. \textit{Láng giềng} tức là có quan hệ phụ thuộc giữa hai đỉnh trên đồ thị gọi nhỏ hơn một khoảng cách $depth$ cho trước. Khoảng cách $depth$ sẽ thay đổi với từng bài toán để cân bằng giữa độ chính xác và độ hồi tưởng của phương pháp để phù với từng loại yêu cầu cụ thể (ví dụ: cần độ chính xác cao thay vì quan tâm đến độ hồi tưởng cao).
-
-\section{Tính toán tập ảnh hưởng}
-Mặc dù tập cốt lõi có thể cho kết quả có độ chính xác tốt nhờ vào điều chỉnh $depth$, tuy vẫn có những phần tử bị dự đoán ảnh hưởng thiếu (thực tế phần tử đó bị ảnh hưởng nhưng không xuất hiện trong tập cốt lõi). Do vậy ta cần tính toán để tìm thêm các phần tử còn sót này, ta sẽ mở rộng tập cốt lõi để xây dựng tập ảnh hưởng cuối cùng (Final Impact Set - FIS) nhằm tăng độ hồi tưởng cho phương pháp. Phương pháp tính toán FIS được thể hiện như Thuật toán \ref{algo:cal-fis}.
-
-\begin{thuattoan}
-\label{algo:cal-fis}
-\caption{Tính toán tập ảnh hưởng cuối cùng}
-\SetKwInOut{Input}{Input}
-\SetKwInOut{Output}{Output}
-\SetKwInOut{Use}{Use}
-\Input{
-	$G = (V, E)$ là đồ thị gọi của ứng dụng\\
-	$Core$ là tập cốt lõi\\
-}
-\Output{$FIS$ là tập ảnh hưởng}
-\Use{$getCallerSet(m, depth)$ là tập các đỉnh gọi hoặc sử dụng $m$ trong khoảng cách $depth$\\
-$getCalleeSet(m, depth)$ là tập các đỉnh được gọi hoặc sử dụng bởi $m$ trong khoảng cách $depth$\\}
-
-
- $FIS = Core$\;
- \While{$FIS$ có số lượng phần tử không ổn định} {
-  \ForEach{$v \in V$}{
-   \If{$m \notin FIS$}{
-    $callerSet = getCallerSet(v)$\;
-    $calleeSet = getCalleeSet(v)$\;
-    \If{$FIS \cap callerSet \neq \emptyset \wedge FIS \cap calleeSet \neq \emptyset$}{
-     $FIS = FIS \cup \{v\}$
-    }
-   }
-  }
- }
-
- \Return $FIS$\;
-\end{thuattoan}
-
-Một phần tử $v$ sẽ được thêm vào tập ảnh hưởng nếu $v$ thỏa mãn điều kiện khi $v$ được gọi hoặc sử dụng bởi $v_1$ và $v_2$, hoặc ngượi lại $v_1$ và $v_2$ gọi hoặc sử dụng $v$; trong khi $v_1$ và $v_2$ là hai phần tử thuộc tập cốt lõi. Sau khi duyệt tất cả các phần tử, tập ảnh hưởng có thể được sử dụng tiếp như tập cốt lõi để tiếp tục mở rộng tập ảnh hưởng nếu nó chưa đủ tốt để tăng độ phủ cho phương pháp. Thuật toán có thể dừng lại khi kích thước tập ảnh hưởng đạt mức ổn định.
 \chapter{Thực nghiệm và triển khai}
+\section{Công cụ cài đặt}
+Dựa trên những đề xuất phương pháp mới đã đề xuất trên đây. Bộ công cụ JCIA-VT, thừa kế mã nguồn từ JCIA, đã được triển khai và cài đặt sử dụng framework Spring trên nền tảng ứng dụng Web. Bộ công cụ này nhận đầu vào là toàn bộ mã nguồn dự án doanh nghiệp sử dụng các nền tảng và công nghệ J2EE dưới dạng tệp nén.
+
+JCIA-VT gồm năm mô-đun chính: bộ xử lý cơ sở, bộ phân tích ảnh hưởng thay đổi, bộ phân tích cấu trúc, bộ trình diễn, bộ quản lý người dùng và lịch sử phân tích; chúng được thể hiện như Hình 3-1. Mô-đun xử lý cơ sở bao gồm hai thành phần con là bộ tiền xử lý mã nguồn và bộ phân tích phụ thuộc theo từng công nghệ để sinh cây cấu trúc và phụ thuộc cho các nút trên cây.
+
+Trong bộ tiền xử lý, mã nguồn Java ban đầu được phân tích nhờ thư viện Java Development Tools (JDT)  hỗ trợ tới chuẩn JavaSE phiên bản 8; đối với mã nguồn XML, hai công cụ DOMParser và SAXParser của thư viện Java được sử dụng đồng thời để có được dữ liệu các thẻ XML theo cấu trúc cấp bậc cũng như tọa độ (số hàng, số cột) của từng thẻ để phục vụ cho yêu cầu định danh và tìm kiếm nút. Bộ phân tích ảnh hưởng thay đổi kế thừa từ công cụ JCIA, sử dụng và cải tiến kĩ thuật phân tích ảnh hưởng WAVE-CIA đã có; một bộ so sánh cũng được cài đặt để thực hiện nhiệm vụ so sánh hai phiên bản mã nguồn (trước và sau thay đổi) nhằm tìm ra các phần tử thay đổi kèm kiểu thay đổi của chúng để đưa vào thuật toán CIA. Mô-đun phân tích cấu trúc bao gồm năm chức năng nhiệm vụ chính là: phân tích kiến trúc công nghệ, xây dựng dòng dữ liệu, phân tích độ phức tạp của mã nguồn, dựng sơ đồ lớp và phân tích cơ sở dữ liệu. Phân tích kiến trúc công nghệ giúp người dùng nắm được công nghệ sử dụng tại dự án đầu vào, sự liên kết giữa các công nghệ giữa các tầng với nhau. Ví dụ: tại tầng liên kết cơ sở dữ liệu dự án sử dụng framework Hibernate kết nối tới hệ quản trị cơ sở dữ liệu MySQL tại tầng cơ sở dữ liệu. Bộ xây dựng dòng dữ liệu phân tích đường đi của dữ liệu từ thành phần này qua thành phần khác của dự án, cụ thể là từ thành phần giao diện đến các thành phần điều khiển và cuối cùng là cơ sở dữ liệu và ngược lại. Điều này cho phép người dùng hình dung được đường đi của dữ liệu trong dự án, giúp người quản lí có thể kiểm tra đối chiếu với bộ quy tắc lập trình, chia tầng ứng dụng của công ty. Bộ tính toán độ phức tạp của mã nguồn triển khai tính toán độ phức tạp của các lớp trong mã nguồn đầu vào dựa trên nhiều tiêu chí khác nhau. Từ đó, người dùng có thêm một góc nhìn đánh giá chất lượng mã nguồn nhằm đảm bảo về khả năng vận hành cũng như bảo trì, nâng cấp về giai đoạn sau của dự án. Bộ xây dựng sơ đồ lớp xây dựng sơ đồ lớp trong một gói và sơ đồ lớp của một lớp tùy thuộc vào mức độ mà người dùng kích hoạt từ giao diện. Sơ đồ lớp được xây dựng và hiển thị đúng theo chuẩn UML 2.0 giúp người dùng thấy được mối quan hệ giữa các lớp trong ứng dụng. Công cụ phân tích cơ sở dữ liệu thực hiện phân tích dựng lên cấu trúc cơ sở dữ liệu và phân tích phát hiện các thành phần tương tác với cơ sở dữ liệu. Công cụ này cho người dùng cái nhìn tổng quan về thiết kế cơ sở dữ liệu của dự án, phát hiện dòng dữ liệu đến cơ sở dữ liệu giúp hoàn thiện bộ phân tích dòng dữ liệu đã nêu trên. Vì là ứng dụng nền tảng Web, mô-đun trình diễn được phát triển với thư viện D3.js  kèm các API để hiển thị thông tin phân tích trực quan tới người dùng và giúp thực hiện các thao tác với hệ thống phía sau. Cuối cùng, với nhu cầu thực hiện phân tích nhiều mã nguồn cùng lúc, mô-đun quản lý người dùng và lịch sử phân tích cho phép nhiều người dùng sử dụng bộ công cụ cùng lúc và cho phép khôi phục lịch sử của các đợt phân tích từ trước.
 \chapter{Kết luận}
+Nghiên cứu này đã đề xuất các phương pháp và bộ công cụ phục vụ cho các hoạt động đảm bảo chất lượng mã nguồn các ứng dụng doanh nghiệp trên nền tảng và công nghệ J2EE. Ở giai đoạn này, chúng tôi đã hoàn thành cơ bản các chức năng chính của bộ công cụ nhằm đáp ứng cho việc phân tích mã nguồn các ứng dụng sử dụng Struts 2 và Hibernate. Dựa trên những gì đã thực hiện được, trong giai đoạn tiếp theo, sẽ có thêm nhiều phụ thuộc được thêm vào để xử lý giúp bộ phân tích ảnh hưởng dự đoán tập ảnh hưởng chính xác hơn. Bộ quản lý vào so sánh các phiên bản mã nguồn sẽ được tích hợp với các hệ thống quản lý phiên bản hiện nay như Git  và SVN . Điều này giúp cho việc thực hiện phân tích ảnh hưởng và báo cáo kết quả hoàn toàn tự động mà không cần đến các thao tác của con người. Đây cũng là một lợi thế để áp dụng các kĩ thuật CIA có tính chính xác cao hơn như kĩ thuật CIA dựa vào phân loại thay đổi bởi bộ so sánh phiên bản có thể xác định chính xác từng loại thay đổi trên các thành phần mã nguồn. Đối với các kiểm thử viên, chức năng phân tích ảnh hưởng có thể giúp họ chỉ cần thực hiện một số ca kiểm thử nhất định khi có đội phát triển thay đổi mã nguồn. Tuy nhiên, hiện nay hầu hết các ca kiểm thử được thực hiện dựa trên các tài liệu biên bản kiểm thử mà chúng mô tả các bước kiểm thử bằng tay trên giao diện ứng dụng chứ không phải tự động bằng Unit Test. Trong khi đó kết quả của bộ phân tích ảnh hưởng là các thành phần mã nguồn, do đó một bộ ánh xạ giữa thành phần mã nguồn và các màn hình hoặc chức năng ứng dụng cần được tích hợp để bộ công cụ này thực sự có ích và có thể ứng dụng đại trà vào quá trình đảm bảo chất lượng cho nền công nghiệp phát triển phần mềm ở các công ty hiện nay. Ngoài ra, cần có thêm nhiều góc nhìn về ứng dụng cần được tích hợp để người sử dụng thêm nhiều thông tin cho ứng dụng của mình như biểu đồ tuần tự giữa các package, biểu đồ dòng điều khiển và các công cụ đánh giá về độ phức tạp mã nguồn và bảo mật của ứng dụng, v.v. Bộ công cụ sẽ hỗ trợ cho thêm nhiều công nghệ và nền tảng khác của Java, và xa hơn nữa, nhóm sẽ nghiên cứu để bộ công cụ có thể phân tích cho các ngôn ngữ khác như C, PHP, Javascript.
 \end{document}
