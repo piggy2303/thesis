@@ -330,7 +330,7 @@ public class BookManager {
 }
 \end{lstlisting}
 
-Ví dụ như ở Mã nguồn \ref{code:java-overloading} thể hiện sự chồng hàm của phương thức \texttt{addBook()}. Nếu chỉ sử dụng tên của phương thức thì ta sẽ không định danh cho các các nút tương ứng với hai phương thức này được. Do vậy ta cần sử dụng cả thông tin về các tham số của chúng để tạo đường dẫn tuyệt đối. Bao gồm cả tên, kiểu và thứ tự của các tham số này trong phần khai báo phương thức. Kết quả ta được hai đường dẫn tuyệt đối có thể đại diện cho sự riêng biệt của các nút phương thức Java này.
+Ví dụ như ở Mã nguồn \ref{code:java-overloading} thể hiện sự chồng hàm của phương thức \texttt{addBook()}. Nếu chỉ sử dụng tên của phương thức thì ta sẽ không định danh cho các các nút tương ứng với hai phương thức này được. Do vậy ta cần sử dụng cả thông tin về các tham số của chúng để tạo đường dẫn tuyệt đối. Bao gồm cả tên, kiểu có tên xác định hoàn toàn (Fully qualified name) và thứ tự của các tham số này trong phần khai báo phương thức. Kết quả ta được hai đường dẫn tuyệt đối có thể đại diện cho sự riêng biệt của các nút phương thức Java này.
 
 \begin{verbatim}
 vn/sample/manager/BookManager.java/BookManager/
@@ -351,6 +351,16 @@ caption={Ví dụ mã nguồn HTML},label={code:html-example}]
 	</body>
 </html>
 \end{lstlisting}
+
+\subsection{Xác định tên xác định hoàn toàn cho kiểu Java}
+Với yêu cầu tham số có kiểu xác định hoàn toàn phụ vụ cho việc định danh cho phương thức Java, ta cần phải thực hiện xử lý qua một số bước như sơ đồ khối ở Hình \ref{fig:fqn-type}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{fqn-type}
+	\label{fig:fqn-type}
+	\caption{Xác định tên xác định hoàn toàn cho kiểu Java}
+\end{figure}
 
 \section{Phân tích phụ thuộc Struts}
 \subsection{Giới thiệu mô hình kiến trúc Struts}
@@ -373,14 +383,76 @@ Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của m�
 
 \subsection{Làm mịn cây cấu trúc}
 
-\subsection{Phân tích tệp cấu hình Struts}
-Thông thường một ứng dụng Struts sẽ có một tệp cấu hình chính có tên là \textit{struts.xml}. Tại đây, chúng ta có thể dễ dàng thu thập được các thông tin về toàn bộ các thành phần trong ứng dụng được khai báo: bao gồm các Action và View Results. Để xác định các mối quan hệ phụ thuộc giữa các thành phần Struts, tệp cấu hình chính là điểm bắt đầu để phân tích. Tệp cấu hình này đã được làm mịn ở bước tiền xử lý mã nguồn, cho ta thông tin về các Package, Action, Result, Interceptor, ResultType - những đối tượng của Struts.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{lam-min}
+	\label{fig:lam-min}
+	\caption{Làm mịn cây cấu trúc}
+\end{figure}
+
+Các nút trên cây sau khi được tiền xử lý mới chỉ mang thông tin cơ bản đặc trưng cho ngôn ngữ được tiền xử lý. Tuy nhiên, công việc phân tích phụ thuộc cần nhiều thông tin hơn nữa để xác định các quan hệ phụ thuộc. Đối với một framework, sẽ có một phương pháp riêng để trích xuất thông tin đặc trưng này. Bước thực hiện này được gọi là làm mịn cây câu trúc. Đối với Struts cũng vậy, ta cần làm mịn các nút thành phần Java và XML thành các nút đặc trưng của Struts như \textit{JavaActionModelNode, StrutsConfigurationNode, StrutsPackageNode} được minh họa ở Hình \ref{fig:lam-min}.
+
+Với yêu cầu thực hiện chuyển đổi từ một nút ban đầu trên cây sang một nút hoàn toàn mới nhưng vẫn giữ được các thuộc tính và phương thức của nút cũ, ta dùng mẫu thiết kế \textit{Decorator}. Ví dụ cho việc chuyển đổi từ nút \textit{XmlFileNode} sang nút \textit{StrutsConfiguration} được minh họa ở Mã nguồn \ref{code:decorator-dp}.
+
+\begin{lstlisting}[language=Java,
+caption={Ví dụ sử dụng mẫu thiết kế Decorator},label={code:decorator-dp}]
+public class StrutsConfigurationNode extends XmlFileNode {
+	protected XmlFileNode xmlFileNode;
+	
+	protected List<StrutsPackage> strutsPackages;
+	protected Lits<StrutsConfigurationNode> includedNodes;
+	// constructor
+	@Override
+	public String getDocument() {
+		return xmlFileNode.getDocument();
+	}
+	//...
+}
+\end{lstlisting}
+
+Lớp \textit{StrutsConfigurationNode} được thiết kế kế thừa đồng thời chứa một thực thể \textit{XmlFileNode}, nó cho phép tái sử dụng lại thông tin nút \textit{XmlFileNode} trước đó (ví dụ: phương thức \textit{getDocument()}). Ngoài ra nó cũng phép định nghĩa thêm các thuộc tính và phương thức mới như \textit{strutsPackages}, \textit{includedNodes}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{lam-min-process}
+	\label{fig:lam-min-process}
+	\caption{Quá trình làm mịn các nút thành phần Struts}
+\end{figure}
+
+Hình \ref{fig:lam-min-process} biểu diễn quá trình làm mịn cho các thành phần Struts từ khi là một nút \textit{XmlFileNode} đến khi trở thành nút \textit{StrutsConfigurationNode}. \textit{struts.xml} là tệp cấu hình cho framework Struts trong một ứng dụng J2EE có sử dụng Struts. Để tránh sự phức tạp cho tệp này và để dễ quản lý các thành phần cấu hình theo từng chức năng, Struts cho phép chúng ta khai báo nhiều tệp cấu hình tuy chúng cần được khai báo trong \textit{struts.xml} thì framework mới sử dụng các cấu hình được định nghĩa trong chúng. Muốn thu thập tất cả thông tin cấu hình, ta cần thu thập và phân tích tất cả tệp cấu hình này. Sau đấy, ta sẽ thu thập toàn bộ thông tin về các thành phần cấu hình của Struts như \textit{Result Type, Interceptor, Result, Action} và \textit{Package}. Do các thông tin cấu hình được chia nhỏ ra ở nhiều tệp, nên có thể một thông tin cấu hình có thể được định nghĩa ở nhiều tệp (ví dụ: một \textit{Package} có thể được định nghĩa ở nhiều tệp). Những thông tin này cần được tổng hợp lại và loại bỏ những trùng lặp hoặc ghi đè ở bước tổng hợp thông tin. Cuối quá trình làm mịn này, ta sẽ thu được một nút \textit{StrutsConfiguration}, từ nó ta có thể có mọi thông tin cấu hình Struts của ứng dụng.
+
+\subsection{Xác định quan hệ phụ thuộc các thành phần Struts}
+Sau khi đã thực hiện làm mịn và thu được nút chứa toàn bộ thông tin cấu hình, việc xác các quan hệ phụ thuộc Struts (giữa mã nguồn ở ba phần Model, View và Controller) sẽ dựa trên duyệt các thành phần cấu hình. Quá trình xác định phụ thuộc này được biểu diễn ở Hình \ref{fig:struts-analyzer}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.55]{struts-analyzer}
+	\label{fig:struts-analyzer}
+	\caption{Xác định các quan hệ phụ thuộc Struts}
+\end{figure}
+
+Đầu tiên, thực hiện xác định quan hệ phụ thuộc cho các thành phần \textit{Result Type} và \textit{Interceptor} bởi chúng chỉ có duy nhất một mối quan hệ phụ thuộc với Model xử lý nghiệp vụ phía sau. Tiếp theo, thực hiện phân tích cho các thành phần \textit{Interceptor Stack}, \textit{Result} bởi chúng sử dụng các thành phần \textit{Result Type, Interceptor}. Ngoài ra \textit{Result} còn có mối quan hệ phụ thuộc với các tệp \textit{.jsp} ở phần View. Trong một số trường hợp khác, ứng dụng có thể sử dụng plugin Tiles \footnote{https://tiles.apache.org} nhằm thiết kế layout cho các tệp \textit{.jsp}. Lúc đấy, ta không thể xác định quan hệ phụ thuộc trực tiếp từ \textit{Result} sang phần View mà phải thông qua các thành phần cấu hình của Tiles. Tiếp đến, các \textit{Action} được phân tích bởi nó sử dụng \textit{Interceptor Stack, Interceptor} và là thành phần cha của \textit{Result}. Nó cũng có mối quan phụ thuộc đến thành phần mã nguồn Java để xử lý phía sau. Sau khi đã xác định được toàn bộ các quan hệ phụ thuộc của phần Controller (các thành phần cấu hình) tới phần Model và View, ta sẽ sử dụng chúng để phân tích phụ thuộc cho phần View. Cụ thể là truy vết theo các quan hệ phụ thuộc của một bộ Controller - Model - View để xác định các quan hệ sử dụng dữ liệu từ View đến Model tương ứng của nó.
+
+\subsection{Ví dụ minh họa}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.53]{struts-analyzer-sample}
+	\label{fig:struts-analyzer-sample}
+	\caption{Ví dụ minh họa xác định các quan hệ phụ thuộc Struts}
+\end{figure}
+
+Để hiểu rõ về quá trình phân tích và xác định phụ thuộc cho các thành phần Struts, một ví dụ minh họa đơn giản sẽ được trình bày như ở Hình \ref{fig:struts-analyzer-sample}.
+
+Đầu tiên, đối với thành phần cấu hình \textit{Action} có tên \textbf{AddBookAction}, ta thu được một quan hệ phụ thuộc từ nó đến lớp Java \textbf{vn.sample.action.AddBookAction}. Tiếp theo đó, tiếp tục phân tích cho hai thành phần cấu hình \textit{Result} có tên là \textbf{success} và \textbf{error} thu được hai phụ thuộc từ chúng ra phần View là hai tệp \textbf{/addbook-success.jsp} và \textbf{/addbook-error.jsp}.
+
+Lúc này, ta đã thu thập được toàn bộ các quan hệ phụ thuộc cấu hình của Struts. Khi phân tích tệp \textbf{/addbook-success.jsp}, ta thấy nó có sử dụng một thuộc tính có tên \textbf{bookName}. Câu hỏi đặt ra là thuộc tính được sử dụng này được định nghĩa ở thành phần nào. Ta sẽ phải truy vết phụ thuộc từ chính tệp \textit{.jsp} này xem nó được sử dụng bởi \textit{Action} nào, từ đó tìm ra phần mã nguồn Model tương ứng để xác định quan hệ phụ thuộc sử dụng thuộc tính của Model. Như ở ví dụ trên, ta có thể thấy \textbf{/addbook-success.jsp} được sử dụng bởi \textbf{AddBookAction}, có Model tương ứng là \textbf{vn.sample.action.AddBookAction}. Từ đấy ta xác định quan hệ phụ thuộc sử dụng dữ liệu từ thẻ \textbf{<s:property>} để thuộc tính \textbf{bookName} của lớp Java \textbf{vn.sample.action.AddBookAction}.
 
 \section{Phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.5]{wave-cia-phenomenon}
+	\includegraphics[scale=0.45]{wave-cia-phenomenon}
 	\label{wave-cia-phenomenon}
 	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi}
 \end{figure}
