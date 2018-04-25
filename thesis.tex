@@ -766,6 +766,64 @@ Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm l
 Đối với phát hiện thay đổi cho thuộc tính và phương thức Java, các làm cũng tương tự so với lớp tuy nhiên sẽ đơn giản hơn như Thuật toán \ref{algo:field-change} và \ref{algo:method-change}. Đối với thuộc tính ta chỉ cần so sánh cho từ khóa $final$, $static$ còn phương thức thì thêm cả từ khóa $abstract$. Ngoài ra đối với thuộc tính ta cũng cần so sánh kiểu của nó để xác định loại thay đổi (\textbf{CSF}). Đối với phương thức, để tìm ra các loại thay đổi khác, ta cần so sánh kiểu trả về (\textbf{CRM}), thân phương thức (\textbf{DM}), danh sách tham số (\textbf{CPM}).
 
 \chapter{Thực nghiệm và triển khai}
+Ở chương này, báo cáo sẽ trình về quá trình thực nghiệm và triển khai với các thư viện hỗ trợ tiền xử lý mã nguồn như Java Development Tools \footnote{https://www.eclipse.org/jdt} hay DOMParser và SAXParser. Thêm vào đó công cụ phát triển cũng được mô tả chi tiết triển khai cho các phương pháp đã nêu ở các chương trước.
+
+\section{Giới thiệu về Java Development Tools}
+Các công cụ phát triển Java (Java Developement Tools - JDT) là một tập các plug-in giúp nền tảng Eclipse trở thành một trình phát triển tích hợp đầy đủ chức năng cho ngôn ngữ Java. Nó được phát triển và bảo trì bởi tổ chức Eclipse và là thành phần mặc định trong Eclipse IDE cho ngôn ngữ Java. Tuy nhiên, những plug-in của JDT này cũng cung cấp các API do vậy chúng ta hoàn toàn có thể sử dụng chúng để hỗ trợ phát triển các công cụ khác của riêng mình.
+\subsection{Các thành phần của Java Development Tools}
+Các plug-in của JDT có thể chia thành năm loại, chúng đều hỗ trợ trong việc phát triển các ứng dụng Java. Bao gồm JDT APT hỗ trợ cho việc xử lý Annotation, được phát triển để hỗ trợ từ Java phiên bản 5; JDT Debug thực hiện các hỗ trợ trong việc gỡ rỗi; JDT Text cung cấp các hỗ trợ cho trình soạn thảo mã nguồn Java như làm nổi bật từ khóa và cú pháp, hỗ soạn thảo và hoàn thiện mã nguồn (code assist và code complete); JDT UI cung cấp một số giao diện hỗ trợ như trình duyệt gói, trình xem hệ thống cấp bậc cho một kiểu, trình xem phác thảo cho một tệp; JDT Core là trái tim của JDT, chứa các phần cài đặt cốt lõi và quan trọng. Nó bao gồm:
+\begin{itemize}
+	\item Một trình biên dịch Java. Được cài đặt như là trình xây dựng Eclipse, nó được phát triển dựa trên công nghệ của trình biên dịch VisualAge. Đặc biệt nó còn cho phép chạy và gỡ rỗi mã nguồn vẫn còn có lỗi.
+	\item Một mô hình Java (Java Model) cung cấp API để tạo và duyệt cây thành phần Java. Nó hiển thị toàn bộ thông tin của các thành phần như các gói, đơn vị biên dịch, lớp nhị phân, các kiểu, phương thức và thuộc tính.
+	\item Một mô hình tài liệu Java (Java Document Model) cung cấp API để thao tác với một tài liệu mã nguồn Java có cấu trúc.
+	\item Một hệ thống tìm kiếm dựa trên đánh chỉ mục, nó được sử dụng cho việc tìm kiếm, hỗ trợ viết mã, tính toán cây phân cấp của kiểu và tái cấu trúc mã nguồn. Bộ máy tìm kiếm Java có thể tìm chính xác trong cả mã nguồn thô lẫn các tệp nhị phân đã được biên dịch.
+\end{itemize}
+
+JDT Core không có phụ thuộc với các phiên bản JDK (ví dụ: JDT Core phiên bản 8 yêu cầu chạy trên môi trường JDK 8), nó cũng không phụ thuộc và bất cứ một nền tảng giao diện Java nào (ví dụ: Swing hoặc JavaFX) do vậy nó hoàn toàn có thể được chạy bất cứ đâu.
+
+\subsection{Sử dụng JDT Core hỗ trợ xử lý mã nguồn Java}
+JDT Core chính là thành phần ta cần sử dụng để hỗ trợ trong việc tiền xử lý mã nguồn Java. Thực vậy, đầu tiên ta sẽ sử dụng Java Model để tạo cây cấu trúc trừu tượng cho một tệp tương ứng với một đơn vị biên dịch.
+\begin{lstlisting}[language=Java,
+caption={Sử dụng API của JDT Core để tạo cây cấu trúc trừu tượng},label={code:jdt-ast-gen}]
+public CompilationUnit getJdtRoot(String javaFilePath, String sourceFolder) throws IOException {
+	ASTParser parser = ASTParser.newParser(AST.JLS8);
+	parser.setResolveBindings(true);
+	parser.setKind(ASTParser.K_COMPILATION_UNIT);
+	parser.setBindingsRecovery(true);
+	Map options = JavaCore.getOptions();
+	parser.setCompilerOptions(options);
+	String[] sources = { sourceFolder };
+	parser.setEnvironment(null, sources, new String[] { "UTF-8"}, true);
+	parser.setUnitName(javaFilePath);
+	parser.setSource(FileHelper.readFileContent(javaFilePath).toCharArray());
+	CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+	return cu;
+}
+\end{lstlisting}
+
+Phương thức \texttt{getJdtRoot()} sử dụng API của JDT Core để phân tích từ một tệp Java thành một đơn vị biên dịch chứa thông tin về cây cấu trúc trừu tượng của tệp. Đầu tiên ta cần khởi tạo trình phân tích với Java phiên bản 8 bằng API \texttt{ASTParser.newParser(AST.JLS8)}. Tiếp theo đấy, sử dụng các API như \texttt{setKind(), setUnitName(), setSource()} để cung cấp thông tin về tệp Java và nội dung của nó cho quá trình phân tích và tạo thành cây cấy trúc tượng. Chú ý ta có sử dụng một số API khác như \texttt{setResolveBinding(), setBindingsRecovery} và \texttt{setEnvironment()}. Chúng được sử dụng để kích hoạt bộ đánh chỉ mục cho các thành phần trên cây cấu trúc trừu tượng. Sau này trong quá trình phân tích quan hệ phụ thuộc Java, ta có thể sử dụng các chỉ mục này cho việc tìm kiếm nhanh các thành phần Java. Chính tính năng tìm kiếm bằng chỉ mục của JDT Core đã giúp công việc xác định các quan hệ phụ thuộc cho Java được thực hiện một cách vô cùng dễ dàng.
+
+Sau khi có được cây cấu trúc trừu tượng của một tệp Java, ta tiếp tục dùng Java Document Model của JDT Core để thực hiện duyệt cây cấu trúc. Bộ duyệt này được cài đặt theo mẫu thiết kế \texttt{Visitor}. Ta có thể duyệt cây cấu trúc và đi tới phần định nghĩa của các thành phần Java ngay lập tức bởi những API sau:
+
+\begin{itemize}
+	\item \texttt{visit(TypeDeclaration)} cho phép duyệt và đi tới tất cả vị trí định nghĩa kiểu
+	\item \texttt{visit(PackageDeclaration)} cho phép duyệt và đi tới vị trí khai báo gói
+	\item \texttt{visit(ImportDeclaration)} cho phép duyệt và đi tới vị trí khai báo các câu lệnh import
+	\item \texttt{visit(MethodDeclaration)} cho phép duyệt và đi tới vị trí khai báo các phương thức
+	\item \texttt{visit(FieldDeclaration)} cho phép duyệt và đi tới vị trí khai báo các thuộc tính
+\end{itemize}
+
+Khi đã duyệt cây cú pháp trừu tượng bằng các API ở trên, ta thu được các nút thành phần. Ta có thể thu thập thông tin về các thành phần Java bằng một số API sau:
+\begin{itemize}
+	\item \texttt{astNode.modifiers()} lấy thông tin về toàn bộ Modifier gồm phạm vi truy cập, \textit{abstract, final, static}. Ta cũng có thể lấy được danh sách các Annotation mà nút này sử dụng.
+	\item \texttt{astNode.getSuperclassType()} lấy tên lớp cha trong một khai bảo kiểu
+	\item \texttt{astNode.superInterfaceTypes()} lấy danh sách tên interface trong một khai bảo kiểu
+	\item \texttt{astNode.parameters()} lấy danh sách tham số trong một khai báo phương thức
+	\item \texttt{astNode.fragments()} lấy toàn bộ thông tin các biến có tại một nơi khai báo thuộc tính. Ví dụ trường hợp \texttt{int a, b;}, mặc dù chỉ có một lệnh khai báo thuộc tính nhưng ta có hai biến là \texttt{a, b}
+\end{itemize}
+
+Một API khác cũng rất hữu ích là \texttt{astNode.getStartPosition()} cho phép chúng ta biết thành phần này được bắt đầu từ vị trí nào trong tệp mã nguồn. Nó sẽ giúp thực hiện việc ánh xạ các nút trên cây cấu trúc với các dòng mã khi biểu diễn cho người dùng.
+
 \section{Công cụ cài đặt}
 Dựa trên những đề xuất phương pháp mới đã đề xuất trên đây. Bộ công cụ JCIA-VT, thừa kế mã nguồn từ JCIA, đã được triển khai và cài đặt sử dụng framework Spring trên nền tảng ứng dụng Web. Bộ công cụ này nhận đầu vào là toàn bộ mã nguồn dự án doanh nghiệp sử dụng các nền tảng và công nghệ J2EE dưới dạng tệp nén.
 
