@@ -766,7 +766,7 @@ Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm l
 Đối với phát hiện thay đổi cho thuộc tính và phương thức Java, các làm cũng tương tự so với lớp tuy nhiên sẽ đơn giản hơn như Thuật toán \ref{algo:field-change} và \ref{algo:method-change}. Đối với thuộc tính ta chỉ cần so sánh cho từ khóa $final$, $static$ còn phương thức thì thêm cả từ khóa $abstract$. Ngoài ra đối với thuộc tính ta cũng cần so sánh kiểu của nó để xác định loại thay đổi (\textbf{CSF}). Đối với phương thức, để tìm ra các loại thay đổi khác, ta cần so sánh kiểu trả về (\textbf{CRM}), thân phương thức (\textbf{DM}), danh sách tham số (\textbf{CPM}).
 
 \chapter{Thực nghiệm và triển khai}
-Ở chương này, báo cáo sẽ trình về quá trình thực nghiệm và triển khai với các thư viện hỗ trợ tiền xử lý mã nguồn như Java Development Tools \footnote{https://www.eclipse.org/jdt} hay DOMParser và SAXParser. Thêm vào đó công cụ phát triển cũng được mô tả chi tiết triển khai cho các phương pháp đã nêu ở các chương trước.
+Ở chương này, báo cáo sẽ trình về quá trình thực nghiệm và triển khai với thư viện hỗ trợ tiền xử lý mã nguồn như Java Development Tools \footnote{https://www.eclipse.org/jdt}. Thêm vào đó công cụ phát triển cũng được mô tả chi tiết triển khai cho các phương pháp đã nêu ở các chương trước.
 
 \section{Giới thiệu về Java Development Tools}
 Các công cụ phát triển Java (Java Developement Tools - JDT) là một tập các plug-in giúp nền tảng Eclipse trở thành một trình phát triển tích hợp đầy đủ chức năng cho ngôn ngữ Java. Nó được phát triển và bảo trì bởi tổ chức Eclipse và là thành phần mặc định trong Eclipse IDE cho ngôn ngữ Java. Tuy nhiên, những plug-in của JDT này cũng cung cấp các API do vậy chúng ta hoàn toàn có thể sử dụng chúng để hỗ trợ phát triển các công cụ khác của riêng mình.
@@ -824,12 +824,120 @@ Khi đã duyệt cây cú pháp trừu tượng bằng các API ở trên, ta th
 
 Một API khác cũng rất hữu ích là \texttt{astNode.getStartPosition()} cho phép chúng ta biết thành phần này được bắt đầu từ vị trí nào trong tệp mã nguồn. Nó sẽ giúp thực hiện việc ánh xạ các nút trên cây cấu trúc với các dòng mã khi biểu diễn cho người dùng.
 
-\section{Công cụ cài đặt}
-Dựa trên những đề xuất phương pháp mới đã đề xuất trên đây. Bộ công cụ JCIA-VT, thừa kế mã nguồn từ JCIA, đã được triển khai và cài đặt sử dụng framework Spring trên nền tảng ứng dụng Web. Bộ công cụ này nhận đầu vào là toàn bộ mã nguồn dự án doanh nghiệp sử dụng các nền tảng và công nghệ J2EE dưới dạng tệp nén.
+\section{Kiến trúc công cụ}
+Ở phần này sẽ trình bày về kiến trúc bộ công cụ JCIA-VT và trình bày chi tiết những mô-đun mà khóa luận này thực hiện. Kiến trúc của bộng công cụ JCIA-VT được mô tả trong Hình \ref{fig:jcia-vt-architecture}.
 
-JCIA-VT gồm năm mô-đun chính: bộ xử lý cơ sở, bộ phân tích ảnh hưởng thay đổi, bộ phân tích cấu trúc, bộ trình diễn, bộ quản lý người dùng và lịch sử phân tích; chúng được thể hiện như Hình 3-1. Mô-đun xử lý cơ sở bao gồm hai thành phần con là bộ tiền xử lý mã nguồn và bộ phân tích phụ thuộc theo từng công nghệ để sinh cây cấu trúc và phụ thuộc cho các nút trên cây.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{jcia-vt-architecture}
+	\label{fig:jcia-vt-architecture}
+	\caption{Kiến trúc bộ công cụ JCIA-VT}
+\end{figure}
 
-Trong bộ tiền xử lý, mã nguồn Java ban đầu được phân tích nhờ thư viện Java Development Tools (JDT)  hỗ trợ tới chuẩn JavaSE phiên bản 8; đối với mã nguồn XML, hai công cụ DOMParser và SAXParser của thư viện Java được sử dụng đồng thời để có được dữ liệu các thẻ XML theo cấu trúc cấp bậc cũng như tọa độ (số hàng, số cột) của từng thẻ để phục vụ cho yêu cầu định danh và tìm kiếm nút. Bộ phân tích ảnh hưởng thay đổi kế thừa từ công cụ JCIA, sử dụng và cải tiến kĩ thuật phân tích ảnh hưởng WAVE-CIA đã có; một bộ so sánh cũng được cài đặt để thực hiện nhiệm vụ so sánh hai phiên bản mã nguồn (trước và sau thay đổi) nhằm tìm ra các phần tử thay đổi kèm kiểu thay đổi của chúng để đưa vào thuật toán CIA. Mô-đun phân tích cấu trúc bao gồm năm chức năng nhiệm vụ chính là: phân tích kiến trúc công nghệ, xây dựng dòng dữ liệu, phân tích độ phức tạp của mã nguồn, dựng sơ đồ lớp và phân tích cơ sở dữ liệu. Phân tích kiến trúc công nghệ giúp người dùng nắm được công nghệ sử dụng tại dự án đầu vào, sự liên kết giữa các công nghệ giữa các tầng với nhau. Ví dụ: tại tầng liên kết cơ sở dữ liệu dự án sử dụng framework Hibernate kết nối tới hệ quản trị cơ sở dữ liệu MySQL tại tầng cơ sở dữ liệu. Bộ xây dựng dòng dữ liệu phân tích đường đi của dữ liệu từ thành phần này qua thành phần khác của dự án, cụ thể là từ thành phần giao diện đến các thành phần điều khiển và cuối cùng là cơ sở dữ liệu và ngược lại. Điều này cho phép người dùng hình dung được đường đi của dữ liệu trong dự án, giúp người quản lí có thể kiểm tra đối chiếu với bộ quy tắc lập trình, chia tầng ứng dụng của công ty. Bộ tính toán độ phức tạp của mã nguồn triển khai tính toán độ phức tạp của các lớp trong mã nguồn đầu vào dựa trên nhiều tiêu chí khác nhau. Từ đó, người dùng có thêm một góc nhìn đánh giá chất lượng mã nguồn nhằm đảm bảo về khả năng vận hành cũng như bảo trì, nâng cấp về giai đoạn sau của dự án. Bộ xây dựng sơ đồ lớp xây dựng sơ đồ lớp trong một gói và sơ đồ lớp của một lớp tùy thuộc vào mức độ mà người dùng kích hoạt từ giao diện. Sơ đồ lớp được xây dựng và hiển thị đúng theo chuẩn UML 2.0 giúp người dùng thấy được mối quan hệ giữa các lớp trong ứng dụng. Công cụ phân tích cơ sở dữ liệu thực hiện phân tích dựng lên cấu trúc cơ sở dữ liệu và phân tích phát hiện các thành phần tương tác với cơ sở dữ liệu. Công cụ này cho người dùng cái nhìn tổng quan về thiết kế cơ sở dữ liệu của dự án, phát hiện dòng dữ liệu đến cơ sở dữ liệu giúp hoàn thiện bộ phân tích dòng dữ liệu đã nêu trên. Vì là ứng dụng nền tảng Web, mô-đun trình diễn được phát triển với thư viện D3.js  kèm các API để hiển thị thông tin phân tích trực quan tới người dùng và giúp thực hiện các thao tác với hệ thống phía sau. Cuối cùng, với nhu cầu thực hiện phân tích nhiều mã nguồn cùng lúc, mô-đun quản lý người dùng và lịch sử phân tích cho phép nhiều người dùng sử dụng bộ công cụ cùng lúc và cho phép khôi phục lịch sử của các đợt phân tích từ trước.
+Dựa trên những đề xuất phương pháp đã trình bày, bộ công cụ JCIA-VT được cài đặt bằng ngôn ngữ Java sử dụng framework Spring và được triển khai trên nền tảng ứng dụng Web. Bộ công cụ này nhận đầu vào là toàn bộ mã nguồn dự án doanh nghiệp sử dụng các nền tảng và công nghệ J2EE dưới dạng tệp nén. Bước đầu tiên toàn bộ mã nguồn sẽ được giải nén và tiền xử lý bởi mô-đun tiền xử cho Java và XML-based. Sau khi có được cây cấu trúc, mô-đun phân tích phụ thuộc sẽ làm nhiệm vụ tiếp theo: tương ứng với mỗi công nghệ framework sử dụng trong dự án sẽ có một bộ phân tích tương ứng làm nhiệm vụ phân tích phụ thuộc riêng. Kết thúc hai quá trình này, ta sẽ có cây cấu trúc cùng với các mối quan hệ phụ thuộc. Cây cấu trúc này có thể biến đổi làm đồ thị gọi cho thuật toán WAVE-CIA hoặc là đầu vào cho các mô-đun phân tích cấu trúc để xây các góc nhìn cho dự án.
+
+Bước tiếp theo, để phân tích ảnh hưởng sử thay đổi, bộ công cụ yêu cầu người dùng tải lên một phiên bản của mã nguồn dự án. Bộ quản lý phiên sẽ thực hiện so sánh và phát hiện thay đổi, sau đấy tập các thành phần thay đổi được đưa vào thuật toán WAVE-CIA. Toàn bộ công việc này sẽ được mô-đun phân tích ảnh hưởng sự thay đổi thực hiện. Hoặc nếu trong trường hợp người dùng muốn sử dụng các bộ phân tích trong mô-đun phân tích cấu trúc. Các bộ phân tích này sẽ thực hiện trích xuất thông tin trên cây cấu trúc để xây dựng các góc nhìn về ứng dụng: góc nhìn kiến trúc công nghệ, dòng dữ liệu ứng dụng, biểu đồ lớp, sơ đồ liên kết thực thể, biểu đồ độ phức tạp mã nguồn.
+
+Tất cả các kết quả phân tích đều có thể được hiển thị tới người dùng một cách trực quan nhờ mô-đun trình diễn. Mô-đun này được phát triển bằng Javascript sử dụng thư viện D3.js \footnote{  https://d3js.org}. Nó truy xuất và tương tác với dữ liệu của hệ thống phía sau bởi các API được cung cấp bởi Spring MVC.
+
+\section{Thực nghiệm triển khai}
+
+Hiện tại bộ công cụ đã được cài đặt và triển khai thực tế trên nền tảng Web tại địa chỉ \url{http://112.137.131.10:8080/jcia}. Bộ công cụ không yêu cầu người dùng cài đặt thêm bất cứ phần mềm nào, chỉ cần có một trình duyệt Web. Bộ công cụ cũng cho phép nhiều người dùng cùng sử dụng và phân tích đồng thời.
+
+\subsection{Giao diện tải lên mã nguồn và phân tích phụ thuộc}
+Sau khi đăng nhập thành công vào hệ thống bộ công cụ, ta sẽ được chuyển tới giao diện tải lên mã nguồn dự án và cấu hình các thông số cho việc phân tích như Hình \ref{fig:jcia-upload}. Tại giao diện ta ngoài việc chọn mã nguồn tải lên ở định dạng \textit{.zip}, ta cần phải quan tâm đến một số thông số như \textit{Java Source Path, Ignored Components, Analyzer(s)} và \textit{Node Level}.
+
+\textit{Java Source Path} là đường dẫn tương đối dẫn đến thư mục chứa mã nguồn Java trong dự án J2EE. Ta cần cung cấp chính xác thông tin này bởi vì thư viện JDT cần biết nó cho việc đánh chỉ mục và xác định mối quan hệ cho các thành phần Java.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{jcia-upload}
+	\label{fig:jcia-upload}
+	\caption{Giao diện tải lên mã nguồn dự án}
+\end{figure}
+
+Trong toàn bộ mã nguồn dự án tải lên, có một số các định dạng mã nguồn bộ công cụ không hỗ trợ phân tích phụ thuộc như Javascript, CSS hay là các mã nguồn XML dùng cho việc lưu trữ thông tin cấu hình IDE khi người dùng phát triển mã nguồn (ví dụ với Netbeans IDE là toàn bộ mã nguồn trong thư mục \textbf{nbproject}). Nếu ta bỏ qua không phân tích những mã nguồn trên sẽ giúp tăng tốc độ thực hiện tiền xử lý và phân tích phụ thuộc. Ngoài ra, trong khi phát triển dự án, các nhà phát triển có thể đã thực hiện chạy thử dự án. Hoạt động này tạo ra các thư mục chứa các tệp nhị phân bytecode đã được biên dịch từ mã nguồn Java mà có thể chạy được, tuy nhiên một số tệp cấu hình sử dụng định dạng XML vẫn được giữ nguyên. Nếu các thư mục không được loại bỏ trước khi phân tích, thì sẽ có nhiều tệp cấu hình trùng tên với nhau khiến trình tìm kiếm không phân biệt và các mô-đun phân tích phụ thuộc sẽ không hoạt động chính xác. \textit{Ignored Components} được sử dụng cho mục đích loại bỏ các thành phần này không cần thiết trước khi phân tích, nó hỗ trợ hai kiểu là theo phần mở rộng (ví dụ: \textit{*.js, *.css}) và theo đường dẫn tương đối (ví dụ: \textit{dist/, nbproject/}).
+
+Tùy chọn \textit{Analyzer(s)} cho phép người dùng chỉ định chính xác sẽ sử dụng những bộ phân tích phụ thuộc cho từng công nghệ cụ thể, hiện tại hỗ trợ cho Java Core, Struts và Hibernate. Tùy chọn \textit{Node Level} giúp người dùng lựa chọn độ sâu cho cây cấu trúc lúc hiển thị, độ sâu càng nhỏ thì lúc thao tác trên cây sẽ dễ dàng hơn. Tuy nhiên nó sẽ không hiển thị được chi tiết thông tin về các thành phần mã nguồn một cách đầy đủ nhất. Hiện tại có ba mức để lựa chọn là \textit{File/Table Level, Class/Table Level} và \textit{Origin Level}.
+
+\subsection{Giao diện lịch sử phân tích và quản lý phiên bản}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{jcia-history}
+	\caption{Giao diện lịch sử phân tích quản lý phiên bản}
+	\label{fig:jcia-history}
+\end{figure}
+
+Sau khi thực hiện tải lên và yêu cầu phân tích phụ thuộc cho dự án. Yêu cầu phân tích này sẽ được hệ thống đưa vào hàng đợi và thông báo về trạng thái tại giao diện lịch sử phân tích và quản lý phiên bản như Hình \ref{fig:jcia-history}.
+
+Về tổng quan, giao diện này lưu trữ thông tin lịch sử phân tích (tên dự án, những bộ phân tích sử dụng và mức hiển thị nút) và các phiên bản cho các dự án được tải lên. Với dấu tích xanh ở trạng thái có nghĩa yêu cầu phân tích cho dự án đấy đã được thực hiện thành công. Nếu người dùng thực hiện cập nhật các phiên bản cho một dự án, chúng cũng sẽ được hiển thị ở giao diện này. Từ đây ta có thể theo dõi sự phát triển của dự án bằng các thông tin thay đổi qua các phiên bản cũng như thực hiện việc phân tích ảnh hưởng sự thay đổi khi so sánh hai phiên bản cụ thể của một dự án.
+
+\subsection{Giao diện làm việc chính}
+Tại giao diện lịch sử phân tích và quản lý phiên bản, sau khi ta thực hiện khôi phục lịch sự phân tích một dự án. Hệ thống sẽ đưa ta vào giao diện làm việc chính như Hình \ref{fig:jcia-workspace}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\linewidth]{jcia-workspace}
+	\caption{Giao diện làm việc chính}
+	\label{fig:jcia-workspace}
+\end{figure}
+
+Giao diện làm việc chính của bộ công cụ được chia làm bốn phần. Bên trái là khung nhìn theo dạng cây của dự án, cho phép ta duyệt và tìm kiếm nhanh các thành phần mã nguồn trên cây cấu trúc. Ở giữa là đồ thị phụ thuộc hiển thị các mối quan hệ phụ thuộc giữa các thành phần mã nguồn. Để xem chi tiết về thông tin các phụ thuộc của một thành phần, ta đưa trỏ chuột vào thành phần đấy, một bảng thông tin về các mối quan hệ phụ thuộc của nó sẽ hiện ra, ví dụ như Hình \ref{fig:jcia-workspace1} là thông tin các quan hệ phụ thuộc của \textit{struts.xml}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/jcia-workspace1}
+	\caption{Ví dụ hiển thị mối quan hệ phụ thuộc}
+	\label{fig:jcia-workspace1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{images/jcia-workspace2}
+	\caption{Các nút chức năng của Change Set View}
+	\label{fig:jcia-workspace2}
+\end{figure}
+
+Phía bên trái giao diện chính gồm hai khung nhìn cho phục vụ cho việc phân tích ảnh hưởng sự thay đổi. Khung nhìn phía trên là hiển thị danh sách tập thay đổi. Tập thay đổi này được thu thập bằng cách so sánh các phiên bản của dự án, ngoài ra người dùng cũng có thể tự thêm vào bằng cách thao tác trên đồ thị phụ thuộc. Các nút chức năng của khung nhìn này ở Hình \ref{fig:jcia-workspace2}, cụ thể bao gồm:
+\begin{itemize}
+	\item \textit{Impact Level} là giá trị thể hiện mức lan ảnh hưởng được sử dụng trong thuật toán WAVE-CIA
+	\item \textit{Upload Change Set} nếu muốn thay đổi nhiều nút cùng lúc, ta có thể tải lên
+	một tệp text chứa đường dẫn của các nút thay đổi trong dự án. Công cụ sẽ tự tìm kiếm
+	các nút đó và thêm chúng vào tập thay đổi.
+	\item \textit{Clean All} xóa bỏ hết các tập thay đổi và tập ảnh hưởng đã phân tích
+	\item \textit{Analyze} thực hiện phân tích tập thay đổi để tìm ra tập ảnh hưởng. Sau khi thực hiện phân tích ảnh hưởng thành công, khung nhìn ở giữa sẽ được chuyển sang đồ thị phụ thuộc mà trong đồ thị này chỉ có các nút có trong tập thay đổi và ảnh hưởng được hiển thị.
+\end{itemize}
+
+\subsection{Ví dụ minh họa}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{images/sample-vitm}
+	\caption{Ví dụ phân tích phụ thuộc cho dự án Struts thực nghiệm}
+	\label{fig:sample-vitm}
+\end{figure}
+
+Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm nghiên cứu sử dụng một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thực nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thực nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
+
+Sau khi thực hiện tiền xử lý và phân tích phụ thuộc cho dự án, hệ thống sẽ trả về cây cấu trúc kèm theo các phụ thuộc giữa các nút trên cây. Trên Hình \ref{fig:sample-vitm}, ta có thể thấy các phụ thuộc được biểu diễn bằng các mũi tên màu xám. Bộ tiền xử lý cho ta cây cấu trúc gồm thông tin về các thư mục và tệp trong mã nguồn dự án. Ta có thể thấy package \textit{common} là một package có nhiều mũi tên trỏ tới, bởi vì nó là một package Java được sử dụng nhiều trong dự án, điều này chứng minh rằng bộ phân tích phụ thuộc Java Core đã có hiệu quả nhất định. Ngoài ra, Bộ phân tích phụ thuộc cho Hibernate đã phân tích mã nguồn và xác định được tên các bảng trong CSDL và gán chúng lên cây cấu trúc, nhiều mũi tên xuất phát từ package \textit{database} tới các nút bảng cho ta thấy package \textit{database} là nơi chưa các lớp truy câp và thao tác trực tiếp tầng CSDL. Cuối cùng, những mũi tên giữa thư mục \textit{web, com/sample, config} và tệp \textit{struts.xml} là kết quả của bộ phân tích Struts 2. Các mũi tên từ \textit{struts.xml} và \textit{config} tới package \textit{com/sample} thể hiện cho sự phụ thuộc của các định nghĩa \textit{Action, Interceptor, Result Type} bằng các lớp Java; tới thư mục \textit{web} thể hiện cho sự phụ thuộc các định nghĩa \textit{Result}.
+
+Bộ công cụ cung cấp hai cách để thực hiện việc phân tích ảnh hưởng sự thay đổi. thứ nhất là người dùng chọn tập thay đổi và phân tích trực tiếp trên giao diện hiển thị phụ thuộc, thứ hai là phân tích tự động bằng cách người dùng tải lên mã nguồn đã thay đổi, công cụ thực hiện so sánh hai phiên bản mã nguồn và phân tích ảnh hưởng rồi trả về báo cáo kết quả.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{images/sample-vitm-1}
+	\caption{Ví dụ phân tích phụ thuộc cho dự án Struts thực nghiệm}
+	\label{fig:sample-vitm-1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{images/sample-vitm-2}
+	\caption{Ví dụ phân tích phụ thuộc cho dự án Struts thực nghiệm}
+	\label{fig:sample-vitm-2}
+\end{figure}
+
+Hình \ref{fig:sample-vitm-1} và Hình \ref{fig:sample-vitm-2} lần lượt biểu diễn cho nhật ký hoạt động và kết quả của quá trình phân tích ảnh hưởng sự thay đổi sử dụng bộ so sánh phiên bản cho một ví dụ cụ thể. Với giả định cải tiến cho chức năng \textit{Upload File} của dự án mẫu, chúng tôi đã thực hiện bằng cách thêm thuộc tính \textit{response} và thay đổi phương thức \textit{prepareUploadFile()} trong tệp \textit{ImFileUpload.java}. Sau khi mã nguồn mới được tải lên, bộ so sánh phiên bản được thực thi, công cụ đã phát hiện chính xác các thay đổi giữa hai phiên bản, ta có thể thấy trong nhật ký so sánh ở Hình \ref{fig:sample-vitm-1}. Tiếp theo, bộ phân tích ảnh hưởng được thực hiện với tham số mức độ ảnh hưởng là 3 cho ta kết quả như Hình \ref{fig:sample-vitm-2}.
+
 \chapter{Kết luận}
-Nghiên cứu này đã đề xuất các phương pháp và bộ công cụ phục vụ cho các hoạt động đảm bảo chất lượng mã nguồn các ứng dụng doanh nghiệp trên nền tảng và công nghệ J2EE. Ở giai đoạn này, chúng tôi đã hoàn thành cơ bản các chức năng chính của bộ công cụ nhằm đáp ứng cho việc phân tích mã nguồn các ứng dụng sử dụng Struts 2 và Hibernate. Dựa trên những gì đã thực hiện được, trong giai đoạn tiếp theo, sẽ có thêm nhiều phụ thuộc được thêm vào để xử lý giúp bộ phân tích ảnh hưởng dự đoán tập ảnh hưởng chính xác hơn. Bộ quản lý vào so sánh các phiên bản mã nguồn sẽ được tích hợp với các hệ thống quản lý phiên bản hiện nay như Git  và SVN . Điều này giúp cho việc thực hiện phân tích ảnh hưởng và báo cáo kết quả hoàn toàn tự động mà không cần đến các thao tác của con người. Đây cũng là một lợi thế để áp dụng các kĩ thuật CIA có tính chính xác cao hơn như kĩ thuật CIA dựa vào phân loại thay đổi bởi bộ so sánh phiên bản có thể xác định chính xác từng loại thay đổi trên các thành phần mã nguồn. Đối với các kiểm thử viên, chức năng phân tích ảnh hưởng có thể giúp họ chỉ cần thực hiện một số ca kiểm thử nhất định khi có đội phát triển thay đổi mã nguồn. Tuy nhiên, hiện nay hầu hết các ca kiểm thử được thực hiện dựa trên các tài liệu biên bản kiểm thử mà chúng mô tả các bước kiểm thử bằng tay trên giao diện ứng dụng chứ không phải tự động bằng Unit Test. Trong khi đó kết quả của bộ phân tích ảnh hưởng là các thành phần mã nguồn, do đó một bộ ánh xạ giữa thành phần mã nguồn và các màn hình hoặc chức năng ứng dụng cần được tích hợp để bộ công cụ này thực sự có ích và có thể ứng dụng đại trà vào quá trình đảm bảo chất lượng cho nền công nghiệp phát triển phần mềm ở các công ty hiện nay. Ngoài ra, cần có thêm nhiều góc nhìn về ứng dụng cần được tích hợp để người sử dụng thêm nhiều thông tin cho ứng dụng của mình như biểu đồ tuần tự giữa các package, biểu đồ dòng điều khiển và các công cụ đánh giá về độ phức tạp mã nguồn và bảo mật của ứng dụng, v.v. Bộ công cụ sẽ hỗ trợ cho thêm nhiều công nghệ và nền tảng khác của Java, và xa hơn nữa, nhóm sẽ nghiên cứu để bộ công cụ có thể phân tích cho các ngôn ngữ khác như C, PHP, Javascript.
+Nghiên cứu này đã đề xuất các phương pháp và bộ công cụ phục vụ cho các hoạt động đảm bảo chất lượng mã nguồn các ứng dụng doanh nghiệp trên nền tảng và công nghệ J2EE. Ở giai đoạn này, chúng tôi đã hoàn thành cơ bản các chức năng chính của bộ công cụ nhằm đáp ứng cho việc phân tích mã nguồn các ứng dụng sử dụng Struts 2 và Hibernate. Dựa trên những gì đã thực hiện được, trong giai đoạn tiếp theo, sẽ có thêm nhiều phụ thuộc được thêm vào để xử lý giúp bộ phân tích ảnh hưởng dự đoán tập ảnh hưởng chính xác hơn. Bộ quản lý vào so sánh các phiên bản mã nguồn sẽ được tích hợp với các hệ thống quản lý phiên bản hiện nay như Git  và SVN . Điều này giúp cho việc thực hiện phân tích ảnh hưởng và báo cáo kết quả hoàn toàn tự động mà không cần đến các thao tác của con người. Đây cũng là một lợi thế để áp dụng các kĩ thuật CIA có tính chính xác cao hơn như kĩ thuật CIA dựa vào phân loại thay đổi bởi bộ so sánh phiên bản có thể xác định chính xác từng loại thay đổi trên các thành phần mã nguồn. Đối với các kiểm thử viên, chức năng phân tích ảnh hưởng có thể giúp họ chỉ cần thực hiện một số ca kiểm thử nhất định khi có đội phát triển thay đổi mã nguồn. Tuy nhiên, hiện nay hầu hết các ca kiểm thử được thực hiện dựa trên các tài liệu biên bản kiểm thử mà chúng mô tả các bước kiểm thử bằng tay trên giao diện ứng dụng chứ không phải tự động bằng Unit Test. Trong khi đó kết quả của bộ phân tích ảnh hưởng là các thành phần mã nguồn, do đó một bộ ánh xạ giữa thành phần mã nguồn và các màn hình hoặc chức năng ứng dụng cần được tích hợp để bộ công cụ này thực sự có ích và có thể ứng dụng đại trà vào quá trình đảm bảo chất lượng cho nền công nghiệp phát triển phần mềm ở các công ty hiện nay. Ngoài ra, cần có thêm nhiều góc nhìn về ứng dụng cần được tích hợp để người sử dụng thêm nhiều thông tin cho ứng dụng của mình như biểu đồ tuần tự giữa các package, biểu đồ dòng điều khiển và các công cụ đánh giá về độ phức tạp mã nguồn và bảo mật của ứng dụng, v.v. Bộ công cụ sẽ hỗ trợ cho thêm nhiều công nghệ và nền tảng khác của Java, và xa hơn nữa, nhóm sẽ nghiên cứu để bộ công cụ có thể phân tích cho các ngôn ngữ khác như C\#, PHP, Javascript.
 \end{document}
