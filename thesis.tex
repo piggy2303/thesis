@@ -18,6 +18,8 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
 
 \setlength{\parskip}{6pt}
 
@@ -184,9 +186,9 @@ Tiếp theo tôi xin gửi lời cảm ơn đến các thầy cô giảng viên 
 \begin{center}
 	\textbf{\large TÓM TẮT}
 \end{center}
-\textbf{Tóm tắt:} Mã nguồn ứng dụng trở nên lớn và phức tạp sau quá trình dài phát triển, bảo trì và nâng cấp. Vấn đề này đang dần phổ biến đối với các doanh nghiệp phát triển phần mềm, gây khó khăn trong việc kiểm soát và đảm bảo chất lượng cho các ứng dụng. Hiện nay đã có một số công cụ được đề xuất để giải quyết vấn đề trên nhưng chưa có kết quả thỏa đáng. Nghiên cứu này đề xuất các phương pháp và xây dựng một bộ công cụ toàn diện cho việc phân tích và đảm bảo chất lượng mã nguồn cho các ứng dụng doanh nghiệp sử dụng các nền tảng J2EE phổ biến Struts 2, Hibernate, Spring. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để tạo cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi và các chức năng phân tích cấu trúc như xây dựng đồ thị dữ liệu; xây dựng kiến trúc về công nghệ, cơ sở dữ liệu; tính toán độ phức tạp mã nguồn. Phương pháp phân tích ảnh hưởng sự thay đổi được đề xuất cải tiến theo hướng tự động hóa bằng phương pháp so sánh các phiên bản mã nguồn. Hiện nay, bộ công cụ đang được triển khai thử nghiệm tại Trung tâm công nghệ và quản lý chất lượng phần mềm Viettel (VITM) và nhận được nhiều phản hồi tích cực.\\
+\textbf{Tóm tắt:} Mã nguồn ứng dụng trở nên lớn và phức tạp sau quá trình dài phát triển, bảo trì và nâng cấp. Vấn đề này đang dần phổ biến đối với các doanh nghiệp phát triển phần mềm, gây khó khăn trong việc kiểm soát và đảm bảo chất lượng cho các ứng dụng. Hiện nay đã có một số công cụ được đề xuất để giải quyết vấn đề trên nhưng chưa có kết quả thỏa đáng. Nghiên cứu này đề xuất các phương pháp và xây dựng một bộ công cụ toàn diện cho việc phân tích và đảm bảo chất lượng mã nguồn cho các ứng dụng doanh nghiệp sử dụng các nền tảng J2EE phổ biến Struts 2, Hibernate, Spring. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để tạo cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi và các chức năng phân tích cấu trúc như xây dựng đồ thị dữ liệu; xây dựng kiến trúc về công nghệ, cơ sở dữ liệu; tính toán độ phức tạp mã nguồn. Phương pháp phân tích ảnh hưởng sự thay đổi được đề xuất cải tiến theo hướng tự động hóa bằng phương pháp so sánh các phiên bản mã nguồn.\\
 
-\noindent \textit{\textbf{Từ khóa:} phân tích mã nguồn, phiên bản mã nguồn, ứng dụng doanh nghiệp}
+\noindent \textit{\textbf{Từ khóa:} quản lý phiên bản, ứng dụng doanh nghiệp, phân tích mã nguồn, phân tích ảnh hưởng sự thay đổi}
 \end{titlepage}
 
 %-----ABSTRACT (ENGLISH)-----%
@@ -195,6 +197,9 @@ Tiếp theo tôi xin gửi lời cảm ơn đến các thầy cô giảng viên 
 \begin{center}
 	\textbf{\large ABSTRACT}
 \end{center}
+\textbf{Abstract:} Applications' source code becomes large and complex after a long time of development, maintains and upgrades. This problem is becoming more and more common for software development companies, making it difficult to control and assure the quality of applications. At present, there are some tools proposed to solve this problem but no satisfactory results. This thesis proposes methods and builds a comprehensive tool for source code analyzing and quality assurance of enterprise applications using popular frameworks of the J2EE platform such as Struts 2, Hibernate and Spring. At first, the source code of application will be preprocessed to create the structure tree. Each tree node represents for a source code component. Next, they will be analyzed according to the technologies used in the application to find out dependency relationships. This structure tree is used as an input for analyzing change impact and some structural analysis functions such as building data flow graph; building architecture for the database; compute the complexity of source code. Change impact analyzing is proposed to implement automatically by comparing the source code versions.
+
+\noindent \textit{\textbf{Keywords:} version control, enterprise application, source code analyzing, change impact analyzing}
 \end{titlepage}
 
 %-----UNDERTAKING-----%
@@ -223,6 +228,20 @@ Tôi xin cam đoan rằng những nghiên cứu về phương pháp hỗ trợ q
 \newpage
 \begin{titlepage}
 \listoftables
+
+\hfill\\[2cm]
+
+\begin{flushleft}
+\bfseries{\Huge{Danh sách ký hiệu, chữ viết tắt}}
+\end{flushleft}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ll}
+		\textbf{CIA}  & Change Impact Analysis              \\[0.3cm]
+		\textbf{J2EE} & Java 2 Platform, Enterprise Edition \\[0.3cm]
+		\textbf{POJO} & Plain Old Java Object              
+	\end{tabular}
+\end{table}
 \end{titlepage}
 
 \newpage
@@ -254,22 +273,15 @@ triển, bảo trì và kiểm thử hồi quy. Đối với người quản lý
 xác định những ca kiểm thử có liên quan đến phần mã nguồn chỉnh sửa, điều này giúp
 giảm số lượng các ca kiểm thử cần thực hiện từ đó rút ngắn thời gian và nỗ lực kiểm thử.
 Các kĩ thuật CIA được thực hiện theo hai hướng tiếp cận chính là phân tích tĩnh (static
-CIA) và phân tích động (dynamic CIA) [1]. Trong thực tế, hầu hết các nghiên cứu đề xuất
+CIA) và phân tích động (dynamic CIA) \cite{cia-survey}. Trong thực tế, hầu hết các nghiên cứu đề xuất
 các phương pháp phân tích ảnh hưởng sự thay đổi liên quan đến static CIA. Nổi bật trong
-số đó là kĩ thuật CIA dựa trên sự phân loại thay đổi [2], kĩ thuật dựa vào đồ thị Call
-Graph [3] và kĩ thuật dựa trên tư tưởng giao thoa sóng nước WAVE-CIA [4]. Tuy nhiên,
+số đó là kĩ thuật CIA dựa trên sự phân loại thay đổi \cite{cia-ct}, kĩ thuật dựa vào đồ thị Call
+Graph [3] và kĩ thuật dựa trên tư tưởng giao thoa sóng nước WAVE-CIA \cite{cia-wave}. Tuy nhiên,
 Các kĩ thuật CIA sử dụng đầu vào là kết quả của quá trình phân tích phụ thuộc từ ứng
 dụng. Quá trình này không thể tổng quát hóa cho toàn bộ các công nghệ và nền tảng hiện
 có.
 
-J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng
-Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI,
-JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts,
-Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng 
-2
-J2EE, một phương pháp kèm theo công cụ có tên JCIA [5] đã được đề xuất và xây dựng.
-Tuy nhiên phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt
-lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính
+J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI, JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts, Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng J2EE, một phương pháp kèm theo công cụ có tên JCIA \cite{cia-uet} đã được đề xuất và xây dựng. Tuy nhiên phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính
 hiệu quả cao.
 
 Dựa trên ý tưởng về phương pháp này, một phương pháp hoàn chỉnh đã được nghiên
@@ -940,4 +952,26 @@ Hình \ref{fig:sample-vitm-1} và Hình \ref{fig:sample-vitm-2} lần lượt bi
 
 \chapter{Kết luận}
 Nghiên cứu này đã đề xuất các phương pháp và bộ công cụ phục vụ cho các hoạt động đảm bảo chất lượng mã nguồn các ứng dụng doanh nghiệp trên nền tảng và công nghệ J2EE. Ở giai đoạn này, chúng tôi đã hoàn thành cơ bản các chức năng chính của bộ công cụ nhằm đáp ứng cho việc phân tích mã nguồn các ứng dụng sử dụng Struts 2 và Hibernate. Dựa trên những gì đã thực hiện được, trong giai đoạn tiếp theo, sẽ có thêm nhiều phụ thuộc được thêm vào để xử lý giúp bộ phân tích ảnh hưởng dự đoán tập ảnh hưởng chính xác hơn. Bộ quản lý vào so sánh các phiên bản mã nguồn sẽ được tích hợp với các hệ thống quản lý phiên bản hiện nay như Git  và SVN . Điều này giúp cho việc thực hiện phân tích ảnh hưởng và báo cáo kết quả hoàn toàn tự động mà không cần đến các thao tác của con người. Đây cũng là một lợi thế để áp dụng các kĩ thuật CIA có tính chính xác cao hơn như kĩ thuật CIA dựa vào phân loại thay đổi bởi bộ so sánh phiên bản có thể xác định chính xác từng loại thay đổi trên các thành phần mã nguồn. Đối với các kiểm thử viên, chức năng phân tích ảnh hưởng có thể giúp họ chỉ cần thực hiện một số ca kiểm thử nhất định khi có đội phát triển thay đổi mã nguồn. Tuy nhiên, hiện nay hầu hết các ca kiểm thử được thực hiện dựa trên các tài liệu biên bản kiểm thử mà chúng mô tả các bước kiểm thử bằng tay trên giao diện ứng dụng chứ không phải tự động bằng Unit Test. Trong khi đó kết quả của bộ phân tích ảnh hưởng là các thành phần mã nguồn, do đó một bộ ánh xạ giữa thành phần mã nguồn và các màn hình hoặc chức năng ứng dụng cần được tích hợp để bộ công cụ này thực sự có ích và có thể ứng dụng đại trà vào quá trình đảm bảo chất lượng cho nền công nghiệp phát triển phần mềm ở các công ty hiện nay. Ngoài ra, cần có thêm nhiều góc nhìn về ứng dụng cần được tích hợp để người sử dụng thêm nhiều thông tin cho ứng dụng của mình như biểu đồ tuần tự giữa các package, biểu đồ dòng điều khiển và các công cụ đánh giá về độ phức tạp mã nguồn và bảo mật của ứng dụng, v.v. Bộ công cụ sẽ hỗ trợ cho thêm nhiều công nghệ và nền tảng khác của Java, và xa hơn nữa, nhóm sẽ nghiên cứu để bộ công cụ có thể phân tích cho các ngôn ngữ khác như C\#, PHP, Javascript.
+
+\begin{thebibliography}{9}
+	\bibitem{cia-survey} 
+	Bixin Li, Xiaobing Sun, Hareton Leung, Sai Zhang.
+	A survey of code-based change impact analysis techniques.
+	In \textit{Software Testing, Verification and Reliability. Wiley Online Library} (2012).
+	
+	\bibitem{cia-ct} 
+	Xiaobing Sun, Bixin Li, Chuanqi Tao and Wanzhi Wen. 
+	Change Impact Analysis Based on a Taxonomy of Change Types.
+	\textit{2010 IEEE 34th Annual Computer Software and Application Conference}, pages 373-382, 2010. 
+	
+	\bibitem{cia-call} 
+	Linda Badri, Mourad Badri and Daniel St-Yves. Supporting Predictive Change Impact Analysis: A Control Call Graph Based Technique. In \textit{Proceedings of the 12th Asia-Pacific Software Engineering Conference}, pages 167-175, 2005.
+	
+	\bibitem{cia-wave} 
+	Bixin Li. WAVE-CIA: a novel CIA approach based on call graph mining. In \textit{Proceedings of the 28th Annual ACM Symposium on Applied Computing}, pages 1000-1005, 2013.
+	
+	\bibitem{cia-uet}
+	Nguyễn Quỳnh Mai, Nguyễn Công Hưng. Phương pháp và công cụ phân tích sự ảnh hưởng của thay đổi mã nguồn cho các ứng dụng J2EE 6. \textit{Hội nghị SVNCKH khoa CNTT, ĐH Công nghệ}, 2016.
+\end{thebibliography}
+
 \end{document}
