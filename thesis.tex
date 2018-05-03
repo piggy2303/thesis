@@ -250,6 +250,7 @@ Tôi xin cam đoan rằng những nghiên cứu về phương pháp hỗ trợ q
 	\begin{tabular}{ll}
 		\textbf{CIA}  & Change Impact Analysis              \\[0.3cm]
 		\textbf{J2EE} & Java 2 Platform, Enterprise Edition \\[0.3cm]
+		\textbf{MVC} & Model - View - Controller			\\[0.3cm]
 		\textbf{POJO} & Plain Old Java Object              \\[0.3cm]
 		\textbf{IDE} & Integrated Development Environment \\[0.3cm]
 	\end{tabular}
@@ -318,7 +319,7 @@ triển như là phiên bản tiếp theo của công cụ JCIA để thực hi�
 \section{Phân tích ảnh hưởng sự thay đổi}
 Bảo trì phần mềm luôn được coi là hoạt động khó và tiêu tốn chi phí nhiều nhất trong quá trình phát triển phần mềm. Các sản phẩm phẩm phần mềm liên tục thay đổi và thích nghi với các yêu cầu thay đổi để phù hợp với nhu cầu của người dùng. Khi các thay đổi được thực hiện, nó sẽ gây ra các ảnh hướng không lường trước được, và có thể gây ra các tác động làm mất sự nhất quán đối với các thành phần của phần mềm.
 
-Phân tích ảnh hưởng sự thay đổi (Change Impact Analysis - CIA) bao gồm một bộ các kỹ thuật giúp xác định sự ảnh hưởng của các thay đổi được đề xuất tới các thành phần phần mềm. Nó đóng vai trò quan trọng trong quá trình phát triển, bảo trì phần mềm và kiểm thử hồi quy.
+Phân tích ảnh hưởng sự thay đổi (Change Impact Analysis - CIA) bao gồm một bộ các kỹ thuật giúp xác định sự ảnh hưởng của các thay đổi được đề xuất tới các thành phần phần mềm\cite{cia-survey}. Nó đóng vai trò quan trọng trong quá trình phát triển, bảo trì phần mềm và kiểm thử hồi quy.
 
 CIA có thể được sử dụng trước hoặc sau khi thực hiện thay đổi. Trước khi thực hiện thay đổi, CIA có thể được sử dụng để tiên đoán ảnh hưởng sự thay đổi và ước tính chi phí. Sau khi thay đổi được thực hiện, CIA có thể được ứng dụng để lựa chọn các ca kiểm thử cho quá trình kiểm thử hồi quy.
 
@@ -330,7 +331,7 @@ CIA có thể được sử dụng trước hoặc sau khi thực hiện thay đ
 	\label{fig:cia-hierarchy}
 \end{figure}
 
-Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA.
+Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng\cite{cia-bohner}. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA.
 
 Để thực hiện Depedency-based CIA, ta có thể sử dụng hai phương pháp là phân tích tĩnh và động. Phân tích động sẽ yêu cầu thực thi ứng dụng, nó sẽ thu thập các thông tin trước, trong và sau khi chạy để xác định các mối quan hệ phụ thuộc. Phương pháp này mang lại chính xác cao nhưng đòi hỏi sự phức tạp và tốn kém. Bên cạnh đó, các phương pháp phân tích tĩnh dễ thực hiện và ít tốn kém. Chúng tập được thực hiện ngay trên mã nguồn phần mềm. Có thể chia các phương pháp tĩnh này thành ba loại chính: Phân tích dựa trên lịch sử được thực hiện bằng cách khai phá thông tin từ nhiều phiên bản tiến hóa của phần mềm, phương pháp thường cho nhiều kết quả dự đoán nhầm, nhiều phần tử ảnh hưởng dự đoán thật sự không bị ảnh hưởng; Phân tích ngữ nghĩa dựa trên việc trích xuất thông tin từ việc phân tích nội dung comment hoặc các định danh (ví dụ: tên biến, phương thức); Nổi trội nhất trong đó là phân tích cấu trúc, phương pháp này tập trung phân tích tĩnh cấu trúc của chương trình, xác định các mối quan hệ giữa các thành phần và xây dựng đồ thị phụ thuộc.
 
@@ -344,7 +345,7 @@ Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu
 
 Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính là thay đổi cấu trúc và thay đổi lô-gíc. Thay đổi cấu trúc là các thay đổi liên quan đến các thành phần trong mã nguồn. Cụ thể đối với ngôn ngữ Java, thay đổi cấu trúc có thể là thay đổi về phạm vi truy cập, kiểu, tên của một thuộc tính hoặc thay đổi chữ kí của một phương thức. Thay đổi lô-gíc là thay đổi về thuật toán, các câu lệnh. Chúng thường là những thay đổi nằm trong thân phương thức.
 
-Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
+Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA\cite{cia-survey}. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
 
 \begin{equation}
 Precision = \frac{|EIS \cap AIS|}{EIS}
@@ -418,7 +419,7 @@ Một API khác cũng rất hữu ích là \texttt{astNode.getStartPosition()} c
 \chapter{Phương pháp thực hiện}
 \label{chap:approach}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
-\textbf{Định nghĩa:} (\textit{Cây cấu trúc} \cite{jcia}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
+\textbf{Định nghĩa:} (\textit{Cây cấu trúc}\cite{jcia}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
 
 Các ứng dụng doanh nghiệp J2EE, ngoài sử dụng mã nguồn Java còn nhiều định dạng mã nguồn khác để đảm nhiệm vai trò cho tầng \textit{View} và các thành phần cấu hình ứng dụng như XML, JSP, XHTML, FreeMarker,...Với mỗi một định dạng lại có cấu trúc và cú pháp khác nhau, tuy nhiên ta có thể phân loại thành hai nhóm là mã nguồn Java và mã nguồn XML-based (mã nguồn có cú pháp dựa trên định dạng XML). Bộ tiền xử lý cần biến đổi những mã nguồn này về định dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa những thông tin cần thiết cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và tìm kiếm các nút trên cây dễ dàng.
 
@@ -486,8 +487,9 @@ Với yêu cầu tham số có kiểu xác định hoàn toàn phụ vụ cho vi
 \end{figure}
 
 \section{Phân tích phụ thuộc Struts}
+Trong phần này, khóa luận trình bày về mô hình kiến trúc của các ứng dụng Struts và phương pháp phân tích phụ thuộc cho các ứng dụng này dựa vào các đặc điểm mô hình kiến trúc của chúng.
 \subsection{Giới thiệu mô hình kiến trúc Struts}
-Apache Struts (trước đây được gọi là Struts2 để phân biệt với Struts1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chứa đủ các thành phần giúp lập trình viên định nghĩa rõ ràng các thành phần Model, View và Controller.
+Apache Struts (trước đây được gọi là Struts 2 để phân biệt với Struts 1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chứa đủ các thành phần giúp lập trình viên định nghĩa rõ ràng các thành phần Model, View và Controller.
 
 \begin{figure}[h]
 	\centering
@@ -975,6 +977,9 @@ Nghiên cứu này đã đề xuất các phương pháp và bộ công cụ ph�
 	Bixin Li, Xiaobing Sun, Hareton Leung, Sai Zhang.
 	A survey of code-based change impact analysis techniques.
 	In \textit{Software Testing, Verification and Reliability. Wiley Online Library} (2012).
+	
+	\bibitem{cia-bohner}
+	Robert S. Arnold. 1996. Software Change Impact Analysis. IEEE Computer Society Press, Los Alamitos, CA, USA.
 	
 	\bibitem{cia-ct} 
 	Xiaobing Sun, Bixin Li, Chuanqi Tao and Wanzhi Wen. 
