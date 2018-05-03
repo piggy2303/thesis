@@ -4,5 +4,7 @@ build/
 *.log
 *.out
 *.toc
+*.lof
+*.lot
 *.synctex.gz
 *.dvi
