@@ -292,7 +292,7 @@ Các kĩ thuật CIA sử dụng đầu vào là kết quả của quá trình p
 dụng. Quá trình này không thể tổng quát hóa cho toàn bộ các công nghệ và nền tảng hiện
 có.
 
-J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI, JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts, Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng J2EE, một phương pháp kèm theo công cụ có tên JCIA \cite{cia-uet} đã được đề xuất và xây dựng. Tuy nhiên phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính
+J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI, JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts, Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng J2EE, một phương pháp kèm theo công cụ có tên JCIA \cite{cia-uet} đã được đề xuất và xây dựng. Tuy nhiên, phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính
 hiệu quả cao.
 
 Dựa trên ý tưởng về phương pháp này, một phương pháp hoàn chỉnh đã được nghiên
@@ -453,7 +453,7 @@ public class BookManager {
 }
 \end{lstlisting}
 
-Ví dụ như ở Mã nguồn \ref{code:java-overloading} thể hiện sự chồng hàm của phương thức \texttt{addBook()}. Nếu chỉ sử dụng tên của phương thức thì ta sẽ không định danh cho các các nút tương ứng với hai phương thức này được. Do vậy ta cần sử dụng cả thông tin về các tham số của chúng để tạo đường dẫn tuyệt đối. Bao gồm cả tên, kiểu có tên xác định hoàn toàn (Fully qualified name) và thứ tự của các tham số này trong phần khai báo phương thức. Kết quả ta được hai đường dẫn tuyệt đối có thể đại diện cho sự riêng biệt của các nút phương thức Java này.
+Mã nguồn \ref{code:java-overloading} thể hiện sự chồng hàm của phương thức \texttt{addBook()}. Nếu chỉ sử dụng tên của phương thức thì ta sẽ không định danh cho các các nút tương ứng với hai phương thức này được. Do vậy ta cần sử dụng cả thông tin về các tham số của chúng để tạo đường dẫn tuyệt đối. Bao gồm cả tên, kiểu có tên xác định hoàn toàn (Fully qualified name) và thứ tự của các tham số này trong phần khai báo phương thức. Kết quả ta được hai đường dẫn tuyệt đối có thể đại diện cho sự riêng biệt của các nút phương thức Java này.
 
 \begin{verbatim}
 vn/sample/manager/BookManager.java/BookManager/
@@ -463,7 +463,7 @@ vn/sample/manager/BookManager.java/BookManager/
 addBook(java.lang.String_bookName,java.lang.String_author)
 \end{verbatim}
 
-Hoặc đối với mã nguồn dựa trên định dạng XML như ở Mã nguồn \ref{code:html-example}, nếu dùng tên thẻ để làm đường dẫn tuyệt đối thì hai phần tử \texttt{h1} sẽ có chung giá trị là \texttt{web/hello.html/html/body/h1}. Để định danh cho hai phần này, ta sẽ dùng thêm các thuộc tích đặc biệt là tọa độ thẻ mở của chúng trong mã nguồn. Ví dụ với phần \texttt{h1} đầu tiên, sẽ có tọa độ số dòng là 3, số cột là 12 cho nên đường dẫn tuyệt đối của nó sẽ là \texttt{web/hello.html/html/body/h1:3:12}. Đường dẫn mới này sẽ giúp phân biệt phần tử này với phần liền kề với đường dẫn \texttt{web/hello.html/html/body/h1:4:12}. Thật may mắn nền tảng Java cung cấp sẵn một thư viện giúp chúng ta phân tích các tệp có định dạng XML và lấy được tọa độ của các phần tử này. SAXParser sẽ giúp ta tiết kiệm công sức rất nhiều trong việc tiền xử lý phần mã nguồn này.
+Hoặc đối với mã nguồn dựa trên định dạng XML ở Mã nguồn \ref{code:html-example}, nếu dùng tên thẻ để làm đường dẫn tuyệt đối thì hai phần tử \texttt{h1} sẽ có chung giá trị là \texttt{web/hello.html/html/body/h1}. Để định danh cho hai phần này, ta sẽ dùng thêm các thuộc tích đặc biệt là tọa độ thẻ mở của chúng trong mã nguồn. Ví dụ với phần \texttt{h1} đầu tiên, sẽ có tọa độ số dòng là 3, số cột là 12 cho nên đường dẫn tuyệt đối của nó sẽ là \texttt{web/hello.html/html/body/h1:3:12}. Đường dẫn mới này sẽ giúp phân biệt phần tử này với phần liền kề với đường dẫn \texttt{web/hello.html/html/body/h1:4:12}. Thật may mắn nền tảng Java cung cấp sẵn một thư viện giúp chúng ta phân tích các tệp có định dạng XML và lấy được tọa độ của các phần tử này. SAXParser sẽ giúp ta tiết kiệm công sức rất nhiều trong việc tiền xử lý phần mã nguồn này.
 
 \begin{lstlisting}[language=XML,
 caption={Ví dụ mã nguồn HTML},label={code:html-example}]
@@ -845,8 +845,8 @@ Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm l
 
 Đối với phát hiện thay đổi cho thuộc tính và phương thức Java, các làm cũng tương tự so với lớp tuy nhiên sẽ đơn giản hơn như Thuật toán \ref{algo:field-change} và \ref{algo:method-change}. Đối với thuộc tính ta chỉ cần so sánh cho từ khóa $final$, $static$ còn phương thức thì thêm cả từ khóa $abstract$. Ngoài ra đối với thuộc tính ta cũng cần so sánh kiểu của nó để xác định loại thay đổi (\textbf{CSF}). Đối với phương thức, để tìm ra các loại thay đổi khác, ta cần so sánh kiểu trả về (\textbf{CRM}), thân phương thức (\textbf{DM}), danh sách tham số (\textbf{CPM}).
 
-\chapter{Thực nghiệm và triển khai}
-Ở chương này, khóa luận sẽ trình về quá trình thực nghiệm và triển khai với thư viện hỗ trợ tiền xử lý mã nguồn như Java Development Tools \footnote{https://www.eclipse.org/jdt}. Thêm vào đó công cụ phát triển cũng được mô tả chi tiết triển khai cho các phương pháp đã nêu ở các chương trước.
+\chapter{Công cụ và thử nghiệm}
+Ở chương này, khóa luận sẽ trình về quá trình thực nghiệm và triển khai công cụ. Thêm vào đó công cụ phát triển cũng được mô tả chi tiết triển khai cho các phương pháp đã nêu ở các chương trước.
 
 \section{Kiến trúc công cụ}
 Ở phần này sẽ trình bày về kiến trúc bộ công cụ JCIA-VT và trình bày chi tiết những mô-đun mà khóa luận này thực hiện. Kiến trúc của bộng công cụ JCIA-VT được mô tả trong Hình \ref{fig:jcia-vt-architecture}.
