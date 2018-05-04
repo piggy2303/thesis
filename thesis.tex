@@ -299,7 +299,7 @@ J2EE đang là một giải pháp phổ biến được sử dụng để triể
 Dựa trên ý tưởng về phương pháp này, một phương pháp hoàn chỉnh đã được nghiên
 cứu và đề xuất để thực hiện phân tích ảnh hưởng sự thay đổi cho các ứng dụng J2EE đa
 nền tảng. Các framework phổ biến hiện nay như Spring, Struts, Hibernate sẽ được tập trung
-hỗ trợ đầu tiên. Sau đó các phương pháp phân tích sẽ dần được hoàn thiện cho các tất cả các nền tảng khác. Ngoài ra, khóa luận này cũng đề xuất một giải pháp giúp thực hiện công việc thu thập tập thay đổi làm đầu vào cho phương pháp CIA bằng phương pháp so sánh cây cấu trúc của các phiên bản ứng dụng. Một công cụ được phát triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã được xây dựng. Các phần còn lại của khóa luận được cấu trúc như sau.
+hỗ trợ đầu tiên. Sau đó các phương pháp phân tích sẽ dần được hoàn thiện cho các tất cả các nền tảng khác. Ngoài ra, khóa luận này cũng đề xuất một giải pháp giúp thực hiện công việc thu thập tập thay đổi làm đầu vào cho phương pháp CIA bằng phương pháp so sánh cây cấu trúc của các phiên bản ứng dụng. Một công cụ được phát triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã được xây dựng. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để sinh cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định các mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng để tạo ra đồ thị gọi làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi. Các phần còn lại của khóa luận được cấu trúc như sau.
 \begin{itemize}
 \item \textbf{Chương \ref{chap:background}} - \nameref{chap:background}. Chương này trình bày về lý thuyết phân tích ảnh hưởng sự thay đổi. Bao gồm lịch sử nghiên cứu và quy trình chung của các phương pháp phân tích ảnh hưởng sự thay đổi hiện nay. Ngoài ra, chương này cũng giới thiệu thư viện Java Development Tools - một thư viện hỗ trợ phân tích mã nguồn Java mạnh mẽ.
 \item \textbf{Chương \ref{chap:approach}} - \nameref{chap:approach}. Trong chương này, một phương pháp về tiền xử lý mã nguồn ứng dụng J2EE để xây dựng cây cấu trúc sẽ được trình bày. Bên cạnh đó, khóa luận đề xuất các phương pháp để phân tích phụ thuộc cho Java Core và framework J2EE Struts và trình bày phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA để áp dụng cho các ứng dụng J2EE. Cuối cùng, chương này mô tả cách quản lý các phiên bản mã nguồn dựa trên cây cấu trúc của mã nguồn.
@@ -319,26 +319,26 @@ Phân tích ảnh hưởng sự thay đổi bao gồm một bộ các kỹ thu�
 CIA có thể được sử dụng trước hoặc sau khi thực hiện thay đổi. Trước khi thực hiện thay đổi, CIA có thể được sử dụng để tiên đoán ảnh hưởng sự thay đổi và ước tính chi phí. Sau khi thay đổi được thực hiện, CIA có thể được ứng dụng để lựa chọn các ca kiểm thử cho quá trình kiểm thử hồi quy.
 
 \subsection{Các phương pháp phân tích ảnh hưởng sự thay đổi}
+Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng\cite{cia-bohner}. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA.
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.5]{CIA-hierarchy}
+	\includegraphics[scale=0.4]{CIA-hierarchy}
 	\caption{Các phương pháp CIA}
 	\label{fig:cia-hierarchy}
 \end{figure}
 
-Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng\cite{cia-bohner}. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA.
-
 Để thực hiện Depedency-based CIA, ta có thể sử dụng hai phương pháp là phân tích tĩnh và động. Phân tích động sẽ yêu cầu thực thi ứng dụng, nó sẽ thu thập các thông tin trước, trong và sau khi chạy để xác định các mối quan hệ phụ thuộc. Phương pháp này mang lại chính xác cao nhưng đòi hỏi sự phức tạp và tốn kém. Bên cạnh đó, các phương pháp phân tích tĩnh dễ thực hiện và ít tốn kém. Chúng tập được thực hiện ngay trên mã nguồn phần mềm. Có thể chia các phương pháp tĩnh này thành ba loại chính: Phân tích dựa trên lịch sử được thực hiện bằng cách khai phá thông tin từ nhiều phiên bản tiến hóa của phần mềm, phương pháp thường cho nhiều kết quả dự đoán nhầm, nhiều phần tử ảnh hưởng dự đoán thật sự không bị ảnh hưởng; Phân tích ngữ nghĩa dựa trên việc trích xuất thông tin từ việc phân tích nội dung comment hoặc các định danh (ví dụ: tên biến, phương thức); Nổi trội nhất trong đó là phân tích cấu trúc, phương pháp này tập trung phân tích tĩnh cấu trúc của chương trình, xác định các mối quan hệ giữa các thành phần và xây dựng đồ thị phụ thuộc.
 
 \subsection{Quy trình phân tích ảnh hưởng sự thay đổi}
+Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính là thay đổi cấu trúc và thay đổi lô-gíc. Thay đổi cấu trúc là các thay đổi liên quan đến các thành phần trong mã nguồn. Cụ thể đối với ngôn ngữ Java, thay đổi cấu trúc có thể là thay đổi về phạm vi truy cập, kiểu, tên của một thuộc tính hoặc thay đổi chữ kí của một phương thức. Thay đổi lô-gíc là thay đổi về thuật toán, các câu lệnh. Chúng thường là những thay đổi nằm trong thân phương thức.
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.8]{CIA-process}
+	\includegraphics[scale=0.7]{CIA-process}
 	\caption{Quy trình chung CIA}
 	\label{fig:cia-process}
 \end{figure}
-
-Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính là thay đổi cấu trúc và thay đổi lô-gíc. Thay đổi cấu trúc là các thay đổi liên quan đến các thành phần trong mã nguồn. Cụ thể đối với ngôn ngữ Java, thay đổi cấu trúc có thể là thay đổi về phạm vi truy cập, kiểu, tên của một thuộc tính hoặc thay đổi chữ kí của một phương thức. Thay đổi lô-gíc là thay đổi về thuật toán, các câu lệnh. Chúng thường là những thay đổi nằm trong thân phương thức.
 
 Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA\cite{cia-survey}. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
 
@@ -845,10 +845,10 @@ Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm l
 
 \chapter{Công cụ và thử nghiệm}
 \label{chap:experiment}
-Ở chương này, khóa luận sẽ trình về quá trình thực nghiệm và triển khai công cụ. Thêm vào đó công cụ phát triển cũng được mô tả chi tiết triển khai cho các phương pháp đã nêu ở các chương trước.
+Ở chương này, khóa luận sẽ mổ tả chi tiết về kiến trúc và cách cài đặt công cụ để triển khai cho các phương pháp nêu ở chương trước. Thêm vào đó, 
 
-\section{Kiến trúc công cụ}
-Ở phần này sẽ trình bày về kiến trúc bộ công cụ JCIA-VT và trình bày chi tiết những mô-đun mà khóa luận này thực hiện. Kiến trúc của bộng công cụ JCIA-VT được mô tả trong Hình \ref{fig:jcia-vt-architecture}.
+\section{Kiến trúc và cài đặt công cụ}
+Ở phần này sẽ trình bày về kiến trúc bộ công cụ JCIA-VT và trình bày chi tiết những mô-đun mà khóa luận này thực hiện. Kiến trúc của bộng công cụ JCIA-VT được mô tả trong Hình \ref{fig:jcia-vt-architecture} (những mô-đun được làm đậm hơn được khóa luận này thực hiện).
 
 \begin{figure}[h]
 	\centering
@@ -862,8 +862,6 @@ Dựa trên những đề xuất phương pháp đã trình bày, bộ công c�
 Bước tiếp theo, để phân tích ảnh hưởng sự thay đổi, bộ công cụ yêu cầu người dùng tải lên một phiên bản của mã nguồn dự án. Bộ quản lý phiên sẽ thực hiện so sánh và phát hiện thay đổi, sau đấy tập các thành phần thay đổi được đưa vào thuật toán WAVE-CIA. Toàn bộ công việc này sẽ được mô-đun phân tích ảnh hưởng sự thay đổi thực hiện. Hoặc nếu trong trường hợp người dùng muốn sử dụng các bộ phân tích trong mô-đun phân tích cấu trúc. Các bộ phân tích này sẽ thực hiện trích xuất thông tin trên cây cấu trúc để xây dựng các góc nhìn về ứng dụng: góc nhìn kiến trúc công nghệ, dòng dữ liệu ứng dụng, biểu đồ lớp, sơ đồ liên kết thực thể, biểu đồ độ phức tạp mã nguồn.
 
 Tất cả các kết quả phân tích đều có thể được hiển thị tới người dùng một cách trực quan nhờ mô-đun trình diễn. Mô-đun này được phát triển bằng Javascript sử dụng thư viện D3.js \footnote{  https://d3js.org}. Nó truy xuất và tương tác với dữ liệu của hệ thống phía sau bởi các API được cung cấp bởi Spring MVC.
-
-\section{Cài đặt công cụ}
 \section{Triển khai thử nghiệm}
 
 Hiện tại bộ công cụ đã được cài đặt và triển khai thực tế trên nền tảng Web tại địa chỉ \url{http://112.137.131.10:8080/jcia}. Bộ công cụ không yêu cầu người dùng cài đặt thêm bất cứ phần mềm nào, chỉ cần có một trình duyệt Web. Bộ công cụ cũng cho phép nhiều người dùng cùng sử dụng và phân tích đồng thời.
@@ -933,6 +931,8 @@ Phía bên trái giao diện chính gồm hai khung nhìn cho phục vụ cho vi
 \end{itemize}
 
 \subsection{Ví dụ minh họa}
+Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm nghiên cứu sử dụng một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thực nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thực nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/sample-vitm}
@@ -940,9 +940,7 @@ Phía bên trái giao diện chính gồm hai khung nhìn cho phục vụ cho vi
 	\label{fig:sample-vitm}
 \end{figure}
 
-Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm nghiên cứu sử dụng một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thực nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thực nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
-
-Sau khi thực hiện tiền xử lý và phân tích phụ thuộc cho dự án, hệ thống sẽ trả về cây cấu trúc kèm theo các phụ thuộc giữa các nút trên cây. Trên Hình \ref{fig:sample-vitm}, ta có thể thấy các phụ thuộc được biểu diễn bằng các mũi tên màu xám. Bộ tiền xử lý cho ta cây cấu trúc gồm thông tin về các thư mục và tệp trong mã nguồn dự án. Ta có thể thấy package \textit{common} là một package có nhiều mũi tên trỏ tới, bởi vì nó là một package Java được sử dụng nhiều trong dự án, điều này chứng minh rằng bộ phân tích phụ thuộc Java Core đã có hiệu quả nhất định. Ngoài ra, Bộ phân tích phụ thuộc cho Hibernate đã phân tích mã nguồn và xác định được tên các bảng trong CSDL và gán chúng lên cây cấu trúc, nhiều mũi tên xuất phát từ package \textit{database} tới các nút bảng cho ta thấy package \textit{database} là nơi chứa các lớp truy cập và thao tác trực tiếp tầng CSDL. Cuối cùng, những mũi tên giữa thư mục \textit{web, com/sample, config} và tệp \textit{struts.xml} là kết quả của bộ phân tích Struts 2. Các mũi tên từ \textit{struts.xml} và \textit{config} tới package \textit{com/sample} thể hiện cho sự phụ thuộc của các định nghĩa \textit{Action, Interceptor, Result Type} bằng các lớp Java; tới thư mục \textit{web} thể hiện cho sự phụ thuộc các định nghĩa \textit{Result}.
+Sau khi thực hiện tiền xử lý và phân tích phụ thuộc cho dự án, hệ thống sẽ trả về cây cấu trúc kèm theo các phụ thuộc giữa các nút trên cây ở Hình \ref{fig:sample-vitm}, ta có thể thấy các phụ thuộc được biểu diễn bằng các mũi tên màu xám. Bộ tiền xử lý cho ta cây cấu trúc gồm thông tin về các thư mục và tệp trong mã nguồn dự án. Ta có thể thấy package \textit{common} là một package có nhiều mũi tên trỏ tới, bởi vì nó là một package Java được sử dụng nhiều trong dự án, điều này chứng minh rằng bộ phân tích phụ thuộc Java Core đã có hiệu quả nhất định. Ngoài ra, Bộ phân tích phụ thuộc cho Hibernate đã phân tích mã nguồn và xác định được tên các bảng trong CSDL và gán chúng lên cây cấu trúc, nhiều mũi tên xuất phát từ package \textit{database} tới các nút bảng cho ta thấy package \textit{database} là nơi chứa các lớp truy cập và thao tác trực tiếp tầng CSDL. Cuối cùng, những mũi tên giữa thư mục \textit{web, com/sample, config} và tệp \textit{struts.xml} là kết quả của bộ phân tích Struts 2. Các mũi tên từ \textit{struts.xml} và \textit{config} tới package \textit{com/sample} thể hiện cho sự phụ thuộc của các định nghĩa \textit{Action, Interceptor, Result Type} bằng các lớp Java; tới thư mục \textit{web} thể hiện cho sự phụ thuộc các định nghĩa \textit{Result}.
 
 Bộ công cụ cung cấp hai cách để thực hiện việc phân tích ảnh hưởng sự thay đổi. thứ nhất là người dùng chọn tập thay đổi và phân tích trực tiếp trên giao diện hiển thị phụ thuộc, thứ hai là phân tích tự động bằng cách người dùng tải lên mã nguồn đã thay đổi, công cụ thực hiện so sánh hai phiên bản mã nguồn và phân tích ảnh hưởng rồi trả về báo cáo kết quả.
 
@@ -955,7 +953,7 @@ Bộ công cụ cung cấp hai cách để thực hiện việc phân tích ản
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\linewidth]{images/sample-vitm-2}
+	\includegraphics[width=0.8\linewidth]{images/sample-vitm-2}
 	\caption{Ví dụ phân tích phụ thuộc cho dự án Struts thực nghiệm}
 	\label{fig:sample-vitm-2}
 \end{figure}
@@ -963,12 +961,37 @@ Bộ công cụ cung cấp hai cách để thực hiện việc phân tích ản
 Hình \ref{fig:sample-vitm-1} và Hình \ref{fig:sample-vitm-2} lần lượt biểu diễn cho nhật ký hoạt động và kết quả của quá trình phân tích ảnh hưởng sự thay đổi sử dụng bộ so sánh phiên bản cho một ví dụ cụ thể. Với giả định cải tiến cho chức năng \textit{Upload File} của dự án mẫu, một thuộc tính có tên \textit{response} đã được thêm vào và phương thức \textit{prepareUploadFile()} đã được thay đổi trong tệp \textit{ImFileUpload.java}. Sau khi mã nguồn mới được tải lên, bộ so sánh phiên bản được thực thi, công cụ đã phát hiện chính xác các thay đổi giữa hai phiên bản, ta có thể thấy trong nhật ký so sánh ở Hình \ref{fig:sample-vitm-1}. Tiếp theo, bộ phân tích ảnh hưởng được thực hiện với tham số mức độ ảnh hưởng là 3 cho ta kết quả như Hình \ref{fig:sample-vitm-2}.
 
 \subsection{Thảo luận}
+Công cụ phân tích phụ thuộc và ảnh hưởng sự thay đổi cho các ứng dụng J2EE trong bộ công cụ JCIA-VT là một giải pháp cho việc quản lý và đảm bảo chất lượng liên tục giữa các phiên bản của các ứng dụng J2EE. Thử nghiệm cho thấy hướng phát triển tiềm năng của kỹ thuật phân tích ảnh hưởng sự thay đổi WAVE-CIA.
+
+Việc phát triển công cụ ngay trên nền tảng Web cho phép người dùng sử dụng ngay trên trình duyệt mà không cần cài đặt bất cứ cái gì. Với giao diện trực quan, dễ sử dụng, người dùng chỉ cần tải lên các phiên bản mã nguồn ứng dụng. Công cụ sẽ tự động phân tích và xuất ra kết quả báo cáo ngay trên giao diện hoặc dưới dạng tệp tin \textit{excel, pdf}.
+
+Trước đây, để thực hiện công việc phân tích ảnh hưởng sự thay đổi thì cần một người trong đội dự án hiểu thật rõ về toàn bộ ứng dụng để có thể đưa ra các thành phần ảnh hưởng. Điều này có thể gây ra rủi ro cao, trong khi đó chi phí cho việc và thời gian cho công sức thức hiện là rất lớn. Thử nghiệm cho thấy, sau khi phân tích phụ thuộc một ứng dụng J2EE có quy mô hơn 350kLOC, thu được tổng số nút cây cấu trúc là 106.500 và số phụ thuộc là 88.000. Đây là những con số khổng lồ, con người khó có thể mà kiểm soát, do vậy việc áp dụng công cụ phân tích ảnh hưởng sự thay đổi mang lại rất nhiều lợi ích.
+
+Bảng \ref{tbl:dep-number} cung cấp thông tin về số lượng mối quan hệ phụ thuộc và số lượng ca kiểm thử cho các bộ phân tích phụ thuộc công nghệ Java Core và framework Struts.
+
+\begin{table}[h]
+	\centering
+	\caption{Số lượng phụ thuộc và ca kiểm thử cho các bộ phân tích phụ thuộc}
+	\label{tbl:dep-number}
+	\begin{tabular}{|p{3cm}|l|l|l|}
+		\hline
+		\textbf{Công nghệ} & \textbf{Số loại phụ thuộc} & \textbf{Số ca kiểm thử} & \textbf{Tỉ lệ ca kiểm thử Pass} \\ \hline
+		Java Core          & 10                         & 61                      & 100\%                           \\ \hline
+		Struts             & 32                         & 86                      & 94.18\%                         \\ \hline
+	\end{tabular}
+\end{table}
+
+Với những lợi thế và ưu điểm đã nêu, trong tương lai công cụ có khả năng áp dụng vào thực tế. Hiện tại, công cụ đang được triển khai thử nghiệm tại Trung tâm Công nghệ và Quản lý chất lượng phần mềm Viettel và nhận được nhiều phản hồi tích cực.
 
 \chapter{Kết luận}
 \label{chap:conclusion}
 Khóa luận này đã đề xuất các phương pháp và công cụ phục vụ hỗ trợ cho công việc quản lý và đảm chất lượng các phiên bản cho các ứng dụng J2EE. Ở giai đoạn này, khóa luận đã hoàn thành cơ bản các chức năng chính của công cụ nhằm đáp ứng cho việc phân tích mã nguồn các ứng dụng sử dụng Java Core và Struts 2. Dựa trên những gì đã thực hiện được, trong giai đoạn tiếp theo, sẽ có thêm nhiều phụ thuộc được thêm vào để xử lý giúp bộ phân tích ảnh hưởng dự đoán tập ảnh hưởng chính xác hơn. Bộ quản lý vào so sánh các phiên bản mã nguồn sẽ được tích hợp với các hệ thống quản lý phiên bản hiện nay như Git và SVN . Điều này giúp cho việc thực hiện phân tích ảnh hưởng và báo cáo kết quả hoàn toàn tự động mà không cần đến các thao tác của con người. Đây cũng là một lợi thế để áp dụng các kĩ thuật CIA có tính chính xác cao hơn như kĩ thuật CIA dựa vào phân loại thay đổi bởi bộ so sánh phiên bản có thể xác định chính xác từng loại thay đổi trên các thành phần mã nguồn. Đối với các kiểm thử viên, chức năng phân tích ảnh hưởng có thể giúp họ chỉ cần thực hiện một số ca kiểm thử nhất định khi có đội phát triển thay đổi mã nguồn. Tuy nhiên, hiện nay hầu hết các ca kiểm thử được thực hiện dựa trên các tài liệu biên bản kiểm thử mà chúng mô tả các bước kiểm thử bằng tay trên giao diện ứng dụng chứ không phải tự động bằng Unit Test. Trong khi đó kết quả của bộ phân tích ảnh hưởng là các thành phần mã nguồn, do đó một bộ ánh xạ giữa thành phần mã nguồn và các màn hình hoặc chức năng ứng dụng cần được tích hợp để công cụ này thực sự có ích và có thể ứng dụng đại trà vào quá trình đảm bảo chất lượng cho nền công nghiệp phát triển phần mềm ở các công ty hiện nay. Ngoài ra, cần có thêm nhiều góc nhìn về ứng dụng cần được tích hợp để người sử dụng thêm nhiều thông tin cho ứng dụng của mình như biểu đồ tuần tự giữa các gói, biểu đồ dòng điều khiển và các tiện ích đánh giá về độ phức tạp mã nguồn và bảo mật của ứng dụng, v.v. Công cụ sẽ hỗ trợ cho thêm nhiều công nghệ và nền tảng khác của Java, và xa hơn nữa, sẽ đề xuất thêm các phương pháp để công cụ có thể phân tích cho các ngôn ngữ khác như C\#, PHP, Javascript.
 
 \begin{thebibliography}{9}
+\section*{Tiếng Việt}
+	\bibitem{cia-uet}
+	Nguyễn Quỳnh Mai, Nguyễn Công Hưng. Phương pháp và công cụ phân tích sự ảnh hưởng của thay đổi mã nguồn cho các ứng dụng J2EE 6. \textit{Hội nghị SVNCKH khoa CNTT, ĐH Công nghệ}, 2016.
+\section*{Tiếng Anh}
 	\bibitem{cia-survey} 
 	Bixin Li, Xiaobing Sun, Hareton Leung, Sai Zhang.
 	A survey of code-based change impact analysis techniques.
@@ -989,9 +1012,6 @@ Khóa luận này đã đề xuất các phương pháp và công cụ phục v�
 	
 	\bibitem{jcia}
 	Ba Cuong Le, Son Nguyen Van, Duc Anh Nguyen, Ngoc Hung Pham, Hieu Vo Dinh. JCIA: A Tool for Change Impact Analysis of Java EE Applications. Information Systems Design and Intelligent Applications, pp.105-114, 2018.
-	
-	\bibitem{cia-uet}
-	Nguyễn Quỳnh Mai, Nguyễn Công Hưng. Phương pháp và công cụ phân tích sự ảnh hưởng của thay đổi mã nguồn cho các ứng dụng J2EE 6. \textit{Hội nghị SVNCKH khoa CNTT, ĐH Công nghệ}, 2016.
 \end{thebibliography}
 
 \end{document}
