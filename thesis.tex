@@ -20,6 +20,7 @@
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{chngcntr}
 \usepackage{nameref}
+\usepackage[font=bf]{caption}
 \counterwithin{figure}{chapter}
 
 \setlength{\parskip}{6pt}
@@ -294,7 +295,7 @@ Các kĩ thuật CIA sử dụng đầu vào là kết quả của quá trình p
 dụng. Quá trình này không thể tổng quát hóa cho toàn bộ các công nghệ và nền tảng hiện
 có.
 
-J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI, JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts, Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng J2EE, một phương pháp kèm theo công cụ có tên JCIA-VT \cite{cia-uet} đã được đề xuất và xây dựng. Tuy nhiên, phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính hiệu quả cao.
+J2EE đang là một giải pháp phổ biến được sử dụng để triển khai cho các ứng dụng Web doanh nghiệp hiện đại. Nó bao gồm nhiều công nghệ cốt lõi như EJB, JSF, CDI, JAX-WS, JPA, JMS, v.v và có thể tích hợp nhiều framework khác như Spring, Struts, Hibernate, Vaddin, GWT, Play!, Grails, v.v. Để giải quyết bài toán trên cho các ứng dụng J2EE, một phương pháp kèm theo công cụ có tên JCIA \cite{cia-uet} đã được đề xuất và xây dựng. Tuy nhiên, phương pháp này khá thô sơ và chỉ đề xuất phân tích cho một số công nghệ cốt lõi của J2EE. Công cụ JCIA còn đơn giản, chưa được hoàn thiện và chưa mang lại tính hiệu quả cao.
 
 Dựa trên ý tưởng về phương pháp này, một phương pháp hoàn chỉnh đã được nghiên
 cứu và đề xuất để thực hiện phân tích ảnh hưởng sự thay đổi cho các ứng dụng J2EE đa
@@ -314,16 +315,16 @@ hỗ trợ đầu tiên. Sau đó các phương pháp phân tích sẽ dần đ�
 \section{Phân tích ảnh hưởng sự thay đổi}
 Bảo trì phần mềm luôn được coi là hoạt động khó và tiêu tốn chi phí nhiều nhất trong quá trình phát triển phần mềm. Các sản phẩm phẩm phần mềm liên tục thay đổi và thích nghi với các yêu cầu thay đổi để phù hợp với nhu cầu của người dùng. Khi các thay đổi được thực hiện, nó sẽ gây ra các ảnh hưởng không lường trước được, và có thể gây ra các tác động làm mất sự nhất quán đối với các thành phần của phần mềm.
 
-Phân tích ảnh hưởng sự thay đổi bao gồm một bộ các kỹ thuật giúp xác định sự ảnh hưởng của các thay đổi được đề xuất tới các thành phần phần mềm\cite{cia-survey}. Nó đóng vai trò quan trọng trong quá trình phát triển, bảo trì phần mềm và kiểm thử hồi quy.
+Phân tích ảnh hưởng sự thay đổi bao gồm một bộ các kỹ thuật giúp xác định sự ảnh hưởng của các thay đổi được đề xuất tới các thành phần phần mềm \cite{cia-survey}. Nó đóng vai trò quan trọng trong quá trình phát triển, bảo trì phần mềm và kiểm thử hồi quy.
 
 CIA có thể được sử dụng trước hoặc sau khi thực hiện thay đổi. Trước khi thực hiện thay đổi, CIA có thể được sử dụng để tiên đoán ảnh hưởng sự thay đổi và ước tính chi phí. Sau khi thay đổi được thực hiện, CIA có thể được ứng dụng để lựa chọn các ca kiểm thử cho quá trình kiểm thử hồi quy.
 
 \subsection{Các phương pháp phân tích ảnh hưởng sự thay đổi}
-Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng\cite{cia-bohner}. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA.
+Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu và đề xuất. Hình \ref{fig:cia-hierarchy} mô tả về các phương pháp CIA hiện nay đã được đề xuất. Một số phương pháp CIA dựa trên phân tích sự truy vết (traceability-based CIA) trong khi một số khác tập trung phân tích các mối quan hệ phụ thuộc (dependency-based CIA) để xác định các ảnh hưởng \cite{cia-bohner}. Traceability-based CIA sẽ cố gắng truy vết mối liên kết giữa các phần tử trong từng mức trừu tượng với các thành phần tương ứng ở các mức khác (các mức trừu tượng: yêu cầu, tài liệu đặc tả, thiết kế, mã nguồn, ca kiểm thử). Mục tiêu của nó là gắn kết các thể hiện ở mỗi mức trừu tượng khác nhau của các đối tượng phần mềm (ví dụ: tài liệu thiết kế với mã nguồn). Trong khi đó, Depedency-based CIA tập trung xác định các mối quan hệ phụ thuộc của các thành phần trong cùng một mức trừu tượng (ví dụ: mối quan hệ giữa các lớp, phương thức, thuộc tính trong mã nguồn). Depedency-based CIA thường được áp dụng ở mức trừu tượng chi tiết hơn Traceability-based CIA.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.4]{CIA-hierarchy}
+	\includegraphics[scale=0.56]{CIA-hierarchy}
 	\caption{Các phương pháp CIA}
 	\label{fig:cia-hierarchy}
 \end{figure}
@@ -335,12 +336,12 @@ Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.7]{CIA-process}
+	\includegraphics[scale=0.8]{CIA-process}
 	\caption{Quy trình chung CIA}
 	\label{fig:cia-process}
 \end{figure}
 
-Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA\cite{cia-survey}. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
+Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA \cite{cia-survey}. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
 
 \begin{equation}
 Precision = \frac{|EIS \cap AIS|}{EIS}
@@ -354,9 +355,9 @@ Recall = \frac{|EIS \cap AIS|}{AIS}
 
 Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập ảnh hưởng dự đoán gần nhất với tập ảnh hưởng thực tế khi thực hiện thay đổi (Actual Impact Set - AIS). Khi so sánh giữa EIS và AIS ta, có tập các thành phần ảnh hưởng tiên đoán nhầm (False Negative Impact Set - FNIS) và tập các thành phần ảnh hưởng tiên đoán thiếu (False Positive Impact Set - FPIS). Để đánh giá sự hiệu quả của một phương pháp CIA, người ta dùng hai độ đo là độ chính xác (Precision - P) và Recall - R, được tính theo các công thức \ref{exp:cia-precision} và \ref{exp:cia-recall}. Độ chính xác càng cao, tập FNIS sẽ càng bé, ta ít phải chú ý đến những thành phần không cần thiết. Độ hồi tưởng càng cao, tập FPIS càng bé, giúp ta phát hiện nhiều thành phần bị ảnh hưởng hơn giúp giảm số lỗi tiềm ẩn sau khi áp dụng phương pháp CIA.
 
-\section{Giới thiệu về Java Development Tools}
+\section{Các công cụ phát triển Java}
 Các công cụ phát triển Java (Java Developement Tools - JDT)\footnote{https://www.eclipse.org/jdt} là một tập các plug-in giúp nền tảng Eclipse trở thành một trình phát triển tích hợp đầy đủ chức năng cho ngôn ngữ Java. Nó được phát triển và bảo trì bởi tổ chức Eclipse và là thành phần mặc định trong Eclipse IDE cho ngôn ngữ Java. Tuy nhiên, những plug-in của JDT này cũng cung cấp các API do vậy chúng ta hoàn toàn có thể sử dụng chúng để hỗ trợ phát triển các công cụ khác của riêng mình.
-\subsection{Các thành phần của Java Development Tools}
+\subsection{Các thành phần của JDT}
 Các plug-in của JDT có thể chia thành năm loại, chúng đều hỗ trợ trong việc phát triển các ứng dụng Java. Bao gồm JDT APT hỗ trợ cho việc xử lý Annotation, được phát triển để hỗ trợ từ Java phiên bản 5; JDT Debug thực hiện các hỗ trợ trong việc gỡ rối; JDT Text cung cấp các hỗ trợ cho trình soạn thảo mã nguồn Java như làm nổi bật từ khóa và cú pháp, hỗ soạn thảo và hoàn thiện mã nguồn (code assist và code complete); JDT UI cung cấp một số giao diện hỗ trợ như trình duyệt gói, trình xem hệ thống cấp bậc cho một kiểu, trình xem phác thảo cho một tệp; JDT Core là trái tim của JDT, chứa các phần cài đặt cốt lõi và quan trọng như sau.
 \begin{itemize}
 	\item Một trình biên dịch Java. Được cài đặt như là trình xây dựng Eclipse, nó được phát triển dựa trên công nghệ của trình biên dịch VisualAge. Đặc biệt nó còn cho phép chạy và gỡ rối mã nguồn vẫn còn có lỗi.
@@ -372,18 +373,18 @@ JDT Core chính là thành phần ta cần sử dụng để hỗ trợ trong vi
 \begin{lstlisting}[language=Java,
 caption={Sử dụng API của JDT Core để tạo cây cấu trúc trừu tượng},label={code:jdt-ast-gen}]
 public CompilationUnit getJdtRoot(String javaFilePath, String sourceFolder) throws IOException {
-ASTParser parser = ASTParser.newParser(AST.JLS8);
-parser.setResolveBindings(true);
-parser.setKind(ASTParser.K_COMPILATION_UNIT);
-parser.setBindingsRecovery(true);
-Map options = JavaCore.getOptions();
-parser.setCompilerOptions(options);
-String[] sources = { sourceFolder };
-parser.setEnvironment(null, sources, new String[] { "UTF-8"}, true);
-parser.setUnitName(javaFilePath);
-parser.setSource(FileHelper.readFileContent(javaFilePath).toCharArray());
-CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-return cu;
+	ASTParser parser = ASTParser.newParser(AST.JLS8);
+	parser.setResolveBindings(true);
+	parser.setKind(ASTParser.K_COMPILATION_UNIT);
+	parser.setBindingsRecovery(true);
+	parser.setCompilerOptions(JavaCore.getOptions());
+	parser.setEnvironment(
+			null, new String[] {sourceFolder},
+			new String[] {"UTF-8"}, true);
+	parser.setUnitName(javaFilePath);
+	parser.setSource(FileHelper.readFileContent(javaFilePath).toCharArray());
+	CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+	return cu;
 }
 \end{lstlisting}
 
@@ -414,9 +415,9 @@ Một API khác cũng rất hữu ích là \texttt{astNode.getStartPosition()} c
 \chapter{Phương pháp thực hiện}
 \label{chap:approach}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
-\textbf{Định nghĩa:} (\textit{Cây cấu trúc}\cite{jcia}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v,v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
+\textbf{Định nghĩa:} (\textit{Cây cấu trúc} \cite{jcia}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v.v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
 
-Các ứng dụng doanh nghiệp J2EE, ngoài sử dụng mã nguồn Java còn nhiều định dạng mã nguồn khác để đảm nhiệm vai trò cho tầng \textit{View} và các thành phần cấu hình ứng dụng như XML, JSP, XHTML, FreeMarker,...Với mỗi một định dạng lại có cấu trúc và cú pháp khác nhau, tuy nhiên ta có thể phân loại thành hai nhóm là mã nguồn Java và mã nguồn XML-based (mã nguồn có cú pháp dựa trên định dạng XML). Bộ tiền xử lý cần biến đổi những mã nguồn này về định dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa những thông tin cần thiết cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và tìm kiếm các nút trên cây dễ dàng.
+Các ứng dụng doanh nghiệp J2EE, ngoài sử dụng mã nguồn Java còn nhiều định dạng mã nguồn khác để đảm nhiệm vai trò cho tầng \textit{View} và các thành phần cấu hình ứng dụng như XML, JSP, XHTML, FreeMarker, v.v. Với mỗi một định dạng lại có cấu trúc và cú pháp khác nhau, tuy nhiên ta có thể phân loại thành hai nhóm là mã nguồn Java và mã nguồn XML-based (mã nguồn có cú pháp dựa trên định dạng XML). Bộ tiền xử lý cần biến đổi những mã nguồn này về định dạng chung là cây cấu trúc, các nút trên cây cấu trúc cần chứa những thông tin cần thiết cho việc phân tích phụ thuộc cũng như cây cần được thiết kế để tối ưu cho việc duyệt và tìm kiếm các nút trên cây dễ dàng.
 
 \subsection{Tiền xử lý cho mã nguồn Java và mã nguồn định dạng XML}
 Hình \ref{fig:preprocess} thể hiện phương pháp để tiền xử lý mã nguồn ứng dựng J2EE. Hai phương pháp chính được đề xuất để thực hiện tiền xử lý cho mã nguồn Java và mã nguồn XML-based. Một phương pháp duyệt thư mục cũng cần được đề xuất và thực hiện nhằm tìm ra các tệp chứa mã nguồn Java và XML-based trong mã nguồn ứng dụng.
@@ -428,18 +429,17 @@ Hình \ref{fig:preprocess} thể hiện phương pháp để tiền xử lý mã
 	\label{fig:preprocess}
 \end{figure}
 
-Đầu tiên, ta thực hiện duyệt toàn bộ cấu trúc các thư mục và tệp trong mã nguồn ứng dụng. Ta có thể sinh được cây cấu trúc cơ bản gồm các nút thư mục và nút tệp. Tiếp theo, ta duyệt tìm tất cả các nút tệp trên cây. Các tệp mã nguồn có phần mở rộng \textit{.java} sẽ được phân tích  để thu thập thông tin và tạo các nút con tương ứng với các thành phần mã nguồn Java đó (lớp, thuộc tính, phương thức). Các thông tin của các thành phần này cũng cần được thu thập (ví dụ: đối với phương thức cần thu thập thông tin về kiểu trả về, mức truy cập, tên phương thức, danh sách các tham số). Hiện nay có một thư viện mã nguồn mở Java có tên Java Development Tools \footnote{https://www.eclipse.org/jdt/} đã hỗ trợ việc phân tích và thu thập thông tin cho các tệp mã nguồn Java. Tuy nhiên đầu ra của thư viện này chứa khá nhiều thông tin không cần thiết. Ta chỉ cần trích xuất những thông tin cần thiết để thêm vào cây cấu trúc. Các tệp mã nguồn có phần mở rộng \textit{.xml, .jsp, .html} sẽ xử lý bởi cùng một phương pháp tiền xử lý cho định dạng mã nguồn dựa trên XML. Kết quả đầu ra sẽ là các nút tương ứng với các thẻ XML có trong tệp. Các nút này cũng cần chứa toàn bộ thông tin của thẻ đấy, bao gồm các thuộc tính và nội dung của thẻ.
+Đầu tiên, ta thực hiện duyệt toàn bộ cấu trúc các thư mục và tệp trong mã nguồn ứng dụng. Ta có thể sinh được cây cấu trúc cơ bản gồm các nút thư mục và nút tệp. Tiếp theo, ta duyệt tìm tất cả các nút tệp trên cây. Các tệp mã nguồn có phần mở rộng \textit{.java} sẽ được phân tích  để thu thập thông tin và tạo các nút con tương ứng với các thành phần mã nguồn Java đó (lớp, thuộc tính, phương thức). Các thông tin của các thành phần này cũng cần được thu thập (ví dụ: đối với phương thức cần thu thập thông tin về kiểu trả về, mức truy cập, tên phương thức, danh sách các tham số). Hiện nay có một thư viện mã nguồn mở Java có tên Java Development Tools\footnote{https://www.eclipse.org/jdt/} đã hỗ trợ việc phân tích và thu thập thông tin cho các tệp mã nguồn Java. Tuy nhiên đầu ra của thư viện này chứa khá nhiều thông tin không cần thiết. Ta chỉ cần trích xuất những thông tin cần thiết để thêm vào cây cấu trúc. Các tệp mã nguồn có phần mở rộng \textit{.xml, .jsp, .html} sẽ xử lý bởi cùng một phương pháp tiền xử lý cho định dạng mã nguồn dựa trên XML. Kết quả đầu ra sẽ là các nút tương ứng với các thẻ XML có trong tệp. Các nút này cũng cần chứa toàn bộ thông tin của thẻ đấy, bao gồm các thuộc tính và nội dung của thẻ.
 
 \subsection{Định danh các nút trên cây cấu trúc}
-Cây cấu trúc là dữ liệu được sử dụng xuyên suốt trong các quá trình phân tích. Sẽ có rất nhiều hoạt động phân tích cần đến việc tìm kiếm và truy xuất dữ liệu của các nút trên cây. Vì thế việc định danh cho các nút trên cây là một việc rất quan trọng. Phương pháp đề xuất là định danh bằng đường dẫn tuyệt đối của nút. Đường dẫn tuyệt đối của mỗi nút trên cây sẽ được tạo thành bởi tên lần lượt của các nút cha và tên của nó, ngăn cách bởi kí tự gạch chéo ``\texttt{/}''. Với hầu hết các nút đại diện trong thành phần mã nguồn sẽ có đường dẫn tuyệt đối duy nhất, ta có thể thực hiện \textit{Indexing} các nút trên cây phục vụ cho việc tìm kiếm nhanh. Tuy nhiên, trong một số trường hợp, dùng tên các nút để tạo thành đường dẫn tuyệt đối sẽ có thể cho cùng một kết quả đối với nhiều hơn một nút.
+Cây cấu trúc là dữ liệu được sử dụng xuyên suốt trong các quá trình phân tích. Sẽ có rất nhiều hoạt động phân tích cần đến việc tìm kiếm và truy xuất dữ liệu của các nút trên cây. Vì thế việc định danh cho các nút trên cây là một việc rất quan trọng. Phương pháp đề xuất là định danh bằng đường dẫn tuyệt đối của nút. Đường dẫn tuyệt đối của mỗi nút trên cây sẽ được tạo thành bởi tên lần lượt của các nút cha và tên của nó, ngăn cách bởi kí tự gạch chéo ``\texttt{/}''. Với hầu hết các nút đại diện trong thành phần mã nguồn sẽ có đường dẫn tuyệt đối duy nhất, ta có thể thực hiện \textit{Indexing} các nút trên cây phục vụ cho việc tìm kiếm nhanh. Tuy nhiên, trong một số trường hợp, việc dùng tên các nút để tạo thành đường dẫn tuyệt đối sẽ có thể cho cùng một kết quả đối với nhiều hơn một nút.
 
 \begin{lstlisting}[language=Java,
 caption={Ví dụ chồng hàm trong Java},label={code:java-overloading}]
 package vn.sample.manager.BookManager;
 import vn.sample.model.Boook;
 import vn.sample.model.Author;
-public class BookManager {
-	//...	
+public class BookManager {	
 	public void addBook(Book newBook) {
 		//...
 	}
@@ -476,7 +476,7 @@ Với yêu cầu tham số có kiểu được biểu diễn bằng FQN phục v
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.6]{fqn-type}
+	\includegraphics[scale=0.75]{fqn-type}
 	\caption{Xác định tên xác định hoàn toàn cho kiểu Java}
 	\label{fig:fqn-type}
 \end{figure}
@@ -488,14 +488,14 @@ Trong phần này, khóa luận trình bày về mô hình kiến trúc của c�
 \subsection{Giới thiệu mô hình kiến trúc Struts}
 Apache Struts (trước đây được gọi là Struts 2 để phân biệt với Struts 1) là một trong những framework được ưa chuộng nhất để phát triển các ứng dụng web J2EE. Tương tự Spring MVC, Struts tuân theo mô hình xử lý MVC mà bản thân nó chứa đủ các thành phần giúp lập trình viên định nghĩa rõ ràng các thành phần Model, View và Controller.
 
+Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của một ứng dụng Struts. Các thành phần chính của nó được thiết kế tương ứng với các phần trong mô hình MVC chung.
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.8]{struts-architecture}
+	\includegraphics[scale=0.9]{struts-architecture}
 	\caption{Mô hình thiết kế của ứng dụng Struts}
 	\label{fig:struts-architecture}
 \end{figure}
-
-Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của một ứng dụng Struts. Các thành phần chính của nó được thiết kế tương ứng với các phần trong mô hình MVC chung.
 
 \textbf{Model:} là các lớp Java định nghĩa các đối tượng để chứa dữ liệu (POJO). Chúng chỉ đơn thuần có phương thức getter/setter tương ứng với các thuộc tính.
 
@@ -505,14 +505,14 @@ Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của m�
 
 \subsection{Làm mịn cây cấu trúc}
 
+Các nút trên cây sau khi được tiền xử lý mới chỉ mang thông tin cơ bản đặc trưng cho ngôn ngữ được tiền xử lý. Tuy nhiên, công việc phân tích phụ thuộc cần nhiều thông tin hơn nữa để xác định các quan hệ phụ thuộc. Đối với một framework, sẽ có một phương pháp riêng để trích xuất thông tin đặc trưng này. Bước thực hiện này được gọi là làm mịn cây cấu trúc. Đối với Struts cũng vậy, ta cần làm mịn các nút thành phần Java và XML thành các nút đặc trưng của Struts như \textit{JavaActionModelNode, StrutsConfigurationNode, StrutsPackageNode} được minh họa ở Hình \ref{fig:lam-min}.
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.4]{lam-min}
+	\includegraphics[scale=0.6]{lam-min}
 	\caption{Làm mịn cây cấu trúc}
 	\label{fig:lam-min}
 \end{figure}
-
-Các nút trên cây sau khi được tiền xử lý mới chỉ mang thông tin cơ bản đặc trưng cho ngôn ngữ được tiền xử lý. Tuy nhiên, công việc phân tích phụ thuộc cần nhiều thông tin hơn nữa để xác định các quan hệ phụ thuộc. Đối với một framework, sẽ có một phương pháp riêng để trích xuất thông tin đặc trưng này. Bước thực hiện này được gọi là làm mịn cây cấu trúc. Đối với Struts cũng vậy, ta cần làm mịn các nút thành phần Java và XML thành các nút đặc trưng của Struts như \textit{JavaActionModelNode, StrutsConfigurationNode, StrutsPackageNode} được minh họa ở Hình \ref{fig:lam-min}.
 
 Với yêu cầu thực hiện chuyển đổi từ một nút ban đầu trên cây sang một nút hoàn toàn mới nhưng vẫn giữ được các thuộc tính và phương thức của nút cũ, ta dùng mẫu thiết kế \textit{Decorator}. Ví dụ cho việc chuyển đổi từ nút \textit{XmlFileNode} sang nút \textit{StrutsConfiguration} được minh họa ở Mã nguồn \ref{code:decorator-dp}.
 
@@ -553,7 +553,7 @@ Sau khi đã thực hiện làm mịn và thu được nút chứa toàn bộ th
 	\label{fig:struts-analyzer}
 \end{figure}
 
-Đầu tiên, thực hiện xác định quan hệ phụ thuộc cho các thành phần \textit{Result Type} và \textit{Interceptor} bởi chúng chỉ có duy nhất một mối quan hệ phụ thuộc với Model xử lý nghiệp vụ phía sau. Tiếp theo, thực hiện phân tích cho các thành phần \textit{Interceptor Stack}, \textit{Result} bởi chúng sử dụng các thành phần \textit{Result Type, Interceptor}. Ngoài ra \textit{Result} còn có mối quan hệ phụ thuộc với các tệp \textit{.jsp} ở phần View. Trong một số trường hợp khác, ứng dụng có thể sử dụng plugin Tiles \footnote{https://tiles.apache.org} nhằm thiết kế layout cho các tệp \textit{.jsp}. Lúc đấy, ta không thể xác định quan hệ phụ thuộc trực tiếp từ \textit{Result} sang phần View mà phải thông qua các thành phần cấu hình của Tiles. Tiếp đến, các \textit{Action} được phân tích bởi nó sử dụng \textit{Interceptor Stack, Interceptor} và là thành phần cha của \textit{Result}. Nó cũng có mối quan phụ thuộc đến thành phần mã nguồn Java để xử lý phía sau. Sau khi đã xác định được toàn bộ các quan hệ phụ thuộc của phần Controller (các thành phần cấu hình) tới phần Model và View, ta sẽ sử dụng chúng để phân tích phụ thuộc cho phần View. Cụ thể là truy vết theo các quan hệ phụ thuộc của một bộ Controller - Model - View để xác định các quan hệ sử dụng dữ liệu từ View đến Model tương ứng của nó.
+Đầu tiên, thực hiện xác định quan hệ phụ thuộc cho các thành phần \textit{Result Type} và \textit{Interceptor} bởi chúng chỉ có duy nhất một mối quan hệ phụ thuộc với Model xử lý nghiệp vụ phía sau. Tiếp theo, thực hiện phân tích cho các thành phần \textit{Interceptor Stack}, \textit{Result} bởi chúng sử dụng các thành phần \textit{Result Type, Interceptor}. Ngoài ra \textit{Result} còn có mối quan hệ phụ thuộc với các tệp \textit{.jsp} ở phần View. Trong một số trường hợp khác, ứng dụng có thể sử dụng plugin Tiles\footnote{https://tiles.apache.org} nhằm thiết kế layout cho các tệp \textit{.jsp}. Lúc đấy, ta không thể xác định quan hệ phụ thuộc trực tiếp từ \textit{Result} sang phần View mà phải thông qua các thành phần cấu hình của Tiles. Tiếp đến, các \textit{Action} được phân tích bởi nó sử dụng \textit{Interceptor Stack, Interceptor} và là thành phần cha của \textit{Result}. Nó cũng có mối quan phụ thuộc đến thành phần mã nguồn Java để xử lý phía sau. Sau khi đã xác định được toàn bộ các quan hệ phụ thuộc của phần Controller (các thành phần cấu hình) tới phần Model và View, ta sẽ sử dụng chúng để phân tích phụ thuộc cho phần View. Cụ thể là truy vết theo các quan hệ phụ thuộc của một bộ Controller - Model - View để xác định các quan hệ sử dụng dữ liệu từ View đến Model tương ứng của nó.
 
 \subsection{Ví dụ minh họa}
 
@@ -570,12 +570,12 @@ Sau khi đã thực hiện làm mịn và thu được nút chứa toàn bộ th
 
 Lúc này, ta đã thu thập được toàn bộ các quan hệ phụ thuộc cấu hình của Struts. Khi phân tích tệp \textbf{/addbook-success.jsp}, ta thấy nó có sử dụng một thuộc tính có tên \textbf{bookName}. Câu hỏi đặt ra là thuộc tính được sử dụng này được định nghĩa ở thành phần nào. Ta sẽ phải truy vết phụ thuộc từ chính tệp \textit{.jsp} này xem nó được sử dụng bởi \textit{Action} nào, từ đó tìm ra phần mã nguồn Model tương ứng để xác định quan hệ phụ thuộc sử dụng thuộc tính của Model. Như ở ví dụ trên, ta có thể thấy \textbf{/addbook-success.jsp} được sử dụng bởi \textbf{AddBookAction}, có Model tương ứng là \textbf{vn.sample.action.AddBookAction}. Từ đấy ta xác định quan hệ phụ thuộc sử dụng dữ liệu từ thẻ \textbf{<s:property>} để thuộc tính \textbf{bookName} của lớp Java \textbf{vn.sample.action.AddBookAction}.
 
-\section{Phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA\cite{cia-wave}}
+\section{Phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA \cite{cia-wave}}
 Trong việc xây dựng công cụ này, WAVE-CIA được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước, được mô tả như Hình \ref{wave-cia-phenomenon}. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.45]{wave-cia-phenomenon}
+	\includegraphics[scale=0.5]{wave-cia-phenomenon}
 	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi}
 	\label{wave-cia-phenomenon}	
 \end{figure}
@@ -672,7 +672,7 @@ Một phần tử $v$ sẽ được thêm vào tập ảnh hưởng nếu $v$ th
 \section{Quản lý các phiên bản}
 Các nhà bảo trì phần mềm cần phải hiểu về ứng dụng phần mềm trước khi thực hiện các sửa đổi trên nó. Mặc dù mã nguồn hệ thống thường được xem xét (review) cẩn thận, tuy nhiên chỉ xem xét cho mã nguồn ở phiên bản hiện tại là không đủ để hiểu rõ sự tiến hóa của nó. Các nhà bảo trì cũng nên hiểu được mã nguồn đã được thay đổi như thế nào trước đó.
 
-Quản lý phiên bản là công việc lưu trữ các thay đổi của ứng dụng phần mềm theo thời gian, nó có thể giúp ta theo dõi các thay đổi qua thời phát triển, bảo trì và hoàn toàn có thể khôi phục lại một phiên bản xác định nào đó sau này. Một số hệ thống quản lý phiên bản phổ biến hiện nay như Git \footnote{https://git-scm.com} hay SVN  \footnote{https://subversion.apache.org} tập trung lưu trữ các thay đổi ở mức các dòng mã nguồn. Các hệ thống này có thể trích xuất thông tin về sự khác nhau giữa các lần sửa đổi của một tệp mã nguồn được lưu trữ. Một tập hợp các thông tin này được xem như là lịch sử thay đổi của tệp mã nguồn đấy.
+Quản lý phiên bản là công việc lưu trữ các thay đổi của ứng dụng phần mềm theo thời gian, nó có thể giúp ta theo dõi các thay đổi qua thời phát triển, bảo trì và hoàn toàn có thể khôi phục lại một phiên bản xác định nào đó sau này. Một số hệ thống quản lý phiên bản phổ biến hiện nay như Git\footnote{https://git-scm.com} hay SVN\footnote{https://subversion.apache.org} tập trung lưu trữ các thay đổi ở mức các dòng mã nguồn. Các hệ thống này có thể trích xuất thông tin về sự khác nhau giữa các lần sửa đổi của một tệp mã nguồn được lưu trữ. Một tập hợp các thông tin này được xem như là lịch sử thay đổi của tệp mã nguồn đấy.
 
 Tuy nhiên, trong thực tế có một vài bất lợi cho các nhà bảo trì khi sử dụng các hệ thống này để theo dõi lịch sử thay đổi của ứng dụng phần mềm. Ở mỗi lần cam kết (commit - xác nhận lưu trữ thay đổi), lập trình viên thường sửa đổi rất nhiều thứ xen kẽ nhau chứ không chỉ thực hiện một thay đổi. Các công cụ phát hiện ở mức dòng mã nguồn khó tách rời những thay đổi này ra và phát hiện riêng rẽ từng thay đổi trong một lần cam kết đấy. Nếu các nhà bảo trì phải thực hiện công việc này bằng tay, nó sẽ tốn rất nhiều thời gian và chi phí.
 
@@ -708,7 +708,7 @@ Các thành phần mã nguồn Java có thể chia làm ba loại chính gồm l
 	\centering
 	\caption{Các loại thay đổi của lớp và phương thức Java}
 	\label{tbl:class-method-changes}
-	\begin{tabular}{|l|p{6cm}|l|p{6cm}|}
+	\begin{tabular}{|l|p{5cm}|l|p{6cm}|}
 		\hline
 		\textbf{Kí hiệu} & \textbf{Ý nghĩa}                                        & \textbf{Kí hiệu} & \textbf{Ý nghĩa}                                                \\ \hline
 		\multicolumn{2}{|l|}{\textit{Các loại thay đổi của lớp}}                   & \multicolumn{2}{l|}{\textit{Các loại thay đổi của phương thức}}                    \\ \hline
@@ -861,10 +861,10 @@ Dựa trên những đề xuất phương pháp đã trình bày, bộ công c�
 
 Bước tiếp theo, để phân tích ảnh hưởng sự thay đổi, bộ công cụ yêu cầu người dùng tải lên một phiên bản của mã nguồn dự án. Bộ quản lý phiên sẽ thực hiện so sánh và phát hiện thay đổi, sau đấy tập các thành phần thay đổi được đưa vào thuật toán WAVE-CIA. Toàn bộ công việc này sẽ được mô-đun phân tích ảnh hưởng sự thay đổi thực hiện. Hoặc nếu trong trường hợp người dùng muốn sử dụng các bộ phân tích trong mô-đun phân tích cấu trúc. Các bộ phân tích này sẽ thực hiện trích xuất thông tin trên cây cấu trúc để xây dựng các góc nhìn về ứng dụng: góc nhìn kiến trúc công nghệ, dòng dữ liệu ứng dụng, biểu đồ lớp, sơ đồ liên kết thực thể, biểu đồ độ phức tạp mã nguồn.
 
-Tất cả các kết quả phân tích đều có thể được hiển thị tới người dùng một cách trực quan nhờ mô-đun trình diễn. Mô-đun này được phát triển bằng Javascript sử dụng thư viện D3.js \footnote{  https://d3js.org}. Nó truy xuất và tương tác với dữ liệu của hệ thống phía sau bởi các API được cung cấp bởi Spring MVC.
+Tất cả các kết quả phân tích đều có thể được hiển thị tới người dùng một cách trực quan nhờ mô-đun trình diễn. Mô-đun này được phát triển bằng Javascript sử dụng thư viện D3.js\footnote{https://d3js.org}. Nó truy xuất và tương tác với dữ liệu của hệ thống phía sau bởi các API được cung cấp bởi Spring MVC.
 \section{Triển khai thử nghiệm}
 
-Hiện tại bộ công cụ đã được cài đặt và triển khai thực tế trên nền tảng Web tại địa chỉ \url{http://112.137.131.10:8080/jcia}. Bộ công cụ không yêu cầu người dùng cài đặt thêm bất cứ phần mềm nào, chỉ cần có một trình duyệt Web. Bộ công cụ cũng cho phép nhiều người dùng cùng sử dụng và phân tích đồng thời.
+Hiện tại bộ công cụ đã được cài đặt và triển khai thực tế trên nền tảng ứng dụng Web\footnote{\url{http://112.137.131.10:8080/jcia}}. Bộ công cụ không yêu cầu người dùng cài đặt thêm bất cứ phần mềm nào, chỉ cần có một trình duyệt Web. Bộ công cụ cũng cho phép nhiều người dùng cùng sử dụng và phân tích đồng thời.
 
 \subsection{Giao diện tải lên mã nguồn và phân tích phụ thuộc}
 Sau khi đăng nhập thành công vào hệ thống bộ công cụ, ta sẽ được chuyển tới giao diện tải lên mã nguồn dự án và cấu hình các thông số cho việc phân tích như Hình \ref{fig:jcia-upload}. Tại giao diện, ngoài việc chọn mã nguồn tải lên ở định dạng \textit{.zip}, ta cần phải quan tâm đến một số thông số như \textit{Java Source Path, Ignored Components, Analyzer(s)} và \textit{Node Level}.
