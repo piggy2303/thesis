@@ -284,7 +284,7 @@ nền tảng. Các framework phổ biến hiện nay như Spring, Struts, Hibern
 hỗ trợ đầu tiên. Sau đó các phương pháp phân tích sẽ dần được hoàn thiện cho các tất cả các nền tảng khác. Ngoài ra, khóa luận này cũng đề xuất một giải pháp giúp thực hiện công việc thu thập tập thay đổi làm đầu vào cho phương pháp CIA bằng phương pháp so sánh cây cấu trúc của các phiên bản ứng dụng. Một công cụ được phát triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã được xây dựng. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để sinh cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định các mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng để tạo ra đồ thị gọi làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi.
 
 Các phần còn lại của khóa luận được cấu trúc như sau. \textbf{Chương \ref{chap:background}} trình bày về lý thuyết phân tích ảnh hưởng sự thay đổi. Bao gồm lịch sử nghiên cứu và quy trình chung của các phương pháp phân tích ảnh hưởng sự thay đổi hiện nay. Ngoài ra, chương này cũng giới thiệu thư viện Java Development Tools - một thư viện hỗ trợ phân tích mã nguồn Java mạnh mẽ. Trong \textbf{Chương \ref{chap:approach}}, một phương pháp về tiền xử lý mã nguồn ứng dụng J2EE để xây dựng cây cấu trúc sẽ được trình bày. Bên cạnh đó, khóa luận đề xuất các phương pháp để phân tích phụ thuộc cho Java Core và framework J2EE Struts và trình bày phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA để áp dụng cho các ứng dụng J2EE. Cuối cùng, chương này mô tả cách quản lý các phiên bản mã nguồn dựa trên cây cấu trúc của mã nguồn.
-\textbf{Chương \ref{chap:experiment}} mô tả kiến trúc và cài đặt công cụ, nó cũng trình bày các kết quả thực nghiệm và thảo luận về các kết quả này. Cuối cùng, \textbf{Chương \ref{chap:conclusion}} là kết luận của toàn bộ khóa luận và công cụ, chương này cũng trình bày các công việc tiếp theo cần thực hiện.
+\textbf{Chương \ref{chap:experiment}} mô tả kiến trúc và cài đặt công cụ, nó cũng trình bày các kết quả thử nghiệm và thảo luận về các kết quả này. Cuối cùng, \textbf{Chương \ref{chap:conclusion}} là kết luận của toàn bộ khóa luận và công cụ, chương này cũng trình bày các công việc tiếp theo cần thực hiện.
 
 
 \newpage	
@@ -366,7 +366,7 @@ public CompilationUnit getJdtRoot(String javaFilePath, String sourceFolder) thro
 }
 \end{lstlisting}
 
-Phương thức \texttt{getJdtRoot()} sử dụng API của JDT Core để phân tích từ một tệp Java thành một đơn vị biên dịch chứa thông tin về cây cấu trúc trừu tượng của tệp. Đầu tiên, cần khởi tạo trình phân tích với Java phiên bản 8 bằng API \texttt{ASTParser.newParser(AST.JLS8)}. Tiếp theo đấy, sử dụng các API như \texttt{setKind(), setUnitName(), setSource()} để cung cấp thông tin về tệp Java và nội dung của nó cho quá trình phân tích và tạo thành cây cấu trúc tượng. Chú ý rằng có sử dụng một số API khác như \texttt{setResolveBinding(), setBindingsRecovery} và \texttt{setEnvironment()}. Chúng được sử dụng để kích hoạt bộ đánh chỉ mục cho các thành phần trên cây cấu trúc trừu tượng. Sau này trong quá trình phân tích quan hệ phụ thuộc Java, các chỉ mục này có thể được sử dụng cho việc tìm kiếm nhanh các thành phần Java. Chính tính năng tìm kiếm bằng chỉ mục của JDT Core đã giúp công việc xác định các quan hệ phụ thuộc cho Java được thực hiện một cách vô cùng dễ dàng.
+Phương thức \texttt{getJdtRoot()} sử dụng API của JDT Core để phân tích từ một tệp Java thành một đơn vị biên dịch chứa thông tin về cây cấu trúc trừu tượng của tệp. Đầu tiên, cần khởi tạo trình phân tích với Java phiên bản 8 bằng API \texttt{ASTParser.newParser(AST.JLS8)}. Tiếp theo đấy, sử dụng các API như \texttt{setKind(), setUnitName(), setSource()} để cung cấp thông tin về tệp Java và nội dung của nó cho quá trình phân tích và tạo thành cây cấu trúc trừu tượng. Chú ý rằng có sử dụng một số API khác như \texttt{setResolveBinding(), setBindingsRecovery} và \texttt{setEnvironment()}. Chúng được sử dụng để kích hoạt bộ đánh chỉ mục cho các thành phần trên cây cấu trúc trừu tượng. Sau này trong quá trình phân tích quan hệ phụ thuộc Java, các chỉ mục này có thể được sử dụng cho việc tìm kiếm nhanh các thành phần Java. Chính tính năng tìm kiếm bằng chỉ mục của JDT Core đã giúp công việc xác định các quan hệ phụ thuộc cho Java được thực hiện một cách vô cùng dễ dàng.
 
 Sau khi có được cây cấu trúc trừu tượng của một tệp Java, tiếp tục dùng Java Document Model của JDT Core để thực hiện duyệt cây cấu trúc. Bộ duyệt này được cài đặt theo mẫu thiết kế \texttt{Visitor}. Ta có thể duyệt cây cấu trúc và đi tới phần định nghĩa của các thành phần Java ngay lập tức bởi những API sau.
 
@@ -913,12 +913,12 @@ Phía bên trái giao diện chính gồm hai khung nhìn cho phục vụ cho vi
 \end{itemize}
 
 \subsection{Ví dụ minh họa}
-Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm nghiên cứu sử dụng một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thực nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thực nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
+Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm nghiên cứu sử dụng một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thử nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thử nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/sample-vitm}
-	\caption{Ví dụ phân tích phụ thuộc cho dự án Struts thực nghiệm}
+	\caption{Ví dụ phân tích phụ thuộc cho dự án Struts thử nghiệm}
 	\label{fig:sample-vitm}
 \end{figure}
 
@@ -947,7 +947,7 @@ Công cụ phân tích phụ thuộc và ảnh hưởng sự thay đổi cho cá
 
 Việc phát triển công cụ ngay trên nền tảng Web cho phép người dùng sử dụng ngay trên trình duyệt mà không cần cài đặt bất cứ cái gì. Với giao diện trực quan, dễ sử dụng, người dùng chỉ cần tải lên các phiên bản mã nguồn ứng dụng. Công cụ sẽ tự động phân tích và xuất ra kết quả báo cáo ngay trên giao diện hoặc dưới dạng tệp tin \textit{excel, pdf}.
 
-Trước đây, để thực hiện công việc phân tích ảnh hưởng sự thay đổi thì cần một người trong đội dự án hiểu thật rõ về toàn bộ ứng dụng để có thể đưa ra các thành phần ảnh hưởng. Điều này có thể gây ra rủi ro cao, trong khi đó chi phí cho việc và thời gian cho công sức thức hiện là rất lớn. Thử nghiệm cho thấy, sau khi phân tích phụ thuộc một ứng dụng J2EE có quy mô hơn 350kLOC, thu được tổng số nút cây cấu trúc là 106.500 và số phụ thuộc là 88.000. Đây là những con số khổng lồ, con người khó có thể mà kiểm soát, do vậy việc áp dụng công cụ phân tích ảnh hưởng sự thay đổi mang lại rất nhiều lợi ích.
+Trước đây, để thực hiện công việc phân tích ảnh hưởng sự thay đổi thì cần một người trong đội dự án hiểu thật rõ về toàn bộ ứng dụng để có thể đưa ra các thành phần ảnh hưởng. Điều này có thể gây ra rủi ro cao, trong khi đó chi phí cho việc và thời gian cho công sức thực hiện là rất lớn. Thử nghiệm cho thấy, sau khi phân tích phụ thuộc một ứng dụng J2EE có quy mô hơn 350kLOC, thu được tổng số nút cây cấu trúc là 106.500 và số phụ thuộc là 88.000. Đây là những con số khổng lồ, con người khó có thể mà kiểm soát, do vậy việc áp dụng công cụ phân tích ảnh hưởng sự thay đổi mang lại rất nhiều lợi ích.
 
 \begin{table}[h]
 	\centering
