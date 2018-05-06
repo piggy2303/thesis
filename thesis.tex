@@ -232,11 +232,12 @@ Tôi xin cam đoan rằng những nghiên cứu về phương pháp hỗ trợ q
 \begin{table}[h]
 	\centering
 	\begin{tabular}{lll}
+		\textbf{API}  & Application Programming Interface\\[0.3cm]
 		\textbf{CIA}  & Change Impact Analysis              \\[0.3cm]
+		\textbf{IDE} & Integrated Development Environment \\[0.3cm]
 		\textbf{J2EE} & Java 2 Platform, Enterprise Edition \\[0.3cm]
 		\textbf{MVC} & Model - View - Controller			\\[0.3cm]
 		\textbf{POJO} & Plain Old Java Object              \\[0.3cm]
-		\textbf{IDE} & Integrated Development Environment \\[0.3cm]
 	\end{tabular}
 \end{table}
 
@@ -922,7 +923,7 @@ Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm n
 	\label{fig:sample-vitm}
 \end{figure}
 
-Sau khi thực hiện tiền xử lý và phân tích phụ thuộc cho dự án, hệ thống sẽ trả về cây cấu trúc kèm theo các phụ thuộc giữa các nút trên cây ở Hình \ref{fig:sample-vitm}, có thể thấy các phụ thuộc được biểu diễn bằng các mũi tên màu xám. Bộ tiền xử lý cho cây cấu trúc gồm thông tin về các thư mục và tệp trong mã nguồn dự án. Ta có thể thấy package \textit{common} là một package có nhiều mũi tên trỏ tới, bởi vì nó là một package Java được sử dụng nhiều trong dự án, điều này chứng minh rằng bộ phân tích phụ thuộc Java Core đã có hiệu quả nhất định. Ngoài ra, Bộ phân tích phụ thuộc cho Hibernate đã phân tích mã nguồn và xác định được tên các bảng trong CSDL và gán chúng lên cây cấu trúc, nhiều mũi tên xuất phát từ package \textit{database} tới các nút bảng cho thấy package \textit{database} là nơi chứa các lớp truy cập và thao tác trực tiếp tầng CSDL. Cuối cùng, những mũi tên giữa thư mục \textit{web, com/sample, config} và tệp \textit{struts.xml} là kết quả của bộ phân tích Struts 2. Các mũi tên từ \textit{struts.xml} và \textit{config} tới package \textit{com/sample} thể hiện cho sự phụ thuộc của các định nghĩa \textit{Action, Interceptor, Result Type} bằng các lớp Java; tới thư mục \textit{web} thể hiện cho sự phụ thuộc các định nghĩa \textit{Result}.
+Sau khi thực hiện tiền xử lý và phân tích phụ thuộc cho dự án, hệ thống sẽ trả về cây cấu trúc kèm theo các phụ thuộc giữa các nút trên cây ở Hình \ref{fig:sample-vitm}, có thể thấy các phụ thuộc được biểu diễn bằng các mũi tên màu xám. Bộ tiền xử lý cho cây cấu trúc gồm thông tin về các thư mục và tệp trong mã nguồn dự án. Ta có thể thấy package \textit{common} là một package có nhiều mũi tên trỏ tới, bởi vì nó là một package Java được sử dụng nhiều trong dự án, điều này chứng minh rằng bộ phân tích phụ thuộc Java Core đã có hiệu quả nhất định. Ngoài ra, Bộ phân tích phụ thuộc cho Hibernate đã phân tích mã nguồn và xác định được tên các bảng trong cơ sở dữ liệu và gán chúng lên cây cấu trúc, nhiều mũi tên xuất phát từ package \textit{database} tới các nút bảng cho thấy package \textit{database} là nơi chứa các lớp truy cập và thao tác trực tiếp tầng cơ sở dữ liệu. Cuối cùng, những mũi tên giữa thư mục \textit{web, com/sample, config} và tệp \textit{struts.xml} là kết quả của bộ phân tích Struts 2. Các mũi tên từ \textit{struts.xml} và \textit{config} tới package \textit{com/sample} thể hiện cho sự phụ thuộc của các định nghĩa \textit{Action, Interceptor, Result Type} bằng các lớp Java; tới thư mục \textit{web} thể hiện cho sự phụ thuộc các định nghĩa \textit{Result}.
 
 Bộ công cụ cung cấp hai cách để thực hiện việc phân tích ảnh hưởng sự thay đổi. thứ nhất là người dùng chọn tập thay đổi và phân tích trực tiếp trên giao diện hiển thị phụ thuộc, thứ hai là phân tích tự động bằng cách người dùng tải lên mã nguồn đã thay đổi, công cụ thực hiện so sánh hai phiên bản mã nguồn và phân tích ảnh hưởng rồi trả về báo cáo kết quả.
 
