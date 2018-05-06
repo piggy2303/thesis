@@ -390,7 +390,7 @@ Khi đã duyệt cây cú pháp trừu tượng bằng các API ở trên, sẽ 
 Một API khác cũng rất hữu ích là \texttt{astNode.getStartPosition()} cho phép biết được thành phần này được bắt đầu từ vị trí nào trong tệp mã nguồn. Nó sẽ giúp thực hiện việc ánh xạ các nút trên cây cấu trúc với các dòng mã khi biểu diễn cho người dùng.
 
 \newpage
-\chapter{Phương pháp thực hiện}
+\chapter{Phương pháp CIA cho ứng dụng J2EE}
 \label{chap:approach}
 \section{Tiền xử lý mã nguồn ứng dụng J2EE}
 \textbf{Định nghĩa:} (\textit{Cây cấu trúc} \cite{jcia}) Cho mã nguồn ứng dụng J2EE, một cây cấu trúc của mã nguồn này được định nghĩa $T = (N, R)$ với $N = \{n_1, n_2,..., n_k\}$ là tập nút đại diện cho các thành phần trong mã nguồn như thư mục; tệp; lớp, phương thức, thuộc tính (Java); thẻ (XML-based); v.v. $R = \{(n_i, n_j) | n_i,n_j \in N\}$ là tập các cạnh. Mỗi cạnh $(r_i,r_j)$ đại diện cho quan hệ phụ thuộc giữa $n_i$ và $n_j$ có nghĩa là $n_i$ phụ thuộc vào $n_j$.
@@ -949,8 +949,6 @@ Việc phát triển công cụ ngay trên nền tảng Web cho phép người d
 
 Trước đây, để thực hiện công việc phân tích ảnh hưởng sự thay đổi thì cần một người trong đội dự án hiểu thật rõ về toàn bộ ứng dụng để có thể đưa ra các thành phần ảnh hưởng. Điều này có thể gây ra rủi ro cao, trong khi đó chi phí cho việc và thời gian cho công sức thức hiện là rất lớn. Thử nghiệm cho thấy, sau khi phân tích phụ thuộc một ứng dụng J2EE có quy mô hơn 350kLOC, thu được tổng số nút cây cấu trúc là 106.500 và số phụ thuộc là 88.000. Đây là những con số khổng lồ, con người khó có thể mà kiểm soát, do vậy việc áp dụng công cụ phân tích ảnh hưởng sự thay đổi mang lại rất nhiều lợi ích.
 
-Bảng \ref{tbl:dep-number} cung cấp thông tin về số lượng mối quan hệ phụ thuộc và số lượng ca kiểm thử cho các bộ phân tích phụ thuộc công nghệ Java Core và framework Struts.
-
 \begin{table}[h]
 	\centering
 	\caption{Số lượng phụ thuộc và ca kiểm thử cho các bộ phân tích phụ thuộc}
@@ -963,7 +961,7 @@ Bảng \ref{tbl:dep-number} cung cấp thông tin về số lượng mối quan 
 	\end{tabular}
 \end{table}
 
-Với những lợi thế và ưu điểm đã nêu, trong tương lai công cụ có khả năng áp dụng vào thực tế. Hiện tại, công cụ đang được triển khai thử nghiệm tại Trung tâm Công nghệ và Quản lý chất lượng phần mềm Viettel và nhận được các phản hồi tích cực.
+Bảng \ref{tbl:dep-number} cung cấp thông tin về số lượng mối quan hệ phụ thuộc và số lượng ca kiểm thử cho các bộ phân tích phụ thuộc công nghệ Java Core và framework Struts. Với những lợi thế và ưu điểm đã nêu, trong tương lai công cụ có khả năng áp dụng vào thực tế. Hiện tại, công cụ đang được triển khai thử nghiệm tại Trung tâm Công nghệ và Quản lý chất lượng phần mềm Viettel và nhận được các phản hồi tích cực.
 
 \chapter{Kết luận}
 \label{chap:conclusion}
