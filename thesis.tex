@@ -23,6 +23,8 @@
 %\usepackage[font=bf]{caption}
 %\counterwithin{figure}{chapter}
 
+\renewcommand\labelitemi{--}
+
 \setlength{\parskip}{6pt}
 
 \usetikzlibrary{calc}
@@ -223,9 +225,11 @@ Tôi xin cam đoan rằng những nghiên cứu về phương pháp hỗ trợ q
 \tableofcontents
 
 \newpage
+\addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
 
 \newpage
+\addcontentsline{toc}{chapter}{Danh sách ký hiệu, chữ viết tắt}
 \begin{flushleft}
 \bfseries{\Huge{Danh sách ký hiệu, chữ viết tắt}}
 \end{flushleft}
@@ -242,6 +246,7 @@ Tôi xin cam đoan rằng những nghiên cứu về phương pháp hỗ trợ q
 \end{table}
 
 \newpage
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
 
 %-----MAIN-----%
@@ -272,7 +277,7 @@ giảm số lượng các ca kiểm thử cần thực hiện từ đó rút ng�
 Các kĩ thuật CIA được thực hiện theo hai hướng tiếp cận chính là phân tích tĩnh (static
 CIA) và phân tích động (dynamic CIA) \cite{cia-survey}. Trong thực tế, hầu hết các nghiên cứu đề xuất các phương pháp phân tích ảnh hưởng sự thay đổi liên quan đến static CIA. Nổi bật trong
 số đó là kĩ thuật CIA dựa trên sự phân loại thay đổi \cite{cia-ct}, kĩ thuật dựa vào đồ thị Call
-Graph [3] và kĩ thuật dựa trên tư tưởng giao thoa sóng nước WAVE-CIA \cite{cia-wave}. Tuy nhiên,
+Graph \cite{cia-call} và kĩ thuật dựa trên tư tưởng giao thoa sóng nước WAVE-CIA \cite{cia-wave}. Tuy nhiên,
 Các kĩ thuật CIA sử dụng đầu vào là kết quả của quá trình phân tích phụ thuộc từ ứng
 dụng. Quá trình này không thể tổng quát hóa cho toàn bộ các công nghệ và nền tảng hiện
 có.
@@ -282,7 +287,9 @@ J2EE đang là một giải pháp phổ biến được sử dụng để triể
 Dựa trên ý tưởng về phương pháp này, một phương pháp hoàn chỉnh đã được nghiên
 cứu và đề xuất để thực hiện phân tích ảnh hưởng sự thay đổi cho các ứng dụng J2EE đa
 nền tảng. Các framework phổ biến hiện nay như Spring, Struts, Hibernate sẽ được tập trung
-hỗ trợ đầu tiên. Sau đó các phương pháp phân tích sẽ dần được hoàn thiện cho các tất cả các nền tảng khác. Ngoài ra, khóa luận này cũng đề xuất một giải pháp giúp thực hiện công việc thu thập tập thay đổi làm đầu vào cho phương pháp CIA bằng phương pháp so sánh cây cấu trúc của các phiên bản ứng dụng. Một công cụ được phát triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã được xây dựng. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để sinh cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định các mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng để tạo ra đồ thị gọi làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi.
+hỗ trợ đầu tiên. Sau đó các phương pháp phân tích sẽ dần được hoàn thiện cho các tất cả các nền tảng khác.
+
+Ngoài ra, khóa luận này cũng đề xuất một giải pháp giúp thực hiện công việc thu thập tập thay đổi làm đầu vào cho phương pháp CIA bằng phương pháp so sánh cây cấu trúc của các phiên bản ứng dụng. Một công cụ được phát triển như là phiên bản tiếp theo của công cụ JCIA để thực hiện các giải pháp đã được xây dựng. Đầu tiên, mã nguồn của ứng dụng sẽ được tiền xử lý để sinh cây cấu trúc. Mỗi nút trên cây đại diện cho một thành phần mã nguồn. Tiếp theo, các nút sẽ được phân tích theo các công nghệ sử dụng trong ứng dụng để xác định các mối quan hệ phụ thuộc. Cây cấu trúc này được sử dụng để tạo ra đồ thị gọi làm đầu vào cho việc phân tích ảnh hưởng sự thay đổi.
 
 Các phần còn lại của khóa luận được cấu trúc như sau. \textbf{Chương \ref{chap:background}} trình bày về lý thuyết phân tích ảnh hưởng sự thay đổi. Bao gồm lịch sử nghiên cứu và quy trình chung của các phương pháp phân tích ảnh hưởng sự thay đổi hiện nay. Ngoài ra, chương này cũng giới thiệu thư viện Java Development Tools - một thư viện hỗ trợ phân tích mã nguồn Java mạnh mẽ. Trong \textbf{Chương \ref{chap:approach}}, một phương pháp về tiền xử lý mã nguồn ứng dụng J2EE để xây dựng cây cấu trúc sẽ được trình bày. Bên cạnh đó, khóa luận đề xuất các phương pháp để phân tích phụ thuộc cho Java Core và framework J2EE Struts và trình bày phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA để áp dụng cho các ứng dụng J2EE. Cuối cùng, chương này mô tả cách quản lý các phiên bản mã nguồn dựa trên cây cấu trúc của mã nguồn.
 \textbf{Chương \ref{chap:experiment}} mô tả kiến trúc và cài đặt công cụ, nó cũng trình bày các kết quả thử nghiệm và thảo luận về các kết quả này. Cuối cùng, \textbf{Chương \ref{chap:conclusion}} là kết luận của toàn bộ khóa luận và công cụ, chương này cũng trình bày các công việc tiếp theo cần thực hiện.
@@ -303,7 +310,7 @@ Trong hơn 30 năm qua, đã có nhiều kỹ thuật CIA được nghiên cứu
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.56]{CIA-hierarchy}
+	\includegraphics[scale=0.45]{CIA-hierarchy}
 	\caption{Các phương pháp CIA}
 	\label{fig:cia-hierarchy}
 \end{figure}
@@ -315,12 +322,12 @@ Các loại thay đổi trong mã nguồn có thể chia làm hai loại chính 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.8]{CIA-process}
-	\caption{Quy trình chung CIA}
+	\includegraphics[scale=0.7]{CIA-process}
+	\caption{Quy trình chung CIA \cite{cia-survey}}
 	\label{fig:cia-process}
 \end{figure}
 
-Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA \cite{cia-survey}. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
+Một thay đổi được thực hiện có thể gây ảnh hưởng không mong muốn đến những thành phần mã nguồn khác. Mục tiêu của các kỹ thuật CIA là xác định những thành phần ảnh hưởng. Hình \ref{fig:cia-process} thể hiện toàn bộ quy trình CIA. Phân tích ảnh hưởng sự thay đổi được bắt đầu bằng việc phân tích yêu cầu thay đổi để xác định được tập các thành phần thay đổi (Change Set - CS). Thông qua thuật toán CIA, các thành phần ảnh hưởng sẽ được phán đoán (Estimated Impact Set - EIS). EIS chính là đầu ra cuối cùng của quá trình CIA.
 
 \begin{equation}
 Precision = \frac{|EIS \cap AIS|}{EIS}
@@ -332,7 +339,7 @@ Recall = \frac{|EIS \cap AIS|}{AIS}
 \label{exp:cia-recall}
 \end{equation}
 
-Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập ảnh hưởng dự đoán gần nhất với tập ảnh hưởng thực tế khi thực hiện thay đổi (Actual Impact Set - AIS). Khi so sánh giữa EIS và AIS ta, có tập các thành phần ảnh hưởng tiên đoán nhầm (False Negative Impact Set - FNIS) và tập các thành phần ảnh hưởng tiên đoán thiếu (False Positive Impact Set - FPIS). Để đánh giá sự hiệu quả của một phương pháp CIA, người ta dùng hai độ đo là độ chính xác (Precision - P) và Recall - R, được tính theo các công thức \ref{exp:cia-precision} và \ref{exp:cia-recall}. Độ chính xác càng cao, tập FNIS sẽ càng bé, thì ít phải chú ý đến những thành phần không cần thiết. Độ hồi tưởng càng cao, tập FPIS càng bé, giúp phát hiện nhiều thành phần bị ảnh hưởng hơn giúp giảm số lỗi tiềm ẩn sau khi áp dụng phương pháp CIA.
+Phương pháp CIA hiệu quả là phương pháp giúp tìm ra được tập ảnh hưởng dự đoán gần nhất với tập ảnh hưởng thực tế khi thực hiện thay đổi (Actual Impact Set - AIS). Khi so sánh giữa EIS và AIS ta, có tập các thành phần ảnh hưởng tiên đoán nhầm (False Negative Impact Set - FNIS) và tập các thành phần ảnh hưởng tiên đoán thiếu (False Positive Impact Set - FPIS). Để đánh giá sự hiệu quả của một phương pháp CIA, người ta dùng hai độ đo là độ chính xác (Precision - P) và Recall - R, được tính theo các công thức \ref{exp:cia-precision} và \ref{exp:cia-recall} \cite{cia-survey}. Độ chính xác càng cao, tập FNIS sẽ càng bé, thì ít phải chú ý đến những thành phần không cần thiết. Độ hồi tưởng càng cao, tập FPIS càng bé, giúp phát hiện nhiều thành phần bị ảnh hưởng hơn giúp giảm số lỗi tiềm ẩn sau khi áp dụng phương pháp CIA.
 
 \section{Các công cụ phát triển Java}
 Các công cụ phát triển Java (Java Developement Tools - JDT)\footnote{https://www.eclipse.org/jdt} là một tập các plug-in giúp nền tảng Eclipse trở thành một trình phát triển tích hợp đầy đủ chức năng cho ngôn ngữ Java. Nó được phát triển và bảo trì bởi tổ chức Eclipse và là thành phần mặc định trong Eclipse IDE cho ngôn ngữ Java. Tuy nhiên, những plug-in của JDT này cũng cung cấp các API do vậy hoàn toàn có thể sử dụng chúng để hỗ trợ phát triển các công cụ khác.
@@ -455,7 +462,7 @@ Với yêu cầu tham số có kiểu được biểu diễn bằng FQN phục v
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.75]{fqn-type}
+	\includegraphics[scale=0.65]{fqn-type}
 	\caption{Xác định tên xác định hoàn toàn cho kiểu Java}
 	\label{fig:fqn-type}
 \end{figure}
@@ -472,7 +479,7 @@ Hình \ref{fig:struts-architecture} thể hiện mô hình thiết kế của m�
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=1]{struts-architecture}
-	\caption{Mô hình thiết kế của ứng dụng Struts}
+	\caption{Mô hình thiết kế của ứng dụng Struts \cite{struts}}
 	\label{fig:struts-architecture}
 \end{figure}
 
@@ -532,7 +539,7 @@ Sau khi đã thực hiện làm mịn và thu được nút chứa toàn bộ th
 	\label{fig:struts-analyzer}
 \end{figure}
 
-Đầu tiên, thực hiện xác định quan hệ phụ thuộc cho các thành phần \textit{Result Type} và \textit{Interceptor} bởi chúng chỉ có duy nhất một mối quan hệ phụ thuộc với Model xử lý nghiệp vụ phía sau. Tiếp theo, thực hiện phân tích cho các thành phần \textit{Interceptor Stack}, \textit{Result} bởi chúng sử dụng các thành phần \textit{Result Type, Interceptor}. Ngoài ra \textit{Result} còn có mối quan hệ phụ thuộc với các tệp \textit{.jsp} ở phần View. Trong một số trường hợp khác, ứng dụng có thể sử dụng plugin Tiles\footnote{https://tiles.apache.org} nhằm thiết kế layout cho các tệp \textit{.jsp}. Lúc đấy, không thể xác định quan hệ phụ thuộc trực tiếp từ \textit{Result} sang phần View mà phải thông qua các thành phần cấu hình của Tiles. Tiếp đến, các \textit{Action} được phân tích bởi nó sử dụng \textit{Interceptor Stack, Interceptor} và là thành phần cha của \textit{Result}. Nó cũng có mối quan phụ thuộc đến thành phần mã nguồn Java để xử lý phía sau. Sau khi đã xác định được toàn bộ các quan hệ phụ thuộc của phần Controller (các thành phần cấu hình) tới phần Model và View, chúng sẽ được sử dụng để phân tích phụ thuộc cho phần View. Cụ thể là truy vết theo các quan hệ phụ thuộc của một bộ Controller - Model - View để xác định các quan hệ sử dụng dữ liệu từ View đến Model tương ứng của nó.
+Đầu tiên, thực hiện xác định quan hệ phụ thuộc cho các thành phần \textit{Result Type} và \textit{Interceptor} bởi chúng chỉ có duy nhất một mối quan hệ phụ thuộc với Model xử lý nghiệp vụ phía sau. Tiếp theo, thực hiện phân tích cho các thành phần \textit{Interceptor Stack}, \textit{Result} bởi chúng sử dụng các thành phần \textit{Result Type, Interceptor}. Ngoài ra \textit{Result} còn có mối quan hệ phụ thuộc với các tệp \textit{.jsp} ở phần View. Trong một số trường hợp khác, ứng dụng có thể sử dụng plug-in Tiles\footnote{https://tiles.apache.org} nhằm thiết kế layout cho các tệp \textit{.jsp}. Lúc đấy, không thể xác định quan hệ phụ thuộc trực tiếp từ \textit{Result} sang phần View mà phải thông qua các thành phần cấu hình của Tiles. Tiếp đến, các \textit{Action} được phân tích bởi nó sử dụng \textit{Interceptor Stack, Interceptor} và là thành phần cha của \textit{Result}. Nó cũng có mối quan phụ thuộc đến thành phần mã nguồn Java để xử lý phía sau. Sau khi đã xác định được toàn bộ các quan hệ phụ thuộc của phần Controller (các thành phần cấu hình) tới phần Model và View, chúng sẽ được sử dụng để phân tích phụ thuộc cho phần View. Cụ thể là truy vết theo các quan hệ phụ thuộc của một bộ Controller - Model - View để xác định các quan hệ sử dụng dữ liệu từ View đến Model tương ứng của nó.
 
 \subsection{Ví dụ minh họa}
 
@@ -550,14 +557,15 @@ Sau khi đã thực hiện làm mịn và thu được nút chứa toàn bộ th
 Lúc này, toàn bộ các quan hệ phụ thuộc cấu hình của Struts đã được thu thập. Khi phân tích tệp \textbf{/addbook-success.jsp}, nhận thấy nó có sử dụng một thuộc tính có tên \textbf{bookName}. Câu hỏi đặt ra là thuộc tính được sử dụng này được định nghĩa ở thành phần nào. Ta sẽ phải truy vết phụ thuộc từ chính tệp \textit{.jsp} này xem nó được sử dụng bởi \textit{Action} nào, từ đó tìm ra phần mã nguồn Model tương ứng để xác định quan hệ phụ thuộc sử dụng thuộc tính của Model. Như ở ví dụ trên, có thể thấy rằng \textbf{/addbook-success.jsp} được sử dụng bởi \textbf{AddBookAction}, có Model tương ứng là \textbf{vn.sample.action.AddBookAction}. Từ đấy sẽ xác định quan hệ phụ thuộc sử dụng dữ liệu từ thẻ \textbf{<s:property>} để thuộc tính \textbf{bookName} của lớp Java \textbf{vn.sample.action.AddBookAction}.
 
 \section{Phương pháp phân tích ảnh hưởng sự thay đổi WAVE-CIA}
-Trong việc xây dựng công cụ này, WAVE-CIA \cite{cia-wave} được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước, được mô tả như Hình \ref{wave-cia-phenomenon}. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.5]{wave-cia-phenomenon}
-	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi}
+	\caption{Hiện tượng lan truyền sóng nước trên đồ thị gọi \cite{cia-wave}}
 	\label{wave-cia-phenomenon}	
 \end{figure}
+
+Trong việc xây dựng công cụ này, WAVE-CIA \cite{cia-wave} được sử dụng làm phương pháp phân tích ảnh hưởng sự thay đổi. WAVE-CIA là một phương pháp phân tích tĩnh trực tiếp trên mã nguồn ứng dụng, sử dụng một bản biểu diễn chương trình dưới dạng đồ thị gọi (Call Graph - CG) tĩnh. Ý tưởng của phương pháp này dựa trên sự mô phỏng hiện tượng lan truyền sóng nước, được mô tả như Hình \ref{wave-cia-phenomenon}. Hầu hết các phương pháp CIA đưa ra dự đoán tập ảnh hưởng dựa trên từng thành phần riêng lẻ của tập thay đổi chứ không xem xét mối quan hệ giữa chúng. Trong khi đó, nhiều thay đổi có thể được thực hiện cùng lúc để đáp ứng một yêu cầu thay đổi nào đó. WAVE-CIA dựa trên nguyên tắc này, và nó có thể dự đoán tập ảnh hưởng tốt hơn với tập thay đổi gồm nhiều phần tử.
 
 Để thực hiện phương pháp này, một đồ thị gọi cần được xây dựng đầu tiên. Sau đó, những phần tử tập cốt lõi sẽ được tìm ra, tập ảnh hưởng cuối cùng sẽ được tính toán dựa vào tập cốt lõi.
 
@@ -914,7 +922,7 @@ Phía bên trái giao diện chính gồm hai khung nhìn cho phục vụ cho vi
 \end{itemize}
 
 \subsection{Ví dụ minh họa}
-Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Nhóm nghiên cứu sử dụng một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thử nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thử nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
+Hiện tại, bộ công cụ đã được triển khai thử nghiệm. Một dự án mẫu có sử dụng các framework Struts 2, Hibernate do tập đoàn Viettel cung cấp để làm dự án thử nghiệm. Phần này sẽ trình bày kết quả phân tích phụ thuộc mã nguồn, chạy thử nghiệm phân tích ảnh hưởng dựa vào kĩ thuật WAVE-CIA.
 
 \begin{figure}[h]
 	\centering
@@ -995,6 +1003,9 @@ Dựa trên những gì đã thực hiện được, trong giai đoạn tiếp t
 	
 	\bibitem{jcia}
 	Ba Cuong Le, Son Nguyen Van, Duc Anh Nguyen, Ngoc Hung Pham, Hieu Vo Dinh. JCIA: A Tool for Change Impact Analysis of Java EE Applications. Information Systems Design and Intelligent Applications, pp.105-114, 2018.
+	
+	\bibitem{struts}
+	Don Brown, Chad Davis, and Scott Stanlick. 2008. Struts 2 in Action (In Action). Manning Publications Co., Greenwich, CT, USA.
 \end{thebibliography}
 
 \end{document}
